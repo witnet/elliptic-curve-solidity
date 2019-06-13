@@ -1,0 +1,22 @@
+{
+  "name": "elliptic-curve-sol",
+  "version": "0.1.0",
+  "description": "Elliptic Curve arithmetic for 256-bit curves written in solidity",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/witnet/elliptic-curve-solidity.git"
+  },
+  "keywords": [
+    "elliptic",
+    "curve",
+    "solidity",
+    "ecdsa",
+    "secp25k1"
+  ],
+  "author": "Witnet Foundation <info@witnet.foundation>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/witnet/elliptic-curve-solidity/issues"
+  },
+  "homepage": "https://github.com/witnet/elliptic-curve-solidity#readme"
+}
