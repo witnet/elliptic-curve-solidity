@@ -3,10 +3,9 @@ const EllipticCurve = artifacts.require("./EllipticCurve")
 
 contract("EllipticCurve", accounts => {
   describe("secp256k1", () => {
-    // var n = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F", 16)
-    // const gx = new BN("79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798", 16)
-    // const gy = new BN("483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8", 16)
-    const pp = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F", 16)
+    const gx = web3.utils.toBN("79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798")
+    const gy = web3.utils.toBN("483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8")
+    const pp = web3.utils.toBN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F")
     let ecLib
     before(async () => {
       ecLib = await EllipticCurve.deployed()
@@ -101,8 +100,8 @@ contract("EllipticCurve", accounts => {
       assert.equal(sumZ.toString(10), expectedSubY.toString())
     })
     it("Should double EcPoint", async () => {
-      const x1 = web3.utils.toBN("0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798")
-      const y1 = web3.utils.toBN("0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8")
+      const x1 = gx
+      const y1 = gy
       const res = await ecLib.ecAdd(x1, y1, x1, y1, 0, pp)
       const mulX = res[0]
       const mulZ = res[1]
@@ -122,21 +121,21 @@ contract("EllipticCurve", accounts => {
     })
 
     it("Should multiply x2 EcPoint", async () => {
-      const x1 = web3.utils.toBN("0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798")
-      const y1 = web3.utils.toBN("0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8")
-      const d = web3.utils.toBN("0x07")
+      const x1 = gx
+      const y1 = gy
+      const d = web3.utils.toBN("0x02")
       const res = await ecLib.ecMul(d, x1, y1, 0, pp)
       const mulX = res[0]
       const mulZ = res[1]
-      const expectedMulX = web3.utils.toBN("0x5CBDF0646E5DB4EAA398F365F2EA7A0E3D419B7E0330E39CE92BDDEDCAC4F9BC")
-      const expectedMulY = web3.utils.toBN("0x6AEBCA40BA255960A3178D6D861A54DBA813D0B813FDE7B5A5082628087264DA")
+      const expectedMulX = web3.utils.toBN("0xC6047F9441ED7D6D3045406E95C07CD85C778E4B8CEF3CA7ABAC09B95C709EE5")
+      const expectedMulY = web3.utils.toBN("0x1AE168FEA63DC339A3C58419466CEAEEF7F632653266D0E1236431A950CFE52A")
       assert.equal(mulX.toString(10), expectedMulX.toString())
       assert.equal(mulZ.toString(10), expectedMulY.toString())
     })
 
-    it("Should multiply small scalar with EcPoint", async () => {
-      const x1 = web3.utils.toBN("0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798")
-      const y1 = web3.utils.toBN("0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8")
+    it("Should multiply big scalar with EcPoint", async () => {
+      const x1 = gx
+      const y1 = gy
       const d = web3.utils.toBN("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364140")
       const res = await ecLib.ecMul(d, x1, y1, 0, pp)
       const mulX = res[0]
@@ -146,7 +145,7 @@ contract("EllipticCurve", accounts => {
       assert.equal(mulX.toString(10), expectedMulX.toString())
       assert.equal(mulZ.toString(10), expectedMulY.toString())
     })
-    it("Should multiply big scalar with EcPoint", async () => {
+    it("Should multiply small scalar with EcPoint", async () => {
       const x1 = web3.utils.toBN("0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798")
       const y1 = web3.utils.toBN("0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8")
       const d = web3.utils.toBN("0x05")
@@ -160,12 +159,11 @@ contract("EllipticCurve", accounts => {
     })
   })
   describe("secp256r1", () => {
-    // var n = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F", 16)
-    // const gx = new BN("79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798", 16)
-    // const gy = new BN("483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8", 16)
-    const pp = new BN("FFFFFFFF00000001000000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF", 16)
-    const a = new BN("FFFFFFFF00000001000000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFC", 16)
-    const b = new BN("5AC635D8AA3A93E7B3EBBD55769886BC651D06B0CC53B0F63BCE3C3E27D2604B", 16)
+    const gx = web3.utils.toBN("0x6B17D1F2E12C4247F8BCE6E563A440F277037D812DEB33A0F4A13945D898C296")
+    const gy = web3.utils.toBN("0x4FE342E2FE1A7F9B8EE7EB4A7C0F9E162BCE33576B315ECECBB6406837BF51F5")
+    const pp = web3.utils.toBN("FFFFFFFF00000001000000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF")
+    const a = web3.utils.toBN("FFFFFFFF00000001000000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFC")
+    const b = web3.utils.toBN("5AC635D8AA3A93E7B3EBBD55769886BC651D06B0CC53B0F63BCE3C3E27D2604B")
 
     let ecLib
     before(async () => {
@@ -216,8 +214,8 @@ contract("EllipticCurve", accounts => {
       assert.equal(newY1.toString(), y1.toString())
     })
     it("Should identify if point is on the curve", async () => {
-      const x = web3.utils.toBN("0x6B17D1F2E12C4247F8BCE6E563A440F277037D812DEB33A0F4A13945D898C296")
-      const y = web3.utils.toBN("0x4FE342E2FE1A7F9B8EE7EB4A7C0F9E162BCE33576B315ECECBB6406837BF51F5")
+      const x = gx
+      const y = gy
       assert.equal(await ecLib.isOnCurve(x, y, a, b, pp), true)
     })
     it("Should identify if point is NOT on the curve", async () => {
@@ -226,8 +224,8 @@ contract("EllipticCurve", accounts => {
       assert.equal(await ecLib.isOnCurve(x, y, a, b, pp), false)
     })
     it("Should Add two big numbers", async () => {
-      const x1 = web3.utils.toBN("0x6B17D1F2E12C4247F8BCE6E563A440F277037D812DEB33A0F4A13945D898C296")
-      const z1 = web3.utils.toBN("0x4FE342E2FE1A7F9B8EE7EB4A7C0F9E162BCE33576B315ECECBB6406837BF51F5")
+      const x1 = gx
+      const z1 = gy
       const x2 = web3.utils.toBN("0x5ECBE4D1A6330A44C8F7EF951D4BF165E6C6B721EFADA985FB41661BC6E7FD6C")
       const z2 = web3.utils.toBN("0x8734640C4998FF7E374B06CE1A64A2ECD82AB036384FB83D9A79B127A27D5032")
       const res = await ecLib.ecAdd(x1, z1, x2, z2, a, pp)
@@ -250,8 +248,8 @@ contract("EllipticCurve", accounts => {
     it("Should Sub two big numbers", async () => {
       const x1 = web3.utils.toBN("0x5ECBE4D1A6330A44C8F7EF951D4BF165E6C6B721EFADA985FB41661BC6E7FD6C")
       const z1 = web3.utils.toBN("0x8734640C4998FF7E374B06CE1A64A2ECD82AB036384FB83D9A79B127A27D5032")
-      const x2 = web3.utils.toBN("0x6B17D1F2E12C4247F8BCE6E563A440F277037D812DEB33A0F4A13945D898C296")
-      const z2 = web3.utils.toBN("0x4FE342E2FE1A7F9B8EE7EB4A7C0F9E162BCE33576B315ECECBB6406837BF51F5")
+      const x2 = gx
+      const z2 = gy
       const res = await ecLib.ecSub(x1, z1, x2, z2, a, pp)
       const sumX = res[0]
       const sumZ = res[1]
@@ -282,8 +280,8 @@ contract("EllipticCurve", accounts => {
     })
 
     it("Should multiply x2 EcPoint", async () => {
-      const x1 = web3.utils.toBN("0x6B17D1F2E12C4247F8BCE6E563A440F277037D812DEB33A0F4A13945D898C296")
-      const y1 = web3.utils.toBN("0x4FE342E2FE1A7F9B8EE7EB4A7C0F9E162BCE33576B315ECECBB6406837BF51F5")
+      const x1 = gx
+      const y1 = gy
       const d = web3.utils.toBN("0x02")
       const res = await ecLib.ecMul(d, x1, y1, a, pp)
       const mulX = res[0]
@@ -295,8 +293,8 @@ contract("EllipticCurve", accounts => {
     })
 
     it("Should multiply x EcPoint", async () => {
-      const x1 = web3.utils.toBN("0x6B17D1F2E12C4247F8BCE6E563A440F277037D812DEB33A0F4A13945D898C296")
-      const y1 = web3.utils.toBN("0x4FE342E2FE1A7F9B8EE7EB4A7C0F9E162BCE33576B315ECECBB6406837BF51F5")
+      const x1 = gx
+      const y1 = gy
       const d = web3.utils.toBN("0x03")
       const res = await ecLib.ecMul(d, x1, y1, a, pp)
       const mulX = res[0]
@@ -307,8 +305,8 @@ contract("EllipticCurve", accounts => {
       assert.equal(mulZ.toString(10), expectedMulY.toString())
     })
     it("Should multiply small scalar with EcPoint", async () => {
-      const x1 = web3.utils.toBN("0x6B17D1F2E12C4247F8BCE6E563A440F277037D812DEB33A0F4A13945D898C296")
-      const y1 = web3.utils.toBN("0x4FE342E2FE1A7F9B8EE7EB4A7C0F9E162BCE33576B315ECECBB6406837BF51F5")
+      const x1 = gx
+      const y1 = gy
       const res = await ecLib.ecMul(0x04, x1, y1, a, pp)
       const mulX = res[0]
       const mulZ = res[1]
@@ -318,8 +316,8 @@ contract("EllipticCurve", accounts => {
       assert.equal(mulZ.toString(10), expectedMulY.toString())
     })
     it("Should multiply big scalar with EcPoint", async () => {
-      const x1 = web3.utils.toBN("0x6B17D1F2E12C4247F8BCE6E563A440F277037D812DEB33A0F4A13945D898C296")
-      const y1 = web3.utils.toBN("0x4FE342E2FE1A7F9B8EE7EB4A7C0F9E162BCE33576B315ECECBB6406837BF51F5")
+      const x1 = gx
+      const y1 = gy
       const d = web3.utils.toBN("0x159D893D4CDD747246CDCA43590E13")
       const res = await ecLib.ecMul(d, x1, y1, a, pp)
       const mulX = res[0]
@@ -331,20 +329,19 @@ contract("EllipticCurve", accounts => {
     })
   })
   describe("secp192r1", () => {
-    // var n = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F", 16)
-    // const gx = new BN("79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798", 16)
-    // const gy = new BN("483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8", 16)
-    const pp = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFF", 16)
-    const a = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFC", 16)
-    const b = new BN("64210519E59C80E70FA7E9AB72243049FEB8DEECC146B9B1", 16)
+    const gx = web3.utils.toBN("0x188DA80EB03090F67CBF20EB43A18800F4FF0AFD82FF1012")
+    const gy = web3.utils.toBN("0x7192B95FFC8DA78631011ED6B24CDD573F977A11E794811")
+    const pp = web3.utils.toBN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFF")
+    const a = web3.utils.toBN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFC")
+    const b = web3.utils.toBN("64210519E59C80E70FA7E9AB72243049FEB8DEECC146B9B1")
 
     let ecLib
     before(async () => {
       ecLib = await EllipticCurve.deployed()
     })
     it("Should Add two big numbers", async () => {
-      const x1 = web3.utils.toBN("0x188DA80EB03090F67CBF20EB43A18800F4FF0AFD82FF1012")
-      const z1 = web3.utils.toBN("0x7192B95FFC8DA78631011ED6B24CDD573F977A11E794811")
+      const x1 = gx
+      const z1 = gy
       const x2 = web3.utils.toBN("0xDAFEBF5828783F2AD35534631588A3F629A70FB16982A888")
       const z2 = web3.utils.toBN("0xDD6BDA0D993DA0FA46B27BBC141B868F59331AFA5C7E93AB")
       const res = await ecLib.ecAdd(x1, z1, x2, z2, a, pp)
@@ -369,8 +366,8 @@ contract("EllipticCurve", accounts => {
       assert.equal(sumZ.toString(10), expectedSubY.toString())
     })
     it("Should double EcPoint", async () => {
-      const x1 = web3.utils.toBN("0x188DA80EB03090F67CBF20EB43A18800F4FF0AFD82FF1012")
-      const y1 = web3.utils.toBN("0x7192B95FFC8DA78631011ED6B24CDD573F977A11E794811")
+      const x1 = gx
+      const y1 = gy
       const res = await ecLib.ecAdd(x1, y1, x1, y1, a, pp)
       const mulX = res[0]
       const mulZ = res[1]
@@ -380,8 +377,8 @@ contract("EllipticCurve", accounts => {
       assert.equal(mulZ.toString(10), expectedMulY.toString())
     })
     it("Should Add two big numbers", async () => {
-      const x1 = web3.utils.toBN("0x188DA80EB03090F67CBF20EB43A18800F4FF0AFD82FF1012")
-      const z1 = web3.utils.toBN("0x7192B95FFC8DA78631011ED6B24CDD573F977A11E794811")
+      const x1 = gx
+      const z1 = gy
       const res = await ecLib.ecAdd(x1, z1, 0, 0, a, pp)
       const sumX = res[0]
       const sumZ = res[1]
@@ -403,8 +400,8 @@ contract("EllipticCurve", accounts => {
     })
 
     it("Should multiply x EcPoint", async () => {
-      const x1 = web3.utils.toBN("0x188DA80EB03090F67CBF20EB43A18800F4FF0AFD82FF1012")
-      const y1 = web3.utils.toBN("0x7192B95FFC8DA78631011ED6B24CDD573F977A11E794811")
+      const x1 = gx
+      const y1 = gy
       const d = web3.utils.toBN("0x03")
       const res = await ecLib.ecMul(d, x1, y1, a, pp)
       const mulX = res[0]
@@ -415,8 +412,8 @@ contract("EllipticCurve", accounts => {
       assert.equal(mulZ.toString(10), expectedMulY.toString())
     })
     it("Should multiply small scalar with EcPoint", async () => {
-      const x1 = web3.utils.toBN("0x188DA80EB03090F67CBF20EB43A18800F4FF0AFD82FF1012")
-      const y1 = web3.utils.toBN("0x7192B95FFC8DA78631011ED6B24CDD573F977A11E794811")
+      const x1 = gx
+      const y1 = gy
       const res = await ecLib.ecMul(0x04, x1, y1, a, pp)
       const mulX = res[0]
       const mulZ = res[1]
@@ -426,8 +423,8 @@ contract("EllipticCurve", accounts => {
       assert.equal(mulZ.toString(10), expectedMulY.toString())
     })
     it("Should multiply big scalar with EcPoint", async () => {
-      const x1 = web3.utils.toBN("0x188DA80EB03090F67CBF20EB43A18800F4FF0AFD82FF1012")
-      const y1 = web3.utils.toBN("0x7192B95FFC8DA78631011ED6B24CDD573F977A11E794811")
+      const x1 = gx
+      const y1 = gy
       const d = web3.utils.toBN("0x159D893D4CDD747246CDCA43590E13")
       const res = await ecLib.ecMul(d, x1, y1, a, pp)
       const mulX = res[0]
@@ -439,9 +436,8 @@ contract("EllipticCurve", accounts => {
     })
   })
   describe("secp224r1", () => {
-    // var n = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F", 16)
-    // const gx = new BN("79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798", 16)
-    // const gy = new BN("483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8", 16)
+    const gx = web3.utils.toBN("0xB70E0CBD6BB4BF7F321390B94A03C1D356C21122343280D6115C1D21")
+    const gy = web3.utils.toBN("0xBD376388B5F723FB4C22DFE6CD4375A05A07476444D5819985007E34")
     const pp = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000000000000001", 16)
     const a = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFE", 16)
     const b = new BN("B4050A850C04B3ABF54132565044B0B7D7BFD8BA270B39432355FFB4", 16)
@@ -451,8 +447,8 @@ contract("EllipticCurve", accounts => {
       ecLib = await EllipticCurve.deployed()
     })
     it("Should Add two big numbers", async () => {
-      const x1 = web3.utils.toBN("0xB70E0CBD6BB4BF7F321390B94A03C1D356C21122343280D6115C1D21")
-      const z1 = web3.utils.toBN("0xBD376388B5F723FB4C22DFE6CD4375A05A07476444D5819985007E34")
+      const x1 = gx
+      const z1 = gy
       const x2 = web3.utils.toBN("0x706A46DC76DCB76798E60E6D89474788D16DC18032D268FD1A704FA6")
       const z2 = web3.utils.toBN("0x1C2B76A7BC25E7702A704FA986892849FCA629487ACF3709D2E4E8BB")
       const res = await ecLib.ecAdd(x1, z1, x2, z2, a, pp)
@@ -477,8 +473,8 @@ contract("EllipticCurve", accounts => {
       assert.equal(sumZ.toString(10), expectedSubY.toString())
     })
     it("Should double EcPoint", async () => {
-      const x1 = web3.utils.toBN("0xB70E0CBD6BB4BF7F321390B94A03C1D356C21122343280D6115C1D21")
-      const y1 = web3.utils.toBN("0xBD376388B5F723FB4C22DFE6CD4375A05A07476444D5819985007E34")
+      const x1 = gx
+      const y1 = gy
       const res = await ecLib.ecAdd(x1, y1, x1, y1, a, pp)
       const mulX = res[0]
       const mulZ = res[1]
@@ -488,8 +484,8 @@ contract("EllipticCurve", accounts => {
       assert.equal(mulZ.toString(10), expectedMulY.toString())
     })
     it("Should Add two big numbers", async () => {
-      const x1 = web3.utils.toBN("0xB70E0CBD6BB4BF7F321390B94A03C1D356C21122343280D6115C1D21")
-      const z1 = web3.utils.toBN("0xB70E0CBD6BB4BF7F321390B94A03C1D356C21122343280D6115C1D21")
+      const x1 = gx
+      const z1 = gx
       const res = await ecLib.ecAdd(x1, z1, 0, 0, a, pp)
       const sumX = res[0]
       const sumZ = res[1]
@@ -511,8 +507,8 @@ contract("EllipticCurve", accounts => {
     })
 
     it("Should multiply x EcPoint", async () => {
-      const x1 = web3.utils.toBN("0xB70E0CBD6BB4BF7F321390B94A03C1D356C21122343280D6115C1D21")
-      const y1 = web3.utils.toBN("0xBD376388B5F723FB4C22DFE6CD4375A05A07476444D5819985007E34")
+      const x1 = gx
+      const y1 = gy
       const d = web3.utils.toBN("0x03")
       const res = await ecLib.ecMul(d, x1, y1, a, pp)
       const mulX = res[0]
@@ -523,8 +519,8 @@ contract("EllipticCurve", accounts => {
       assert.equal(mulZ.toString(10), expectedMulY.toString())
     })
     it("Should multiply small scalar with EcPoint", async () => {
-      const x1 = web3.utils.toBN("0xB70E0CBD6BB4BF7F321390B94A03C1D356C21122343280D6115C1D21")
-      const y1 = web3.utils.toBN("0xBD376388B5F723FB4C22DFE6CD4375A05A07476444D5819985007E34")
+      const x1 = gx
+      const y1 = gy
       const res = await ecLib.ecMul(0x04, x1, y1, a, pp)
       const mulX = res[0]
       const mulZ = res[1]
@@ -534,8 +530,8 @@ contract("EllipticCurve", accounts => {
       assert.equal(mulZ.toString(10), expectedMulY.toString())
     })
     it("Should multiply big scalar with EcPoint", async () => {
-      const x1 = web3.utils.toBN("0xB70E0CBD6BB4BF7F321390B94A03C1D356C21122343280D6115C1D21")
-      const y1 = web3.utils.toBN("0xBD376388B5F723FB4C22DFE6CD4375A05A07476444D5819985007E34")
+      const x1 = gx
+      const y1 = gy
       const d = web3.utils.toBN("0x159D893D4CDD747246CDCA43590E13")
       const res = await ecLib.ecMul(d, x1, y1, a, pp)
       const mulX = res[0]
