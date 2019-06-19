@@ -330,4 +330,220 @@ contract("EllipticCurve", accounts => {
       assert.equal(mulZ.toString(10), expectedMulY.toString())
     })
   })
+  describe("secp192r1", () => {
+    // var n = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F", 16)
+    // const gx = new BN("79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798", 16)
+    // const gy = new BN("483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8", 16)
+    const pp = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFF", 16)
+    const a = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFC", 16)
+    const b = new BN("64210519E59C80E70FA7E9AB72243049FEB8DEECC146B9B1", 16)
+
+    let ecLib
+    before(async () => {
+      ecLib = await EllipticCurve.deployed()
+    })
+    it("Should Add two big numbers", async () => {
+      const x1 = web3.utils.toBN("0x188DA80EB03090F67CBF20EB43A18800F4FF0AFD82FF1012")
+      const z1 = web3.utils.toBN("0x7192B95FFC8DA78631011ED6B24CDD573F977A11E794811")
+      const x2 = web3.utils.toBN("0xDAFEBF5828783F2AD35534631588A3F629A70FB16982A888")
+      const z2 = web3.utils.toBN("0xDD6BDA0D993DA0FA46B27BBC141B868F59331AFA5C7E93AB")
+      const res = await ecLib.ecAdd(x1, z1, x2, z2, a, pp)
+      const sumX = res[0]
+      const sumZ = res[1]
+      const expectedSumX = web3.utils.toBN("0x76E32A2557599E6EDCD283201FB2B9AADFD0D359CBB263DA")
+      const expectedSumZ = web3.utils.toBN("0x782C37E372BA4520AA62E0FED121D49EF3B543660CFD05FD")
+      assert.equal(sumX.toString(10), expectedSumX.toString())
+      assert.equal(sumZ.toString(10), expectedSumZ.toString())
+    })
+    it("Should Sub two big numbers", async () => {
+      const x1 = web3.utils.toBN("0x10BB8E9840049B183E078D9C300E1605590118EBDD7FF590")
+      const z1 = web3.utils.toBN("0x31361008476F917BADC9F836E62762BE312B72543CCEAEA1")
+      const x2 = web3.utils.toBN("0x76E32A2557599E6EDCD283201FB2B9AADFD0D359CBB263DA")
+      const z2 = web3.utils.toBN("0x782C37E372BA4520AA62E0FED121D49EF3B543660CFD05FD")
+      const res = await ecLib.ecSub(x1, z1, x2, z2, a, pp)
+      const sumX = res[0]
+      const sumZ = res[1]
+      const expectedSubX = web3.utils.toBN("0xDAFEBF5828783F2AD35534631588A3F629A70FB16982A888")
+      const expectedSubY = web3.utils.toBN("0xDD6BDA0D993DA0FA46B27BBC141B868F59331AFA5C7E93AB")
+      assert.equal(sumX.toString(10), expectedSubX.toString())
+      assert.equal(sumZ.toString(10), expectedSubY.toString())
+    })
+    it("Should double EcPoint", async () => {
+      const x1 = web3.utils.toBN("0x188DA80EB03090F67CBF20EB43A18800F4FF0AFD82FF1012")
+      const y1 = web3.utils.toBN("0x7192B95FFC8DA78631011ED6B24CDD573F977A11E794811")
+      const res = await ecLib.ecAdd(x1, y1, x1, y1, a, pp)
+      const mulX = res[0]
+      const mulZ = res[1]
+      const expectedMulX = web3.utils.toBN("0xDAFEBF5828783F2AD35534631588A3F629A70FB16982A888")
+      const expectedMulY = web3.utils.toBN("0xDD6BDA0D993DA0FA46B27BBC141B868F59331AFA5C7E93AB")
+      assert.equal(mulX.toString(10), expectedMulX.toString())
+      assert.equal(mulZ.toString(10), expectedMulY.toString())
+    })
+    it("Should Add two big numbers", async () => {
+      const x1 = web3.utils.toBN("0x188DA80EB03090F67CBF20EB43A18800F4FF0AFD82FF1012")
+      const z1 = web3.utils.toBN("0x7192B95FFC8DA78631011ED6B24CDD573F977A11E794811")
+      const res = await ecLib.ecAdd(x1, z1, 0, 0, a, pp)
+      const sumX = res[0]
+      const sumZ = res[1]
+      assert.equal(sumX.toString(10), x1.toString())
+      assert.equal(sumZ.toString(10), z1.toString())
+    })
+
+    it("Should multiply x2 EcPoint", async () => {
+      const x1 = web3.utils.toBN("0xDAFEBF5828783F2AD35534631588A3F629A70FB16982A888")
+      const y1 = web3.utils.toBN("0xDD6BDA0D993DA0FA46B27BBC141B868F59331AFA5C7E93AB")
+      const d = web3.utils.toBN("0x02")
+      const res = await ecLib.ecMul(d, x1, y1, a, pp)
+      const mulX = res[0]
+      const mulZ = res[1]
+      const expectedMulX = web3.utils.toBN("0x35433907297CC378B0015703374729D7A4FE46647084E4BA")
+      const expectedMulY = web3.utils.toBN("0xA2649984F2135C301EA3ACB0776CD4F125389B311DB3BE32")
+      assert.equal(mulX.toString(10), expectedMulX.toString())
+      assert.equal(mulZ.toString(10), expectedMulY.toString())
+    })
+
+    it("Should multiply x EcPoint", async () => {
+      const x1 = web3.utils.toBN("0x188DA80EB03090F67CBF20EB43A18800F4FF0AFD82FF1012")
+      const y1 = web3.utils.toBN("0x7192B95FFC8DA78631011ED6B24CDD573F977A11E794811")
+      const d = web3.utils.toBN("0x03")
+      const res = await ecLib.ecMul(d, x1, y1, a, pp)
+      const mulX = res[0]
+      const mulZ = res[1]
+      const expectedMulX = web3.utils.toBN("0x76E32A2557599E6EDCD283201FB2B9AADFD0D359CBB263DA")
+      const expectedMulY = web3.utils.toBN("0x782C37E372BA4520AA62E0FED121D49EF3B543660CFD05FD")
+      assert.equal(mulX.toString(10), expectedMulX.toString())
+      assert.equal(mulZ.toString(10), expectedMulY.toString())
+    })
+    it("Should multiply small scalar with EcPoint", async () => {
+      const x1 = web3.utils.toBN("0x188DA80EB03090F67CBF20EB43A18800F4FF0AFD82FF1012")
+      const y1 = web3.utils.toBN("0x7192B95FFC8DA78631011ED6B24CDD573F977A11E794811")
+      const res = await ecLib.ecMul(0x04, x1, y1, a, pp)
+      const mulX = res[0]
+      const mulZ = res[1]
+      const expectedMulX = web3.utils.toBN("0x35433907297CC378B0015703374729D7A4FE46647084E4BA")
+      const expectedMulY = web3.utils.toBN("0xA2649984F2135C301EA3ACB0776CD4F125389B311DB3BE32")
+      assert.equal(mulX.toString(10), expectedMulX.toString())
+      assert.equal(mulZ.toString(10), expectedMulY.toString())
+    })
+    it("Should multiply big scalar with EcPoint", async () => {
+      const x1 = web3.utils.toBN("0x188DA80EB03090F67CBF20EB43A18800F4FF0AFD82FF1012")
+      const y1 = web3.utils.toBN("0x7192B95FFC8DA78631011ED6B24CDD573F977A11E794811")
+      const d = web3.utils.toBN("0x159D893D4CDD747246CDCA43590E13")
+      const res = await ecLib.ecMul(d, x1, y1, a, pp)
+      const mulX = res[0]
+      const mulZ = res[1]
+      const expectedMulX = web3.utils.toBN("0xB357B10AC985C891B29FB37DA56661CCCF50CEC21128D4F6")
+      const expectedMulY = web3.utils.toBN("0xBA20DC2FA1CC228D3C2D8B538C2177C2921884C6B7F0D96F")
+      assert.equal(mulX.toString(10), expectedMulX.toString())
+      assert.equal(mulZ.toString(10), expectedMulY.toString())
+    })
+  })
+  describe("secp224r1", () => {
+    // var n = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F", 16)
+    // const gx = new BN("79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798", 16)
+    // const gy = new BN("483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8", 16)
+    const pp = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000000000000001", 16)
+    const a = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFE", 16)
+    const b = new BN("B4050A850C04B3ABF54132565044B0B7D7BFD8BA270B39432355FFB4", 16)
+
+    let ecLib
+    before(async () => {
+      ecLib = await EllipticCurve.deployed()
+    })
+    it("Should Add two big numbers", async () => {
+      const x1 = web3.utils.toBN("0xB70E0CBD6BB4BF7F321390B94A03C1D356C21122343280D6115C1D21")
+      const z1 = web3.utils.toBN("0xBD376388B5F723FB4C22DFE6CD4375A05A07476444D5819985007E34")
+      const x2 = web3.utils.toBN("0x706A46DC76DCB76798E60E6D89474788D16DC18032D268FD1A704FA6")
+      const z2 = web3.utils.toBN("0x1C2B76A7BC25E7702A704FA986892849FCA629487ACF3709D2E4E8BB")
+      const res = await ecLib.ecAdd(x1, z1, x2, z2, a, pp)
+      const sumX = res[0]
+      const sumZ = res[1]
+      const expectedSumX = web3.utils.toBN("0xDF1B1D66A551D0D31EFF822558B9D2CC75C2180279FE0D08FD896D04")
+      const expectedSumZ = web3.utils.toBN("0xA3F7F03CADD0BE444C0AA56830130DDF77D317344E1AF3591981A925")
+      assert.equal(sumX.toString(10), expectedSumX.toString())
+      assert.equal(sumZ.toString(10), expectedSumZ.toString())
+    })
+    it("Should Sub two big numbers", async () => {
+      const x1 = web3.utils.toBN("0x31C49AE75BCE7807CDFF22055D94EE9021FEDBB5AB51C57526F011AA")
+      const z1 = web3.utils.toBN("0x27E8BFF1745635EC5BA0C9F1C2EDE15414C6507D29FFE37E790A079B")
+      const x2 = web3.utils.toBN("0xDF1B1D66A551D0D31EFF822558B9D2CC75C2180279FE0D08FD896D04")
+      const z2 = web3.utils.toBN("0xA3F7F03CADD0BE444C0AA56830130DDF77D317344E1AF3591981A925")
+      const res = await ecLib.ecSub(x1, z1, x2, z2, a, pp)
+      const sumX = res[0]
+      const sumZ = res[1]
+      const expectedSubX = web3.utils.toBN("0x706A46DC76DCB76798E60E6D89474788D16DC18032D268FD1A704FA6")
+      const expectedSubY = web3.utils.toBN("0x1C2B76A7BC25E7702A704FA986892849FCA629487ACF3709D2E4E8BB")
+      assert.equal(sumX.toString(10), expectedSubX.toString())
+      assert.equal(sumZ.toString(10), expectedSubY.toString())
+    })
+    it("Should double EcPoint", async () => {
+      const x1 = web3.utils.toBN("0xB70E0CBD6BB4BF7F321390B94A03C1D356C21122343280D6115C1D21")
+      const y1 = web3.utils.toBN("0xBD376388B5F723FB4C22DFE6CD4375A05A07476444D5819985007E34")
+      const res = await ecLib.ecAdd(x1, y1, x1, y1, a, pp)
+      const mulX = res[0]
+      const mulZ = res[1]
+      const expectedMulX = web3.utils.toBN("0x706A46DC76DCB76798E60E6D89474788D16DC18032D268FD1A704FA6")
+      const expectedMulY = web3.utils.toBN("0x1C2B76A7BC25E7702A704FA986892849FCA629487ACF3709D2E4E8BB")
+      assert.equal(mulX.toString(10), expectedMulX.toString())
+      assert.equal(mulZ.toString(10), expectedMulY.toString())
+    })
+    it("Should Add two big numbers", async () => {
+      const x1 = web3.utils.toBN("0xB70E0CBD6BB4BF7F321390B94A03C1D356C21122343280D6115C1D21")
+      const z1 = web3.utils.toBN("0xB70E0CBD6BB4BF7F321390B94A03C1D356C21122343280D6115C1D21")
+      const res = await ecLib.ecAdd(x1, z1, 0, 0, a, pp)
+      const sumX = res[0]
+      const sumZ = res[1]
+      assert.equal(sumX.toString(10), x1.toString())
+      assert.equal(sumZ.toString(10), z1.toString())
+    })
+
+    it("Should multiply x2 EcPoint", async () => {
+      const x1 = web3.utils.toBN("0x706A46DC76DCB76798E60E6D89474788D16DC18032D268FD1A704FA6")
+      const y1 = web3.utils.toBN("0x1C2B76A7BC25E7702A704FA986892849FCA629487ACF3709D2E4E8BB")
+      const d = web3.utils.toBN("0x02")
+      const res = await ecLib.ecMul(d, x1, y1, a, pp)
+      const mulX = res[0]
+      const mulZ = res[1]
+      const expectedMulX = web3.utils.toBN("0xAE99FEEBB5D26945B54892092A8AEE02912930FA41CD114E40447301")
+      const expectedMulY = web3.utils.toBN("0x482580A0EC5BC47E88BC8C378632CD196CB3FA058A7114EB03054C9")
+      assert.equal(mulX.toString(10), expectedMulX.toString())
+      assert.equal(mulZ.toString(10), expectedMulY.toString())
+    })
+
+    it("Should multiply x EcPoint", async () => {
+      const x1 = web3.utils.toBN("0xB70E0CBD6BB4BF7F321390B94A03C1D356C21122343280D6115C1D21")
+      const y1 = web3.utils.toBN("0xBD376388B5F723FB4C22DFE6CD4375A05A07476444D5819985007E34")
+      const d = web3.utils.toBN("0x03")
+      const res = await ecLib.ecMul(d, x1, y1, a, pp)
+      const mulX = res[0]
+      const mulZ = res[1]
+      const expectedMulX = web3.utils.toBN("0xDF1B1D66A551D0D31EFF822558B9D2CC75C2180279FE0D08FD896D04")
+      const expectedMulY = web3.utils.toBN("0xA3F7F03CADD0BE444C0AA56830130DDF77D317344E1AF3591981A925")
+      assert.equal(mulX.toString(10), expectedMulX.toString())
+      assert.equal(mulZ.toString(10), expectedMulY.toString())
+    })
+    it("Should multiply small scalar with EcPoint", async () => {
+      const x1 = web3.utils.toBN("0xB70E0CBD6BB4BF7F321390B94A03C1D356C21122343280D6115C1D21")
+      const y1 = web3.utils.toBN("0xBD376388B5F723FB4C22DFE6CD4375A05A07476444D5819985007E34")
+      const res = await ecLib.ecMul(0x04, x1, y1, a, pp)
+      const mulX = res[0]
+      const mulZ = res[1]
+      const expectedMulX = web3.utils.toBN("0xAE99FEEBB5D26945B54892092A8AEE02912930FA41CD114E40447301")
+      const expectedMulY = web3.utils.toBN("0x482580A0EC5BC47E88BC8C378632CD196CB3FA058A7114EB03054C9")
+      assert.equal(mulX.toString(10), expectedMulX.toString())
+      assert.equal(mulZ.toString(10), expectedMulY.toString())
+    })
+    it("Should multiply big scalar with EcPoint", async () => {
+      const x1 = web3.utils.toBN("0xB70E0CBD6BB4BF7F321390B94A03C1D356C21122343280D6115C1D21")
+      const y1 = web3.utils.toBN("0xBD376388B5F723FB4C22DFE6CD4375A05A07476444D5819985007E34")
+      const d = web3.utils.toBN("0x159D893D4CDD747246CDCA43590E13")
+      const res = await ecLib.ecMul(d, x1, y1, a, pp)
+      const mulX = res[0]
+      const mulZ = res[1]
+      const expectedMulX = web3.utils.toBN("0x29895F0AF496BFC62B6EF8D8A65C88C613949B03668AAB4F0429E35")
+      const expectedMulY = web3.utils.toBN("0x3EA6E53F9A841F2019EC24BDE1A75677AA9B5902E61081C01064DE93")
+      assert.equal(mulX.toString(10), expectedMulX.toString())
+      assert.equal(mulZ.toString(10), expectedMulY.toString())
+    })
+  })
 })
