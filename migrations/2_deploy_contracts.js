@@ -1,6 +1,5 @@
-var EC = artifacts.require("./EcUtils.sol")
+var eclib = artifacts.require("./EllipticCurve.sol")
 
-module.exports = function (deployer, network, accounts) {
-  console.log("Network:", network)
-  deployer.deploy(EC)
+module.exports = function (deployer) {
+  deployer.deploy(eclib)
 }
