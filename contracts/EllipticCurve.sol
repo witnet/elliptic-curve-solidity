@@ -230,10 +230,13 @@ library EllipticCurve {
   /// @dev Derives the y coordinate from a compressed-format point x (0x02 even, 0x03 odd)
   /// @param prefix parity byte
   /// @param x coordinate x
+  /// @param a constant of curve
+  /// @param b constant of curve
   /// @param pp the modulus
   /// @return y coordinate y
-  function deriveY(uint8 prefix, uint256 x, uint256 pp) public pure returns (uint256 y) {
-    uint256 y2 = addmod(mulmod(x, mulmod(x, x, pp), pp), 7, pp);
+  function deriveY(uint8 prefix, uint256 x, uint256 a, uint256 b, uint256 pp) public pure returns (uint256 y) {
+    // x^3 + ax + b
+    uint256 y2 = addmod(mulmod(x, mulmod(x, x, pp), pp), addmod(mulmod(x, a, pp), b, pp), pp);
     uint256 y_ = expMod(y2, (pp + 1) / 4, pp);
     // uint256 cmp = yBit ^ y_ & 1;
     y = (y_ + prefix) % 2 == 0 ? y_ : pp - y_;

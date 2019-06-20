@@ -54,6 +54,12 @@ contract("EllipticCurve", accounts => {
       const newY1 = await ecLib.invMod(inverted, pp)
       assert.equal(newY1.toString(), y1.toString())
     })
+    it("Should get the y coordinate based on parity", async () => {
+      const coordX = "0xc2704fed5dc41d3979235b85edda8f86f1806c17ce0a516a034c605d2b4f9a26"
+      const expectedCoordY = "0x6970c3dd18910d09250143db08fed1065a522403df0c204ed240a07d123b29d5"
+      const coordY = await ecLib.deriveY(0x03, web3.utils.hexToBytes(coordX), 0, 7, pp)
+      assert.equal(web3.utils.numberToHex(coordY), expectedCoordY)
+    })
     it("Should identify if point is on the curve", async () => {
       const x = web3.utils.toBN("0xe906a3b4379ddbff598994b2ff026766fb66424710776099b85111f23f8eebcc")
       const y = web3.utils.toBN("0x7638965bf85f5f2b6641324389ef2ffb99576ba72ec19d8411a5ea1dd251b112")
@@ -119,7 +125,6 @@ contract("EllipticCurve", accounts => {
       assert.equal(sumX.toString(10), x1.toString())
       assert.equal(sumZ.toString(10), z1.toString())
     })
-
     it("Should multiply x2 EcPoint", async () => {
       const x1 = gx
       const y1 = gy
@@ -132,7 +137,6 @@ contract("EllipticCurve", accounts => {
       assert.equal(mulX.toString(10), expectedMulX.toString())
       assert.equal(mulZ.toString(10), expectedMulY.toString())
     })
-
     it("Should multiply big scalar with EcPoint", async () => {
       const x1 = gx
       const y1 = gy
@@ -213,6 +217,11 @@ contract("EllipticCurve", accounts => {
       const newY1 = await ecLib.invMod(inverted, pp)
       assert.equal(newY1.toString(), y1.toString())
     })
+    it("Should get the y coordinate based on parity", async () => {
+      const x = gx
+      const y = await ecLib.deriveY(0x03, x, a, b, pp)
+      assert.equal(gy.toString(), y.toString())
+    })
     it("Should identify if point is on the curve", async () => {
       const x = gx
       const y = gy
@@ -278,7 +287,6 @@ contract("EllipticCurve", accounts => {
       assert.equal(sumX.toString(10), x1.toString())
       assert.equal(sumZ.toString(10), z1.toString())
     })
-
     it("Should multiply x2 EcPoint", async () => {
       const x1 = gx
       const y1 = gy
@@ -291,7 +299,6 @@ contract("EllipticCurve", accounts => {
       assert.equal(mulX.toString(10), expectedMulX.toString())
       assert.equal(mulZ.toString(10), expectedMulY.toString())
     })
-
     it("Should multiply x EcPoint", async () => {
       const x1 = gx
       const y1 = gy
@@ -339,6 +346,11 @@ contract("EllipticCurve", accounts => {
     before(async () => {
       ecLib = await EllipticCurve.deployed()
     })
+    it("Should get the y coordinate based on parity", async () => {
+      const x = gx
+      const y = await ecLib.deriveY(0x03, x, a, b, pp)
+      assert.equal(gy.toString(), y.toString())
+    })
     it("Should Add two big numbers", async () => {
       const x1 = gx
       const z1 = gy
@@ -385,7 +397,6 @@ contract("EllipticCurve", accounts => {
       assert.equal(sumX.toString(10), x1.toString())
       assert.equal(sumZ.toString(10), z1.toString())
     })
-
     it("Should multiply x2 EcPoint", async () => {
       const x1 = web3.utils.toBN("0xDAFEBF5828783F2AD35534631588A3F629A70FB16982A888")
       const y1 = web3.utils.toBN("0xDD6BDA0D993DA0FA46B27BBC141B868F59331AFA5C7E93AB")
@@ -398,7 +409,6 @@ contract("EllipticCurve", accounts => {
       assert.equal(mulX.toString(10), expectedMulX.toString())
       assert.equal(mulZ.toString(10), expectedMulY.toString())
     })
-
     it("Should multiply x EcPoint", async () => {
       const x1 = gx
       const y1 = gy
@@ -438,13 +448,19 @@ contract("EllipticCurve", accounts => {
   describe("secp224r1", () => {
     const gx = web3.utils.toBN("0xB70E0CBD6BB4BF7F321390B94A03C1D356C21122343280D6115C1D21")
     const gy = web3.utils.toBN("0xBD376388B5F723FB4C22DFE6CD4375A05A07476444D5819985007E34")
-    const pp = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000000000000001", 16)
-    const a = new BN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFE", 16)
-    const b = new BN("B4050A850C04B3ABF54132565044B0B7D7BFD8BA270B39432355FFB4", 16)
-
+    const pp = web3.utils.toBN("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000000000000001")
+    const a = web3.utils.toBN("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFE")
+    const b = web3.utils.toBN("0xB4050A850C04B3ABF54132565044B0B7D7BFD8BA270B39432355FFB4")
     let ecLib
     before(async () => {
       ecLib = await EllipticCurve.deployed()
+    })
+    it("Should get the y coordinate based on parity", async () => {
+      const x = web3.utils.toBN("0xB70E0CBD6BB4BF7F321390B94A03C1D356C21122343280D6115C1D21")
+      const expectedY = gy
+      const y = await ecLib.deriveY(0x02, x, a, b, pp)
+      console.log(expectedY.toString())
+      assert.equal(expectedY.toString(), y.toString())
     })
     it("Should Add two big numbers", async () => {
       const x1 = gx
@@ -492,7 +508,6 @@ contract("EllipticCurve", accounts => {
       assert.equal(sumX.toString(10), x1.toString())
       assert.equal(sumZ.toString(10), z1.toString())
     })
-
     it("Should multiply x2 EcPoint", async () => {
       const x1 = web3.utils.toBN("0x706A46DC76DCB76798E60E6D89474788D16DC18032D268FD1A704FA6")
       const y1 = web3.utils.toBN("0x1C2B76A7BC25E7702A704FA986892849FCA629487ACF3709D2E4E8BB")
@@ -505,7 +520,6 @@ contract("EllipticCurve", accounts => {
       assert.equal(mulX.toString(10), expectedMulX.toString())
       assert.equal(mulZ.toString(10), expectedMulY.toString())
     })
-
     it("Should multiply x EcPoint", async () => {
       const x1 = gx
       const y1 = gy
