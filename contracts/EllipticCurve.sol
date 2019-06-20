@@ -1,35 +1,32 @@
 pragma solidity ^0.5.0;
 
 /**
- * @title EllipticCurve
- *
- * Functions for operating with EC points...
- *
+ * @title Elliptic Curve Library
+ * @dev Library providing arithmetic operations over elliptic curves
+ * @author Witnet Foundation
  */
 
 
 library EllipticCurve {
 
-  /// @dev Modular euclidean inverse of a (mod p)
+  /// @dev Modular euclidean inverse of a number (mod p)
   /// @param x The number
   /// @param pp The modulus
-  /// @return x such that ax = 1 (mod pp)
-  function invMod(uint256 x, uint256 pp) public pure returns (uint256) {
+  /// @return q such that x*q = 1 (mod pp)
+  function invMod(uint256 x, uint256 pp) public pure returns (uint256 q) {
     if (x == 0 || x == pp || pp == 0) {
       revert("Invalid number");
     }
-    uint256 t = 0;
+    q = 0;
     uint256 newT = 1;
     uint256 r = pp;
     uint256 newR = x;
-    uint256 q;
+    uint256 t;
     while (newR != 0) {
-      q = r / newR;
-      (t, newT) = (newT, addmod(t, (pp - mulmod(q, newT, pp)), pp));
-      (r, newR) = (newR, r - q * newR );
+      t = r / newR;
+      (q, newT) = (newT, addmod(q, (pp - mulmod(t, newT, pp)), pp));
+      (r, newR) = (newR, r - t * newR );
     }
-
-    return t;
   }
 
   /// @dev Modular exponentiation, b^e % pp
@@ -37,15 +34,15 @@ library EllipticCurve {
   /// @param base base
   /// @param e exponent
   /// @param pp modulus
-  /// @return x such that x = b**e (mod pp)
-  function expMod(uint256 base, uint256 e, uint256 pp) internal pure returns (uint256) {
+  /// @return r such that r = b**e (mod pp)
+  function expMod(uint256 base, uint256 e, uint256 pp) public pure returns (uint256 r) {
     if (base == 0)
       return 0;
     if (e == 0)
       return 1;
     if (pp == 0)
       revert("Modulus is zero");
-    uint256 r = 1;
+    r = 1;
     uint256 bit = 2 ** 255;
 
     assembly {
@@ -57,38 +54,17 @@ library EllipticCurve {
         bit := div(bit, 16)
       }
     }
-
-    return r;
-  }
-
-  /// @dev Converts a point (x, y, z) expressed in Jacobian coordinates to affine coordinates (x', y', 1)
-  /// @param x coordinate x
-  /// @param y coordinate y
-  /// @param z coordinate z
-  /// @param pp the modulus
-  /// @return (x', y') affine coordinates
-  function toAffine(
-    uint256 x,
-    uint256 y,
-    uint256 z,
-    uint pp)
-  public pure returns (uint256 x2, uint256 y2)
-  {
-    uint zInv = invMod(z, pp);
-    uint zInv2 = mulmod(zInv, zInv, pp);
-    x2 = mulmod(x, zInv2, pp);
-    y2 = mulmod(y, mulmod(zInv, zInv2, pp), pp);
   }
 
   /// @dev Adds two points (x1, y1, z1) and (x2 y2, z2).
   /// @param x1 coordinate x of P1
   /// @param y1 coordinate y of P1
   /// @param z1 coordinate z of P1
-  /// @param x2 coordinate x of P2
-  /// @param y2 coordinate y of P2
-  /// @param z2 coordinate z of P2
+  /// @param x2 coordinate x of square
+  /// @param y2 coordinate y of square
+  /// @param z2 coordinate z of square
   /// @param pp the modulus
-  /// @return (qx, qy, qz) P1+P2 in Jacobian
+  /// @return (qx, qy, qz) P1+square in Jacobian
   function jacAdd(
     uint256 x1,
     uint256 y1,
@@ -142,7 +118,6 @@ library EllipticCurve {
     qy = addmod(qy, pp - mulmod(zs[1], hr[3], pp), pp);
     // qz = h*z1*z2
     qz = mulmod(hr[0], mulmod(z1, z2, pp), pp);
-    return(qx, qy, qz);
   }
 
   /// @dev Doubles a points (x, y, z).
@@ -162,24 +137,24 @@ library EllipticCurve {
   {
     if (z == 0)
       return (x, y, z);
-    uint256[3] memory P2;
+    uint256[3] memory square;
     // We follow the equations described in https://pdfs.semanticscholar.org/5c64/29952e08025a9649c2b0ba32518e9a7fb5c2.pdf Section 5
-    P2[0] = mulmod(x, x, pp); //x1^2
-    P2[1] = mulmod(y, y, pp); //y1^2
-    P2[2] = mulmod(z, z, pp); //z1^2
+    // Note: there is a bug in the paper regarding the m parameter, M=3*(x1^2)+a*(z1^4)
+    square[0] = mulmod(x, x, pp); //x1^2
+    square[1] = mulmod(y, y, pp); //y1^2
+    square[2] = mulmod(z, z, pp); //z1^2
 
     // s
-    uint s = mulmod(4, mulmod(x, P2[1], pp), pp);
+    uint s = mulmod(4, mulmod(x, square[1], pp), pp);
     // m
-    uint m = addmod(mulmod(3, P2[0], pp), mulmod(a, mulmod(P2[2], P2[2], pp), pp), pp);
+    uint m = addmod(mulmod(3, square[0], pp), mulmod(a, mulmod(square[2], square[2], pp), pp), pp);
     // t
     uint256 t = addmod(mulmod(m, m, pp), pp - addmod(s, s, pp), pp);
     qx = t;
     // qy = -8*y1^4 + M(S-T)
-    qy = addmod(mulmod(m, addmod(s, pp - qx, pp), pp), pp - mulmod(8, mulmod(P2[1], P2[1], pp), pp), pp);
+    qy = addmod(mulmod(m, addmod(s, pp - qx, pp), pp), pp - mulmod(8, mulmod(square[1], square[1], pp), pp), pp);
     // qz = 2*y1*z1
     qz = mulmod(2, mulmod(y, z, pp), pp);
-    return (qx, qy, qz);
   }
 
   /// @dev Multiply point (x, y, z) times d.
@@ -200,14 +175,13 @@ library EllipticCurve {
   internal pure returns (uint256 qx, uint256 qy, uint256 qz)
   {
     uint256 remaining = d;
-    uint256[3] memory P;
-    P[0] = x;
-    P[1] = y;
-    P[2] = z;
-    uint256[3] memory A;
-    A[0] = 0;
-    A[1] = 0;
-    A[2] = 1;
+    uint256[3] memory point;
+    point[0] = x;
+    point[1] = y;
+    point[2] = z;
+    qx = 0;
+    qy = 0;
+    qz = 1;
 
     if (d == 0) {
       return (0, 0, 1);
@@ -215,25 +189,54 @@ library EllipticCurve {
     // Double and add algorithm
     while (remaining != 0) {
       if ((remaining & 1) != 0) {
-        (A[0], A[1], A[2]) = jacAdd(
-          A[0],
-          A[1],
-          A[2],
-          P[0],
-          P[1],
-          P[2],
+        (qx, qy, qz) = jacAdd(
+          qx,
+          qy,
+          qz,
+          point[0],
+          point[1],
+          point[2],
           pp);
       }
       remaining = remaining / 2;
-      (P[0], P[1], P[2]) = jacDouble(
-        P[0],
-        P[1],
-        P[2],
+      (point[0], point[1], point[2]) = jacDouble(
+        point[0],
+        point[1],
+        point[2],
         a,
         pp);
     }
+  }
 
-    (qx,qy,qz) = (A[0], A[1], A[2]);
+  /// @dev Converts a point (x, y, z) expressed in Jacobian coordinates to affine coordinates (x', y', 1)
+  /// @param x coordinate x
+  /// @param y coordinate y
+  /// @param z coordinate z
+  /// @param pp the modulus
+  /// @return (x', y') affine coordinates
+  function toAffine(
+    uint256 x,
+    uint256 y,
+    uint256 z,
+    uint pp)
+  public pure returns (uint256 x2, uint256 y2)
+  {
+    uint zInv = invMod(z, pp);
+    uint zInv2 = mulmod(zInv, zInv, pp);
+    x2 = mulmod(x, zInv2, pp);
+    y2 = mulmod(y, mulmod(zInv, zInv2, pp), pp);
+  }
+
+  /// @dev Derives the y coordinate from a compressed-format point x (0x02 even, 0x03 odd)
+  /// @param prefix parity byte
+  /// @param x coordinate x
+  /// @param pp the modulus
+  /// @return y coordinate y
+  function deriveY(uint8 prefix, uint256 x, uint256 pp) public pure returns (uint256 y) {
+    uint256 y2 = addmod(mulmod(x, mulmod(x, x, pp), pp), 7, pp);
+    uint256 y_ = expMod(y2, (pp + 1) / 4, pp);
+    // uint256 cmp = yBit ^ y_ & 1;
+    y = (y_ + prefix) % 2 == 0 ? y_ : pp - y_;
   }
 
   /// @dev Check whether point (x,y) is on curve defined by a, b, and pp.
@@ -254,12 +257,10 @@ library EllipticCurve {
     if (0 == x || x == pp || 0 == y || y == pp) {
       return false;
     }
-
     // y^2
     uint lhs = mulmod(y, y, pp);
     // x^3
     uint rhs = mulmod(mulmod(x, x, pp), x, pp);
-
     if (a != 0) {
       // x^3 + a*x
       rhs = addmod(rhs, mulmod(x, a, pp), pp);
@@ -286,7 +287,7 @@ library EllipticCurve {
     (qx, qy) = (x, (pp - y) % pp);
   }
 
-  /// @dev Add two points (x1, y1) and (x2, y2) in Affine coordinates.
+  /// @dev Add two points (x1, y1) and (x2, y2) in affine coordinates.
   /// @param x1 coordinate x of P1
   /// @param y1 coordinate y of P1
   /// @param x2 coordinate x of P2
@@ -332,7 +333,7 @@ library EllipticCurve {
       pp);
   }
 
-  /// @dev Substract two points (x1, y1) and (x2, y2) in Affine coordinates.
+  /// @dev Substract two points (x1, y1) and (x2, y2) in affine coordinates.
   /// @param x1 coordinate x of P1
   /// @param y1 coordinate y of P1
   /// @param x2 coordinate x of P2
@@ -349,9 +350,9 @@ library EllipticCurve {
     uint256 pp)
   public pure returns(uint256 qx, uint256 qy)
   {
-    // invert P2
+    // invert square
     (uint256 x, uint256 y) = ecInv(x2, y2, pp);
-    // P1-P2
+    // P1-square
     (qx, qy) = ecAdd(
       x1,
       y1,
@@ -361,7 +362,7 @@ library EllipticCurve {
       pp);
   }
 
-  /// @dev Multiply point (x1, y1, z1) times d in Affine coordinates.
+  /// @dev Multiply point (x1, y1, z1) times d in affine coordinates.
   /// @param d scalar to multiply
   /// @param x coordinate x of P1
   /// @param y coordinate y of P1
