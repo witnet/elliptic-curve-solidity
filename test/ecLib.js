@@ -455,13 +455,6 @@ contract("EllipticCurve", accounts => {
     before(async () => {
       ecLib = await EllipticCurve.deployed()
     })
-    it("Should get the y coordinate based on parity", async () => {
-      const x = web3.utils.toBN("0xB70E0CBD6BB4BF7F321390B94A03C1D356C21122343280D6115C1D21")
-      const expectedY = gy
-      const y = await ecLib.deriveY(0x02, x, a, b, pp)
-      console.log(expectedY.toString())
-      assert.equal(expectedY.toString(), y.toString())
-    })
     it("Should Add two big numbers", async () => {
       const x1 = gx
       const z1 = gy
