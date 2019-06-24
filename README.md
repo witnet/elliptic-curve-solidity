@@ -4,7 +4,7 @@
 
 _DISCLAIMER: This is experimental software. **Use it at your own risk**!_
 
-The solidity library has been generalized in order to support any elliptic curve up to 256 bits. It provides functions for:
+The solidity library has been generalized in order to support any elliptic curve based on prime numbers up to 256 bits. It provides functions for:
 
 - Modular
   - inverse
@@ -34,7 +34,7 @@ The `elliptic-curve-solidity` contract supports up to 256-bit curves. However, i
 
 Known limitations:
 
-- `deriveY` function does work with curve `secp224r1` because of the selected derivation algorithm. This curve computations are done with a modulo prime `p` such as `p=1`, so that more complex algorithm is required (e.g. *Tonelli-Shanks algorithm*).
+- `deriveY` function does work with curve `secp224r1` because of the selected derivation algorithm. This curve computations are done with a modulo prime `p` such as `p=1  mod 4`, so that more complex algorithm is required (e.g. *Tonelli-Shanks algorithm*). Note that `deriveY` is just an auxiliary function, and thus does not limit the functionality of curve arithmetic operations.
 
 ## Usage
 
