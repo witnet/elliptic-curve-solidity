@@ -32,8 +32,7 @@
     "solium": "solium -d contracts",
     "solium:fix": "solium -d contracts --fix",
     "lint": "eslint ./test",
-    "lint:fix": "eslint ./test --fix",
-    "coverage": "solidity-coverage"
+    "lint:fix": "eslint ./test --fix"
   },
   "dependencies": {
     "truffle-hdwallet-provider": "^1.0.7"
@@ -48,7 +47,6 @@
     "eth-gas-reporter": "^0.2.0",
     "ethlint": "^1.2.4",
     "ganache-cli": "^6.4.3",
-    "solidity-coverage": "^0.5.11",
     "truffle": "^5.0.20",
     "truffle-assertions": "^0.9.0"
   }
