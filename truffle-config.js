@@ -5,10 +5,6 @@ module.exports = {
       port: 8545,
       network_id: "*",
     },
-    development: {
-      provider: require("ganache-cli").provider({ gasLimit: 100000000 }),
-      network_id: "*",
-    },
   },
   mocha: {
     // timeout: 100000

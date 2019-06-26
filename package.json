@@ -35,7 +35,7 @@
     "lint:fix": "eslint ./test --fix"
   },
   "dependencies": {
-    "truffle-hdwallet-provider": "^1.0.7"
+    "truffle-hdwallet-provider": "^1.0.11"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
@@ -44,10 +44,10 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
-    "eth-gas-reporter": "^0.2.0",
+    "eth-gas-reporter": "^0.2.1",
     "ethlint": "^1.2.4",
-    "ganache-cli": "^6.4.3",
-    "truffle": "^5.0.20",
-    "truffle-assertions": "^0.9.0"
+    "ganache-cli": "^6.4.4",
+    "truffle": "^5.0.24",
+    "truffle-assertions": "^0.9.1"
   }
 }
