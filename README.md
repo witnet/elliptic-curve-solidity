@@ -23,6 +23,10 @@ The solidity library has been generalized in order to support any elliptic curve
   - derive coordinate Y from compressed ec point
   - check if ec point is on curve
 
+`elliptic-curve-solidity` has been designed as a library with **only pure functions** aiming at decreasing gas consumption as much as possible.
+A modified library with a constructor for setting the curve parameters can be found at the branch `ref/constructor`.
+Additionally, gas consumption comparison can be found in [gas report][benchmark].
+
 ## Supported curves
 
 The `elliptic-curve-solidity` contract supports up to 256-bit curves. However, it has been extensively tested for the following curves:
@@ -35,19 +39,20 @@ The `elliptic-curve-solidity` contract supports up to 256-bit curves. However, i
 Known limitations:
 
 - `deriveY` function does work with curve `secp224r1` because of the selected derivation algorithm. This curve computations are done with a modulo prime `p` such as `p=1  mod 4`, so that more complex algorithm is required (e.g. *Tonelli-Shanks algorithm*). Note that `deriveY` is just an auxiliary function, and thus does not limit the functionality of curve arithmetic operations.
+- the library only supports elliptic curves with `cofactor = 1` (all supported curves have a `cofactor = 1`).
 
 ## Usage
 
 `EllipticCurve.sol` contract can be used directly by inheritance or by instantiating it.
 
-The following example depicts how to inherit the library by providing a function to derive a public key from a secret key:
+The [Secp256k1](https://github.com/witnet/elliptic-curve-solidity/blob/master/examples/Secp256k1.sol) example depicts how to inherit the library by providing a function to derive a public key from a secret key:
 
 ```solidity
 pragma solidity ^0.5.0;
 
 import "./EllipticCurve.sol";
 
-contract Secp256k1Example is EllipticCurve {
+contract Secp256k1 is EllipticCurve {
 
   uint256 constant GX = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798;
   uint256 constant GY = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8;
@@ -67,7 +72,7 @@ contract Secp256k1Example is EllipticCurve {
 }
 ```
 
-The cost for the aforementioned function is around 550k gas.
+The cost for a key derivation operation in Secp256k1 is around 550k gas.
 
 ```bash
 ·--------------------------------------------------|--------------------------·
@@ -77,45 +82,45 @@ The cost for the aforementioned function is around 550k gas.
 ··················|··········|··········|··········|············|··············
 |  Method         ·  Min     ·  Max     ·  Avg     ·  # calls   ·  usd (avg)  │
 ··················|··········|··········|··········|············|··············
-|  deriveKey      ·  528127  ·  572545  ·  552976  ·        18  ·       3.20  │
+|  deriveKey      ·  528127  ·  572545  ·  552976  ·        18  ·       3.71  │
 ··················|··········|··········|··········|············|··············
 ```
 
 ## Benchmark
 
-Estimation with a gas price of 20 Gwei, derived from [ETH Gas Station](https://ethgasstation.info/):
+Gas consumption estimation with a gas price of 20 Gwei, derived from [ETH Gas Station](https://ethgasstation.info/):
 
 ```bash
-·-------------------------------------------------|--------------------------·
-|                      Gas                        · Block limit: 6721975 gas │
-··················|·······························|···························
-|  Methods        ·          20 gwei/gas          ·      267.79 usd/eth      │
-··················|·········|··········|··········|············|··············
-| Method          ·  Min    ·  Max     ·  Avg     ·  # calls   ·  usd (avg)  │
-··················|·········|··········|··········|············|··············
-| deriveY         ·  50504  ·   59058  ·   54858  ·         3  ·       0.29  │
-··················|·········|··········|··········|············|··············
-| ecAdd           ·  29408  ·   61603  ·   48298  ·        12  ·       0.26  │
-··················|·········|··········|··········|············|··············
-| ecInv           ·  27196  ·   28092  ·   27644  ·         2  ·       0.15  │
-··················|·········|··········|··········|············|··············
-| ecMul           ·  52150  ·  674698  ·  142639  ·        15  ·       0.76  │
-··················|·········|··········|··········|············|··············
-| ecSub           ·  55576  ·   61782  ·   58907  ·         4  ·       0.32  │
-··················|·········|··········|··········|············|··············
-| invMod          ·  23242  ·   52736  ·   37591  ·         4  ·       0.20  │
-··················|·········|··········|··········|············|··············
-| isOnCurve       ·  28727  ·   30973  ·   29866  ·         4  ·       0.16  │
-··················|·········|··········|··········|············|··············
-| toAffine        ·  56817  ·   56892  ·   56855  ·         2  ·       0.30  │
-··················|·········|··········|··········|············|··············
-|  Deployments    ·                                            ·  % of limit ·  
-····························|··········|··········|············|··············
-|  EllipticCurve  ·    -    ·     -    ·  822657  ·    12.2 %  ·       4.41  │
-·-----------------|---------|----------|----------|------------|-------------·
+·---------------------------------------|---------------------------|-------------|----------------------------·
+|  Solc version: 0.5.8+commit.23d335f2  ·  Optimizer enabled: true  ·  Runs: 200  ·  Block limit: 6721975 gas  │
+········································|···························|·············|·····························
+|  Methods                              ·               20 gwei/gas               ·       335.29 usd/eth       │
+·····················|··················|·············|·············|·············|··············|··············
+|  Contract          ·  Method          ·  Min        ·  Max        ·  Avg        ·  # calls     ·  usd (avg)  │
+·····················|··················|·············|·············|·············|··············|··············
+|  EllipticCurve     ·  deriveY         ·      50504  ·      59058  ·      54858  ·           6  ·       0.37  │
+·····················|··················|·············|·············|·············|··············|··············
+|  EllipticCurve     ·  ecAdd           ·      29408  ·      61603  ·      48298  ·          24  ·       0.32  │
+·····················|··················|·············|·············|·············|··············|··············
+|  EllipticCurve     ·  ecInv           ·      27196  ·      28092  ·      27644  ·           4  ·       0.19  │
+·····················|··················|·············|·············|·············|··············|··············
+|  EllipticCurve     ·  ecMul           ·      52150  ·     674698  ·     137948  ·          29  ·       0.93  │
+·····················|··················|·············|·············|·············|··············|··············
+|  EllipticCurve     ·  ecSub           ·      55576  ·      61782  ·      58907  ·           8  ·       0.40  │
+·····················|··················|·············|·············|·············|··············|··············
+|  EllipticCurve     ·  invMod          ·      23242  ·      52736  ·      37591  ·           8  ·       0.25  │
+·····················|··················|·············|·············|·············|··············|··············
+|  EllipticCurve     ·  isOnCurve       ·      28727  ·      30973  ·      29866  ·           8  ·       0.20  │
+·····················|··················|·············|·············|·············|··············|··············
+|  EllipticCurve     ·  toAffine        ·      56817  ·      56892  ·      56855  ·           4  ·       0.38  │
+·····················|··················|·············|·············|·············|··············|··············
+|  Deployments                          ·                                         ·  % of limit  ·             │
+········································|·············|·············|·············|··············|··············
+|  EllipticCurve                        ·          -  ·          -  ·     822657  ·      12.2 %  ·       5.52  │
+·---------------------------------------|-------------|-------------|-------------|--------------|-------------·
 ```
 
-*Tested with Solidity 0.5.0 and Truffle v5.0.20.*
+More detailed results can be found in [gas report][benchmark].
 
 ## Acknowledgements
 
@@ -130,3 +135,4 @@ Some functions of the contract are based on:
 `elliptic-curve-solidity` is published under the [MIT license][license].
 
 [license]: https://github.com/witnet/elliptic-curve-solidity/blob/master/LICENSE
+[benchmark]: https://github.com/witnet/elliptic-curve-solidity/blob/master/benchmark/GAS.md
