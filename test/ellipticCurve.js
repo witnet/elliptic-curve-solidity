@@ -450,7 +450,6 @@ contract("EllipticCurve", accounts => {
     const gy = web3.utils.toBN("0xBD376388B5F723FB4C22DFE6CD4375A05A07476444D5819985007E34")
     const pp = web3.utils.toBN("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000000000000001")
     const a = web3.utils.toBN("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFE")
-    const b = web3.utils.toBN("0xB4050A850C04B3ABF54132565044B0B7D7BFD8BA270B39432355FFB4")
     let ecLib
     before(async () => {
       ecLib = await EllipticCurve.deployed()
