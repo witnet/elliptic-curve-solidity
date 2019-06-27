@@ -10,7 +10,7 @@ contract("Example", accounts => {
     it("Should derive a public key", async () => {
       for (let pair of testdata.keypairs) {
         var priv = web3.utils.toBN(pair.priv)
-        await example.deriveKey(priv)
+        await example.derivePubKey(priv)
       }
     })
   })
