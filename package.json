@@ -7,9 +7,12 @@
     "url": "git+https://github.com/witnet/elliptic-curve-solidity.git"
   },
   "keywords": [
-    "elliptic",
-    "curve",
+    "cryptography",
+    "ethereum",
     "solidity",
+    "elliptic",
+    "ecc",
+    "curve",
     "ecdsa",
     "secp256k1",
     "secp256r1",
