@@ -252,6 +252,116 @@ contract EllipticCurve {
       pp);
   }
 
+  /// @notice Addition of two points in Jacobian coordinates, placing the result in the first point
+  /// @dev Based on the addition formulas from http://www.hyperelliptic.org/EFD/g1p/auto-code/shortw/jacobian-0/addition/add-2001-b.op3
+  /// @param P An EC point in Jacobian coordinates. The result is returned here.
+  /// @param Q An EC point in Jacobian coordinates
+  function addJacobianMutates(
+    uint[3] memory P, 
+    uint[3] memory Q
+  )  internal pure {
+
+    uint256 Pz = P[2];
+    uint256 Qz = Q[2];
+
+    if (Pz == 0) {
+      P[0] = Q[0];
+      P[1] = Q[1];
+      P[2] = Qz;
+      return;
+    } else if(Qz == 0) {
+      return;
+    }
+
+    uint256 p = fieldOrder;
+
+    uint256 zz = mulmod(Pz, Pz, p);
+    uint256 t0 = mulmod(Q[0], zz, p);
+    uint256 t1 = mulmod(Q[1], mulmod(Pz, zz, p), p);
+
+    zz = mulmod(Qz, Qz, p);
+    uint256 a = mulmod(P[0], zz, p);
+    uint256 c = mulmod(P[1], mulmod(Qz, zz, p), p);
+        
+
+    if ((a == t0) && (c == t1)) {
+      doubleMutates(P);
+      return;
+    }
+        
+    t1 = addmod(t1, p-c, p); // d = t1 - c
+    uint256 b = addmod(t0, p-a, p); // b = t0 - a
+    uint256 e = mulmod(b, b, p); // e = b^2
+    t0 = mulmod(a, e, p);    // t0 is actually "g"
+    e = mulmod(e, b, p);  // f = b^3  (we will re-use the variable e )
+    uint256 temp = addmod(mulmod(t1, t1, p), p-addmod(mulmod(2, t0, p), e, p), p);
+    P[0] = temp;
+    temp = mulmod(t1, addmod(t0, p-temp, p), p);
+    P[1] = addmod(temp, p-mulmod(c, e, p), p);
+    P[2] = mulmod(b, mulmod(Pz, Qz, p), p);
+  }
+
+  /// @notice Subtraction of two points in Jacobian coordinates, placing the result in the first point
+  /// @dev Based on the addition formulas from http://www.hyperelliptic.org/EFD/g1p/auto-code/shortw/jacobian-0/addition/add-2001-b.op3
+  /// @param P An EC point in Jacobian coordinates. The result is returned here.
+  /// @param Q An EC point in Jacobian coordinates
+  function subJacobianMutates(
+    uint[3] memory P, 
+    uint[3] memory Q
+  )  internal pure {
+    uint256 Pz = P[2];
+    uint256 Qz = Q[2];
+    uint256 p = fieldOrder;
+
+    if (Pz == 0) {
+      P[0] = Q[0];
+      P[1] = p - Q[1];
+      P[2] = Qz;
+      return;
+    } else if (Qz == 0) {
+      return;
+    }
+
+    uint256 zz = mulmod(Pz, Pz, p);
+    uint256 t0 = mulmod(Q[0], zz, p);
+    uint256 t1 = mulmod(p - Q[1], mulmod(Pz, zz, p), p);
+
+    zz = mulmod(Qz, Qz, p);
+    uint256 a = mulmod(P[0], zz, p);
+    uint256 c = mulmod(P[1], mulmod(Qz, zz, p), p); 
+
+    if ((a == t0) && (c == t1)) {
+      P[2] = 0;
+      return;
+    }
+        
+    t1 = addmod(t1, p-c, p); // d = t1 - c
+    uint256 b = addmod(t0, p-a, p); // b = t0 - a
+    uint256 e = mulmod(b, b, p); // e = b^2
+    t0 = mulmod(a, e, p);    // t0 is actually "g"
+    e = mulmod(e, b, p);  // f = b^3  (we will re-use the variable e )
+    uint256 temp = addmod(mulmod(t1, t1, p), p-addmod(mulmod(2, t0, p), e, p), p);
+    P[0] = temp;
+    temp = mulmod(t1, addmod(t0, p-temp, p), p);
+    P[1] = addmod(temp, p-mulmod(c, e, p), p);
+    P[2] = mulmod(b, mulmod(Pz, Qz, p), p);
+  }
+
+  function doubleMutates(uint[3] memory P) internal pure {
+    uint256 z = P[2];
+    if (z == 0)
+      return;
+    uint256 p = fieldOrder;
+    uint256 x = P[0];
+    uint256 _2y = mulmod(2, P[1], p);
+    uint256 _4yy = mulmod(_2y, _2y, p);
+    uint256 s = mulmod(_4yy, x, p);
+    uint256 m = mulmod(3, mulmod(x, x, p), p);
+    uint256 t = addmod(mulmod(m, m, p), mulmod(0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2d, s, p),p);
+    P[0] = t;
+    P[1] = addmod(mulmod(m, addmod(s, p - t, p), p), mulmod(0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffff7ffffe17, mulmod(_4yy, _4yy, p), p), p);
+    P[2] = mulmod(_2y, z, p);
+  }
   function _lookup_sim_mul(
     uint256[3][4][4] memory iP, 
     uint256[4] memory P_Q,
@@ -397,13 +507,14 @@ contract EllipticCurve {
     uint256[3][4][4] memory iP;
     _lookup_sim_mul(iP, P_Q, a, pp);
 
+    // LOOP 
     uint256 i = length;
     uint256 ki;
     uint256 ptr;
     while (i > 0) {
       i--;
 
-      (Q[0], Q[1], Q[2]) = jacDouble(Q[0], Q[1], Q[2], a, pp);
+      doubleMutates(Q);
 
       ptr = wnaf_ptr[0] + i;
       assembly {
@@ -411,9 +522,9 @@ contract EllipticCurve {
       }
 
       if (ki > 8) {
-        (Q[0], Q[1], Q[2]) = jacAdd(Q[0], Q[1], Q[2], iP[0][(15 - ki) / 2][0], (pp - iP[0][(15 - ki) / 2][1]) % pp, iP[0][(15 - ki) / 2][2], pp);
+        subJacobianMutates(Q, iP[0][(15 - ki) / 2]);
       } else if (ki > 0) {
-        (Q[0], Q[1], Q[2]) = jacAdd(Q[0], Q[1], Q[2], iP[0][(ki - 1) / 2][0], iP[0][(ki - 1) / 2][1], iP[0][(ki - 1) / 2][2], pp);
+        addJacobianMutates(Q, iP[0][(ki - 1) / 2]);
       }
 
       ptr = wnaf_ptr[1] + i;
@@ -422,11 +533,10 @@ contract EllipticCurve {
       }
 
       if (ki > 8) {
-        (Q[0], Q[1], Q[2]) = jacAdd(Q[0], Q[1], Q[2], iP[1][(15 - ki) / 2][0], (pp - iP[1][(15 - ki) / 2][1]) % pp, iP[1][(15 - ki) / 2][2], pp);
-
+        subJacobianMutates(Q, iP[1][(15 - ki) / 2]);
       } else if (ki > 0) {
-        (Q[0], Q[1], Q[2]) = jacAdd(Q[0], Q[1], Q[2], iP[1][(ki - 1) / 2][0], iP[1][(ki - 1) / 2][1], iP[1][(ki - 1) / 2][2], pp);
-      }
+        addJacobianMutates(Q, iP[1][(ki - 1) / 2]);
+      } 
 
       ptr = wnaf_ptr[2] + i;
       assembly {
@@ -434,10 +544,10 @@ contract EllipticCurve {
       }
 
       if (ki > 8) {
-        (Q[0], Q[1], Q[2]) = jacAdd(Q[0], Q[1], Q[2], iP[2][(15 - ki) / 2][0], (pp - iP[2][(15 - ki) / 2][1]) % pp, iP[2][(15 - ki) / 2][2], pp);
+        subJacobianMutates(Q, iP[2][(15 - ki) / 2]);
       } else if (ki > 0) {
-        (Q[0], Q[1], Q[2]) = jacAdd(Q[0], Q[1], Q[2], iP[2][(ki - 1) / 2][0], iP[2][(ki - 1) / 2][1], iP[2][(ki - 1) / 2][2], pp);
-      }
+        addJacobianMutates(Q, iP[2][(ki - 1) / 2]);
+      } 
 
       ptr = wnaf_ptr[3] + i;
       assembly {
@@ -445,9 +555,9 @@ contract EllipticCurve {
       }
 
       if (ki > 8) {
-        (Q[0], Q[1], Q[2]) = jacAdd(Q[0], Q[1], Q[2], iP[3][(15 - ki) / 2][0], (pp - iP[3][(15 - ki) / 2][1]) % pp, iP[3][(15 - ki) / 2][2], pp);
+        subJacobianMutates(Q, iP[3][(15 - ki) / 2]);
       } else if (ki > 0) {
-        (Q[0], Q[1], Q[2]) = jacAdd(Q[0], Q[1], Q[2], iP[3][(ki - 1) / 2][0], iP[3][(ki - 1) / 2][1], iP[3][(ki - 1) / 2][2], pp);
+        addJacobianMutates(Q, iP[3][(ki - 1) / 2]);
       } 
     }
   }
