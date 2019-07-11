@@ -1,6 +1,6 @@
 {
   "name": "elliptic-curve-solidity",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Elliptic Curve arithmetic for up to 256-bit curves written in solidity",
   "repository": {
     "type": "git",
@@ -35,7 +35,8 @@
     "solium": "solium -d contracts",
     "solium:fix": "solium -d contracts --fix",
     "lint": "eslint ./test",
-    "lint:fix": "eslint ./test --fix"
+    "lint:fix": "eslint ./test --fix",
+    "coverage": "solidity-coverage"
   },
   "dependencies": {
     "truffle-hdwallet-provider": "^1.0.11"
@@ -50,6 +51,7 @@
     "eth-gas-reporter": "^0.2.1",
     "ethlint": "^1.2.4",
     "ganache-cli": "^6.4.4",
+    "solidity-coverage": "^0.6.0-beta.5",
     "truffle": "^5.0.24",
     "truffle-assertions": "^0.9.1"
   }
