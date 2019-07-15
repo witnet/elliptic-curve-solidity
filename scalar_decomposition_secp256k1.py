@@ -7,8 +7,14 @@ g1 = 0x00000000000000000000000000003086D221A7D46BCDE86C90E49284EB153DAB
 g2 = 0x0000000000000000000000000000E4437ED6010E88286F547FA90ABFE4C42212
 group = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141
 
+def myceil(a, b):
+  return ((a + b - 1) // b) * b
+
 def roundedDiv(a, dividend):
-  return int(round(a/pow(2, dividend)))
+  myvar = a/pow(2, dividend)
+  import pdb; pdb.set_trace()
+  myvar = round(myvar)
+  return int(myvar)
 
 def split(num):
 
@@ -19,8 +25,7 @@ def split(num):
   r2 = (c1+c2) % group
   r1 = (r2*minusLambda) % group
   r1 = (r1+num) % group
-  return(r1, r2)
-
+  return (r1, r2)
 
 if len(sys.argv) < 2:
   print("Please input an scalar in decimal form")
