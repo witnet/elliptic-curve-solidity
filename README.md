@@ -38,7 +38,7 @@ The `elliptic-curve-solidity` contract supports up to 256-bit curves. However, i
 
 Known limitations:
 
-- `deriveY` function does work with curve `secp224r1` because of the selected derivation algorithm. The computations for this curve are done with a modulo prime `p` such as `p=1  mod 4`, thus a more complex algorithm is required (e.g. *Tonelli-Shanks algorithm*). Note that `deriveY` is just an auxiliary function, and thus does not limit the functionality of curve arithmetic operations.
+- `deriveY` function does not work with the curve `secp224r1` because of the selected derivation algorithm. The computations for this curve are done with a modulo prime `p` such as `p=1  mod 4`, thus a more complex algorithm is required (e.g. *Tonelli-Shanks algorithm*). Note that `deriveY` is just an auxiliary function, and thus does not limit the functionality of curve arithmetic operations.
 - the library only supports elliptic curves with `cofactor = 1` (all supported curves have a `cofactor = 1`).
 
 ## Usage
