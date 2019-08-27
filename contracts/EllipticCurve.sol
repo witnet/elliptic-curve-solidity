@@ -314,12 +314,10 @@ contract EllipticCurve {
     uint256[3][4][4] memory iP, 
     uint256[4] memory P_Q,
     uint256 a,
+    uint256 beta,
     uint256 pp
   ) internal pure
   {
-    uint256 p = pp;
-    uint256 beta = 0x7ae96a2b657c07106e64479eac3434e99cf0497512f58995c1396c28719501ee;
-
     uint256[3][4] memory iPj;
     uint256[3] memory double;
 
@@ -333,11 +331,11 @@ contract EllipticCurve {
     (iPj[3][0], iPj[3][1], iPj[3][2]) = jacAdd(double[0], double[1], double[2], iPj[2][0], iPj[2][1], iPj[2][2], pp);
 
     // P2 Lookup Table
-    iP[1][0] = [mulmod(beta, P_Q[0], p), P_Q[1], 1];	// P2
+    iP[1][0] = [mulmod(beta, P_Q[0], pp), P_Q[1], 1];	// P2
 
-    iP[1][1] = [mulmod(beta, iPj[1][0], p), iPj[1][1], iPj[1][2]];
-    iP[1][2] = [mulmod(beta, iPj[2][0], p), iPj[2][1], iPj[2][2]];
-    iP[1][3] = [mulmod(beta, iPj[3][0], p), iPj[3][1], iPj[3][2]];
+    iP[1][1] = [mulmod(beta, iPj[1][0], pp), iPj[1][1], iPj[1][2]];
+    iP[1][2] = [mulmod(beta, iPj[2][0], pp), iPj[2][1], iPj[2][2]];
+    iP[1][3] = [mulmod(beta, iPj[3][0], pp), iPj[3][1], iPj[3][2]];
 
     // Q1 Lookup Table
     iPj = iP[2];
@@ -349,11 +347,11 @@ contract EllipticCurve {
     (iPj[3][0], iPj[3][1], iPj[3][2]) = jacAdd(double[0], double[1], double[2], iPj[2][0], iPj[2][1], iPj[2][2], pp);
 
     // Q2 Lookup Table
-    iP[3][0] = [mulmod(beta, P_Q[2], p), P_Q[3], 1];	// P2
+    iP[3][0] = [mulmod(beta, P_Q[2], pp), P_Q[3], 1];	// P2
 
-    iP[3][1] = [mulmod(beta, iPj[1][0], p), iPj[1][1], iPj[1][2]];
-    iP[3][2] = [mulmod(beta, iPj[2][0], p), iPj[2][1], iPj[2][2]];
-    iP[3][3] = [mulmod(beta, iPj[3][0], p), iPj[3][1], iPj[3][2]];
+    iP[3][1] = [mulmod(beta, iPj[1][0], pp), iPj[1][1], iPj[1][2]];
+    iP[3][2] = [mulmod(beta, iPj[2][0], pp), iPj[2][1], iPj[2][2]];
+    iP[3][3] = [mulmod(beta, iPj[3][0], pp), iPj[3][1], iPj[3][2]];
   }
 
   /// @notice Computes the WNAF representation of an integer, and puts the resulting array of coefficients in memory
@@ -425,6 +423,7 @@ contract EllipticCurve {
     int256[4] memory k_l, 
     uint256[4] memory P_Q,
     uint256 a,
+    uint256 beta,
     uint256 pp
   ) public pure returns (uint[3] memory Q) {
 
@@ -444,7 +443,7 @@ contract EllipticCurve {
       }
     }
 
-    Q = _sim_mul_wnaf(wnaf, max_count, P_Q, a, pp);
+    Q = _sim_mul_wnaf(wnaf, max_count, P_Q, a, beta, pp);
   }
 
   function _sim_mul_wnaf(
@@ -452,10 +451,11 @@ contract EllipticCurve {
     uint256 length, 
     uint256[4] memory P_Q,
     uint256 a,
+    uint256 beta,
     uint256 pp
   ) internal pure  returns (uint[3] memory Q) {
     uint256[3][4][4] memory iP;
-    _lookup_sim_mul(iP, P_Q, a, pp);
+    _lookup_sim_mul(iP, P_Q, a, beta, pp);
 
     uint256 i = length;
     uint256 ki;
