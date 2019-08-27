@@ -6,6 +6,8 @@ contract("EllipticCurve", accounts => {
     const gx = web3.utils.toBN("79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798")
     const gy = web3.utils.toBN("483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8")
     const pp = web3.utils.toBN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F")
+    const n = web3.utils.toBN("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141")
+    const lambda = web3.utils.toBN("5363ad4cc05c30e0a5261c028812645a122e22ea20816678df02967c1b23bd72")
     let ecLib
     before(async () => {
       ecLib = await EllipticCurve.deployed()
@@ -160,6 +162,102 @@ contract("EllipticCurve", accounts => {
       const expectedMulY = web3.utils.toBN("0xD8AC222636E5E3D6D4DBA9DDA6C9C426F788271BAB0D6840DCA87D3AA6AC62D6")
       assert.equal(mulX.toString(10), expectedMulX.toString())
       assert.equal(mulZ.toString(10), expectedMulY.toString())
+    })
+    it("Should test scalar decomposition multiplication 1", async () => {
+      const k1 = web3.utils.toBN("-89243190524605339210527649141408088119")
+      const k2 = web3.utils.toBN("-53877858828609620138203152946894934485")
+      const l1 = web3.utils.toBN("-185204247857117235934281322466442848518")
+      const l2 = web3.utils.toBN("-7585701889390054782280085152653861472")
+      const P1 = web3.utils.toBN("0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798")
+      const P2 = web3.utils.toBN("0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8")
+      const Q1 = web3.utils.toBN("0xc6047f9441ed7d6d3045406e95c07cd85c778e4b8cef3ca7abac09b95c709ee5")
+      const Q2 = web3.utils.toBN("0x1ae168fea63dc339a3c58419466ceaeef7f632653266d0e1236431a950cfe52a")
+      const res_jac = await ecLib._sim_mul([k1, k2, l1, l2], [P1, P2, Q1, Q2], 0, pp)
+      const res_affine = await ecLib.toAffine(res_jac[0], res_jac[1], res_jac[2], pp)
+      const mulX = res_affine[0]
+      const mulY = res_affine[1]
+      const expectedMulX = web3.utils.toBN("0x7635e27fba8e1f779dcfdde1b1eacbe0571fbe39ecf6056d29ba4bd3ef5e22f2")
+      const expectedMulY = web3.utils.toBN("0x197888e5cec769ac2f1eb65dbcbc0e49c00a8cdf01f8030d8286b68c1933fb18")
+      assert.equal(mulX.toString(10), expectedMulX.toString())
+      assert.equal(mulY.toString(10), expectedMulY.toString())
+    })
+    it("Should test scalar decomposition multiplication 2", async () => {
+      const k = web3.utils.toBN("115792089237316195423570985008687907852837564279074904382605163141518161494329")
+      const kDecom = await ecLib.scalarDecomposition(k, n, lambda)
+      const l = web3.utils.toBN("1")
+      const lDecom = await ecLib.scalarDecomposition(l, n, lambda)
+      const P1 = web3.utils.toBN("0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798")
+      const P2 = web3.utils.toBN("0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8")
+      const Q1 = web3.utils.toBN("0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798")
+      const Q2 = web3.utils.toBN("0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8")
+      const resJac = await ecLib._sim_mul([kDecom[0], kDecom[1], lDecom[0], lDecom[1]], [P1, P2, Q1, Q2], 0, pp)
+      const resDecom = await ecLib.toAffine(resJac[0], resJac[1], resJac[2], pp)
+
+      // non-decomp mul
+      const kPoint = await ecLib.ecMul(k, P1, P2, 0, pp)
+      const lPoint = await ecLib.ecMul(l, Q1, Q2, 0, pp)
+      const res = await ecLib.ecAdd(lPoint[0], lPoint[1], kPoint[0], kPoint[1], 0, pp)
+
+      // assert same result
+      const mulX = resDecom[0]
+      const mulY = resDecom[1]
+      assert(resDecom[0].eq(res[0]))
+      assert(resDecom[1].eq(res[1]))
+      const expectedMulX = web3.utils.toBN("0x5CBDF0646E5DB4EAA398F365F2EA7A0E3D419B7E0330E39CE92BDDEDCAC4F9BC")
+      const expectedMulY = web3.utils.toBN("0x951435BF45DAA69F5CE8729279E5AB2457EC2F47EC02184A5AF7D9D6F78D9755")
+      assert.equal(mulX.toString(10), expectedMulX.toString())
+      assert.equal(mulY.toString(10), expectedMulY.toString())
+    })
+    it("Should test scalar decomposition multiplication 3", async () => {
+      const k1 = web3.utils.toBN("-8")
+      const k2 = web3.utils.toBN("0")
+      const k = web3.utils.toBN("115792089237316195423570985008687907852837564279074904382605163141518161494329")
+      const l1 = web3.utils.toBN("5")
+      const l2 = web3.utils.toBN("0")
+      const P1 = web3.utils.toBN("0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798")
+      const P2 = web3.utils.toBN("0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8")
+      const Q1 = web3.utils.toBN("0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798")
+      const Q2 = web3.utils.toBN("0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8")
+      const res_jac = await ecLib._sim_mul([k1, k2, l1, l2], [P1, P2, Q1, Q2], 0, pp)
+      const res_affine = await ecLib.toAffine(res_jac[0], res_jac[1], res_jac[2], pp)
+      // non decomposed mul
+      const kPoint = await ecLib.ecMul(k, P1, P2, 0, pp)
+      const lPoint = await ecLib.ecMul(5, P1, P2, 0, pp)
+      const res = await ecLib.ecAdd(lPoint[0], lPoint[1], kPoint[0], kPoint[1], 0, pp)
+      const mulX = res_affine[0]
+      const mulY = res_affine[1]
+      assert(res_affine[0].eq(res[0]))
+      assert(res_affine[1].eq(res[1]))
+      const expectedMulX = web3.utils.toBN("0xF9308A019258C31049344F85F89D5229B531C845836F99B08601F113BCE036F9")
+      const expectedMulY = web3.utils.toBN("0xC77084F09CD217EBF01CC819D5C80CA99AFF5666CB3DDCE4934602897B4715BD")
+      assert.equal(mulX.toString(10), expectedMulX.toString())
+      assert.equal(mulY.toString(10), expectedMulY.toString())
+    })
+    it("Should test scalar decomposition multiplication 4", async () => {
+      const k1 = web3.utils.toBN("-75853609866811635898812693916901439793")
+      const k2 = web3.utils.toBN("-91979353254113275055958955257284867062")
+      const k = web3.utils.toBN("28948022309329048855892746252171976963209391069768726095651290785379540373584")
+      const l1 = web3.utils.toBN("216210193282829828426210433195336588662")
+      const l2 = web3.utils.toBN("-119455732959019993483332865153036025047")
+      const l = web3.utils.toBN("57896044618658097711785492504343953926418782139537452191302581570759080747168")
+      const P1 = web3.utils.toBN("0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798")
+      const P2 = web3.utils.toBN("0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8")
+      const Q1 = web3.utils.toBN("0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798")
+      const Q2 = web3.utils.toBN("0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8")
+      const res_jac = await ecLib._sim_mul([k1, k2, l1, l2], [P1, P2, Q1, Q2], 0, pp)
+      const res_affine = await ecLib.toAffine(res_jac[0], res_jac[1], res_jac[2], pp)
+      // non decomposed mul
+      const kPoint = await ecLib.ecMul(k, P1, P2, 0, pp)
+      const lPoint = await ecLib.ecMul(l, P1, P2, 0, pp)
+      const res = await ecLib.ecAdd(lPoint[0], lPoint[1], kPoint[0], kPoint[1], 0, pp)
+      const mulX = res_affine[0]
+      const mulY = res_affine[1]
+      assert(res_affine[0].eq(res[0]))
+      assert(res_affine[1].eq(res[1]))
+      const expectedMulX = web3.utils.toBN("0xE24CE4BEEE294AA6350FAA67512B99D388693AE4E7F53D19882A6EA169FC1CE1")
+      const expectedMulY = web3.utils.toBN("0x8B71E83545FC2B5872589F99D948C03108D36797C4DE363EBD3FF6A9E1A95B10")
+      assert.equal(mulX.toString(10), expectedMulX.toString())
+      assert.equal(mulY.toString(10), expectedMulY.toString())
     })
   })
   describe("secp256r1", () => {

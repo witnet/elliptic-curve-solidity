@@ -222,28 +222,31 @@ contract EllipticCurve {
 
   /// @dev Decomposition of the scalar k in two scalars k1 and k2 with half bit-length, such that k=k1+k2*LAMBDA (mod n)
   /// @param _k the scalar to be decompose
-  /// @param _pp the modulus
+  /// @param _n the modulus
   /// @param _LAMBDA is a root of the characteristic polynomial of an endomorphism of the curve
   /// @return k1 and k2  such that k=k1+k2*LAMBDA (mod n)
-  function scalarDecomposition (uint256 _k, uint256 _pp, uint256 _LAMBDA) public pure returns (int256[2] memory) {
+  function scalarDecomposition (uint256 _k, uint256 _n, uint256 _LAMBDA) public pure returns (int256[2] memory) {
   // Extended Euclidean Algorithm for n and LAMBDA
-    int256 t = 1;
-    int256 oldt = 0;
-    uint256 r = uint256(_LAMBDA);
-    uint256 oldr = uint256(_pp);
+    int256[2] memory t;
+    t[0] = 1;
+    t[1] = 0;
+    uint256[2] memory r;
+    r[0] = uint256(_LAMBDA);
+    r[1] = uint256(_n);
+
     uint256 quotient;
 
-    while (uint256(r) >= sqrt(_pp)) {
-      quotient = oldr / r;
-      (oldr, r) = (r, oldr - quotient*r);
-      (oldt, t) = (t, oldt - int256(quotient)*t);
+    while (uint256(r[0]) >= sqrt(_n)) {
+      quotient = r[1] / r[0];
+      (r[1], r[0]) = (r[0], r[1] - quotient*r[0]);
+      (t[1], t[0]) = (t[0], t[1] - int256(quotient)*t[0]);
     }
-  // the vectors v1=(a1, b1) and v2=(a2,b2)
     int256[4] memory ab;
-    ab[0] = int256(r);
-    ab[1] = int256(0 - t);
-    ab[2] = int256(oldr);
-    ab[3] = 0-oldt;
+  // the vectors v1=(a1, b1) and v2=(a2,b2)
+    ab[0] = int256(r[0]);
+    ab[1] = int256(0 - t[0]);
+    ab[2] = int256(r[1]);
+    ab[3] = 0-t[1];
 
   //b2*K
     uint[3] memory test;
@@ -254,23 +257,23 @@ contract EllipticCurve {
     (test2[0], test2[1], test2[2]) = multiply256(uint(-ab[1]), uint(_k));
   //c1 and c2
     uint[2] memory c1;
-    (c1[0],c1[1]) = bigDivision(uint256 (uint128 (test[0])) << 128 | uint128 (test[1]), uint256(test[2]) + (_pp / 2), _pp);
+    (c1[0],c1[1]) = bigDivision(uint256 (uint128 (test[0])) << 128 | uint128 (test[1]), uint256(test[2]) + (_n / 2), _n);
 
     uint[2] memory c2;
-    (c2[0],c2[1]) = bigDivision(uint256 (uint128 (test2[0])) << 128 | uint128 (test2[1]), uint256(test2[2]) + (_pp / 2), _pp);
+    (c2[0],c2[1]) = bigDivision(uint256 (uint128 (test2[0])) << 128 | uint128 (test2[1]), uint256(test2[2]) + (_n / 2), _n);
 
   // the decomposition of k in k1 and k2
-    int256 k1 = int256((int256(_k) - int256(c1[0]) * int256(ab[0]) - int256(c2[0]) * int256(ab[2])) % int256(_pp));
-    int256 k2 = int256((-int256(c1[0]) * int256(ab[1]) - int256(c2[0]) * int256(ab[3])) % int256(_pp));
-    if (uint256(abs(k1)) <= (_pp / 2)) {
+    int256 k1 = int256((int256(_k) - int256(c1[0]) * int256(ab[0]) - int256(c2[0]) * int256(ab[2])) % int256(_n));
+    int256 k2 = int256((-int256(c1[0]) * int256(ab[1]) - int256(c2[0]) * int256(ab[3])) % int256(_n));
+    if (uint256(abs(k1)) <= (_n / 2)) {
       k1 = k1;
     } else {
-      k1 = int256(uint256(k1) - _pp);
+      k1 = int256(uint256(k1) - _n);
     }
-    if (uint256(abs(k2)) <= (_pp / 2)) {
+    if (uint256(abs(k2)) <= (_n / 2)) {
       k2 = k2;
     } else {
-      k2 = int256(uint256(k2) - _pp);
+      k2 = int256(uint256(k2) - _n);
     }
 
     return [k1, k2];
@@ -312,8 +315,9 @@ contract EllipticCurve {
     uint256[4] memory P_Q,
     uint256 a,
     uint256 pp
-  ) internal pure {
-    uint256 p = fieldOrder;
+  ) internal pure
+  {
+    uint256 p = pp;
     uint256 beta = 0x7ae96a2b657c07106e64479eac3434e99cf0497512f58995c1396c28719501ee;
 
     uint256[3][4] memory iPj;
@@ -386,9 +390,10 @@ contract EllipticCurve {
   }
   function eqJacobian(
     uint256[3] memory P, 
-    uint256[3] memory Q
+    uint256[3] memory Q,
+    uint256 pp
   ) internal pure returns(bool) {
-    uint256 p = fieldOrder;
+    uint256 p = pp;
 
     uint256 Qz = Q[2];
     uint256 Pz = P[2];
@@ -695,21 +700,22 @@ contract EllipticCurve {
     shift = 256 - shift;
     aM = (_aM << shift) + (shift > 128 ? _am << (shift - 128) : _am >> (128 - shift));
     uint256 a0 = (_am << shift) & 2**128-1;
-    uint256 b = _b << shift;
-    (uint256 b1, uint256 b0) = (b >> 128, b & 2**128-1);
+    uint256[2] memory b;
+
+    (b[1], b[0]) = ((_b << shift) >> 128, (_b << shift) & 2**128-1);
 
     uint256 rM;
-    uint256 q = aM / b1;
-    rM = aM % b1;
+    uint256 q = aM / b[1];
+    rM = aM % b[1];
 
-    uint256 rsub0 = (q & 2**128-1) * b0;
-    uint256 rsub21 = (q >> 128) * b0 + (rsub0 >> 128);
+    uint256 rsub0 = (q & 2**128-1) * b[0];
+    uint256 rsub21 = (q >> 128) * b[0] + (rsub0 >> 128);
     rsub0 &= 2**128-1;
 
     while (rsub21 > rM || rsub21 == rM && rsub0 > a0) {
       q--;
-      a0 += b0;
-      rM += b1 + (a0 >> 128);
+      a0 += b[0];
+      rM += b[1] + (a0 >> 128);
       a0 &= 2**128-1;
     }
 
