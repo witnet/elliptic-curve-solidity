@@ -9,6 +9,7 @@ The solidity library has been generalized in order to support any elliptic curve
 - Modular
   - inverse
   - exponentiation
+  - scalar decomposition
 - Jacobian coordinates
   - addition
   - double
@@ -18,6 +19,7 @@ The solidity library has been generalized in order to support any elliptic curve
   - addition
   - subtraction
   - multiplication
+  - simultaneous multiplication (using wNAF)
 - Auxiliary
   - conversion to affine coordinates
   - derive coordinate Y from compressed ec point
@@ -32,13 +34,15 @@ Additionally, gas consumption comparison can be found in [gas report][benchmark]
 The `elliptic-curve-solidity` contract supports up to 256-bit curves. However, it has been extensively tested for the following curves:
 
 - `secp256k1`
+- `secp224k1`
+- `secp192k1`
 - `secp256r1`
 - `secp192r1`
 - `secp224r1`
 
 Known limitations:
 
-- `deriveY` function does not work with the curve `secp224r1` because of the selected derivation algorithm. The computations for this curve are done with a modulo prime `p` such as `p=1  mod 4`, thus a more complex algorithm is required (e.g. *Tonelli-Shanks algorithm*). Note that `deriveY` is just an auxiliary function, and thus does not limit the functionality of curve arithmetic operations.
+- `deriveY` function do not work with the curves `secp224r1` and `secp224k1` because of the selected derivation algorithm. The computations for this curve are done with a modulo prime `p` such that `p mod 4 = 1`, thus a more complex algorithm is required (e.g. *Tonelli-Shanks algorithm*). Note that `deriveY` is just an auxiliary function, and thus does not limit the functionality of curve arithmetic operations.
 - the library only supports elliptic curves with `cofactor = 1` (all supported curves have a `cofactor = 1`).
 
 ## Usage
@@ -86,6 +90,8 @@ The cost of a key derivation operation in Secp256k1 is around 550k gas.
 ··················|··········|··········|··········|············|··············
 ```
 
+The cost of a simultaneous multiplication (using wNAF) consumes around 35% of the gas required by 2 EC multiplications.
+
 ## Benchmark
 
 Gas consumption and USD price estimation with a gas price of 20 Gwei, derived from [ETH Gas Station](https://ethgasstation.info/):
@@ -94,29 +100,33 @@ Gas consumption and USD price estimation with a gas price of 20 Gwei, derived fr
 ·---------------------------------------|---------------------------|-------------|----------------------------·
 |  Solc version: 0.5.8+commit.23d335f2  ·  Optimizer enabled: true  ·  Runs: 200  ·  Block limit: 6721975 gas  │
 ········································|···························|·············|·····························
-|  Methods                              ·               20 gwei/gas               ·       335.29 usd/eth       │
-·····················|··················|·············|·············|·············|··············|··············
-|  Contract          ·  Method          ·  Min        ·  Max        ·  Avg        ·  # calls     ·  usd (avg)  │
-·····················|··················|·············|·············|·············|··············|··············
-|  EllipticCurve     ·  deriveY         ·      50504  ·      59058  ·      54858  ·           6  ·       0.37  │
-·····················|··················|·············|·············|·············|··············|··············
-|  EllipticCurve     ·  ecAdd           ·      29408  ·      61603  ·      48298  ·          24  ·       0.32  │
-·····················|··················|·············|·············|·············|··············|··············
-|  EllipticCurve     ·  ecInv           ·      27196  ·      28092  ·      27644  ·           4  ·       0.19  │
-·····················|··················|·············|·············|·············|··············|··············
-|  EllipticCurve     ·  ecMul           ·      52150  ·     674698  ·     137948  ·          29  ·       0.93  │
-·····················|··················|·············|·············|·············|··············|··············
-|  EllipticCurve     ·  ecSub           ·      55576  ·      61782  ·      58907  ·           8  ·       0.40  │
-·····················|··················|·············|·············|·············|··············|··············
-|  EllipticCurve     ·  invMod          ·      23242  ·      52736  ·      37591  ·           8  ·       0.25  │
-·····················|··················|·············|·············|·············|··············|··············
-|  EllipticCurve     ·  isOnCurve       ·      28727  ·      30973  ·      29866  ·           8  ·       0.20  │
-·····················|··················|·············|·············|·············|··············|··············
-|  EllipticCurve     ·  toAffine        ·      56817  ·      56892  ·      56855  ·           4  ·       0.38  │
-·····················|··················|·············|·············|·············|··············|··············
+|  Methods                              ·               20 gwei/gas               ·       169.15 usd/eth       │
+···················|····················|·············|·············|·············|··············|··············
+|  Contract        ·  Method            ·  Min        ·  Max        ·  Avg        ·  # calls     ·  usd (avg)  │
+···················|····················|·············|·············|·············|··············|··············
+|  EllipticCurve   ·  decomposeScalar   ·     656255  ·    1083667  ·    1054756  ·          17  ·       3.57  │
+···················|····················|·············|·············|·············|··············|··············
+|  EllipticCurve   ·  deriveY           ·      50485  ·      59039  ·      54762  ·           8  ·       0.19  │
+···················|····················|·············|·············|·············|··············|··············
+|  EllipticCurve   ·  ecAdd             ·      48747  ·      64887  ·      57093  ·         468  ·       0.19  │
+···················|····················|·············|·············|·············|··············|··············
+|  EllipticCurve   ·  ecInv             ·      27285  ·      28181  ·      27733  ·           4  ·       0.09  │
+···················|····················|·············|·············|·············|··············|··············
+|  EllipticCurve   ·  ecMul             ·      29163  ·     683483  ·     385920  ·         561  ·       1.31  │
+···················|····················|·············|·············|·············|··············|··············
+|  EllipticCurve   ·  ecSimMul          ·      91299  ·     521542  ·     276388  ·           7  ·       0.94  │
+···················|····················|·············|·············|·············|··············|··············
+|  EllipticCurve   ·  ecSub             ·      48926  ·      64712  ·      57395  ·         228  ·       0.19  │
+···················|····················|·············|·············|·············|··············|··············
+|  EllipticCurve   ·  invMod            ·      23245  ·      52739  ·      42166  ·          12  ·       0.14  │
+···················|····················|·············|·············|·············|··············|··············
+|  EllipticCurve   ·  toAffine          ·      56836  ·      56911  ·      56874  ·           4  ·       0.19  │
+···················|····················|·············|·············|·············|··············|··············
+|  Migrations      ·  setCompleted      ·          -  ·          -  ·      26939  ·           1  ·       0.09  │
+···················|····················|·············|·············|·············|··············|··············
 |  Deployments                          ·                                         ·  % of limit  ·             │
 ········································|·············|·············|·············|··············|··············
-|  EllipticCurve                        ·          -  ·          -  ·     822657  ·      12.2 %  ·       5.52  │
+|  EllipticCurve                        ·          -  ·          -  ·    1869605  ·      27.8 %  ·       6.32  │
 ·---------------------------------------|-------------|-------------|-------------|--------------|-------------·
 ```
 
