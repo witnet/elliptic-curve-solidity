@@ -184,9 +184,9 @@ contract("EllipticCurve", accounts => {
       }
 
       // Scalar decomposition
-      for (let [index, test] of curveData.scalarDecomposition.valid.entries()) {
+      for (let [index, test] of curveData.decomposeScalar.valid.entries()) {
         it(`should decompose an scalar (${index + 1}) - ${test.description}`, async () => {
-          const res = await ecLib.scalarDecomposition(
+          const res = await ecLib.decomposeScalar(
             web3.utils.toBN(test.input.k),
             nn,
             lambda)
@@ -198,9 +198,9 @@ contract("EllipticCurve", accounts => {
       }
 
       // Simultaneous multiplication
-      for (let [index, test] of curveData.simultaneousMultiplication.valid.entries()) {
+      for (let [index, test] of curveData.simMul.valid.entries()) {
         it(`should do a simultaneous multiplication (${index + 1}) - ${test.description}`, async () => {
-          const resJac = await ecLib._sim_mul(
+          const res = await ecLib.ecSimMul(
             [
               web3.utils.toBN(test.input.k1),
               web3.utils.toBN(test.input.k2),
@@ -217,49 +217,47 @@ contract("EllipticCurve", accounts => {
             beta,
             pp
           )
-          const resAffine = await ecLib.toAffine(resJac[0], resJac[1], resJac[2], pp)
           const expectedMulX = web3.utils.toBN(test.output.x)
           const expectedMulY = web3.utils.toBN(test.output.y)
-          assert.equal(resAffine[0].toString(10), expectedMulX.toString())
-          assert.equal(resAffine[1].toString(10), expectedMulY.toString())
+          assert.equal(res[0].toString(10), expectedMulX.toString())
+          assert.equal(res[1].toString(10), expectedMulY.toString())
         })
       }
 
-      // // MulAddMul
-      // for (let [index, test] of curveData.mulAddMul.valid.entries()) {
-      //   it(`should do a simultaneous multiplication (${index + 1}) - ${test.description}`, async () => {
-      //     const k = await ecLib.scalarDecomposition(
-      //       web3.utils.toBN(test.input.k),
-      //       nn,
-      //       lambda)
-      //     const l = await ecLib.scalarDecomposition(
-      //       web3.utils.toBN(test.input.l),
-      //       nn,
-      //       lambda)
-      //     const resJac = await ecLib._sim_mul(
-      //       [
-      //         web3.utils.toBN(k[0]),
-      //         web3.utils.toBN(k[1]),
-      //         web3.utils.toBN(l[0]),
-      //         web3.utils.toBN(l[1]),
-      //       ],
-      //       [
-      //         web3.utils.toBN(test.input.px),
-      //         web3.utils.toBN(test.input.py),
-      //         web3.utils.toBN(test.input.qx),
-      //         web3.utils.toBN(test.input.qy),
-      //       ],
-      //       aa,
-      //       beta,
-      //       pp
-      //     )
-      //     const resAffine = await ecLib.toAffine(resJac[0], resJac[1], resJac[2], pp)
-      //     const expectedMulX = web3.utils.toBN(test.output.x)
-      //     const expectedMulY = web3.utils.toBN(test.output.y)
-      //     assert.equal(resAffine[0].toString(), expectedMulX.toString())
-      //     assert.equal(resAffine[1].toString(), expectedMulY.toString())
-      //   })
-      // }
+      // MulAddMul
+      for (let [index, test] of curveData.mulAddMul.valid.entries()) {
+        it(`should do decompose scalar and simult. multiplication (${index + 1}) - ${test.description}`, async () => {
+          const k = await ecLib.decomposeScalar(
+            web3.utils.toBN(test.input.k),
+            nn,
+            lambda)
+          const l = await ecLib.decomposeScalar(
+            web3.utils.toBN(test.input.l),
+            nn,
+            lambda)
+          const res = await ecLib.ecSimMul(
+            [
+              web3.utils.toBN(k[0]),
+              web3.utils.toBN(k[1]),
+              web3.utils.toBN(l[0]),
+              web3.utils.toBN(l[1]),
+            ],
+            [
+              web3.utils.toBN(test.input.px),
+              web3.utils.toBN(test.input.py),
+              web3.utils.toBN(test.input.qx),
+              web3.utils.toBN(test.input.qy),
+            ],
+            aa,
+            beta,
+            pp
+          )
+          const expectedMulX = web3.utils.toBN(test.output.x)
+          const expectedMulY = web3.utils.toBN(test.output.y)
+          assert.equal(res[0].toString(), expectedMulX.toString())
+          assert.equal(res[1].toString(), expectedMulY.toString())
+        })
+      }
     })
   }
 })
