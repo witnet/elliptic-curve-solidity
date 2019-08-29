@@ -1,515 +1,359 @@
 pragma solidity ^0.5.0;
 
+
 /**
  * @title Elliptic Curve Library
  * @dev Library providing arithmetic operations over elliptic curves
  * @author Witnet Foundation
  */
-
-
 contract EllipticCurve {
 
   /// @dev Modular euclidean inverse of a number (mod p)
-  /// @param x The number
-  /// @param pp The modulus
-  /// @return q such that x*q = 1 (mod pp)
-  function invMod(uint256 x, uint256 pp) public pure returns (uint256 q) {
-    if (x == 0 || x == pp || pp == 0) {
+  /// @param _x The number
+  /// @param _pp The modulus
+  /// @return q such that x*q = 1 (mod _pp)
+  function invMod(uint256 _x, uint256 _pp) public pure returns (uint256) {
+    if (_x == 0 || _x == _pp || _pp == 0) {
       revert("Invalid number");
     }
-    q = 0;
+    uint256 q = 0;
     uint256 newT = 1;
-    uint256 r = pp;
-    uint256 newR = x;
+    uint256 r = _pp;
+    uint256 newR = _x;
     uint256 t;
     while (newR != 0) {
       t = r / newR;
-      (q, newT) = (newT, addmod(q, (pp - mulmod(t, newT, pp)), pp));
+      (q, newT) = (newT, addmod(q, (_pp - mulmod(t, newT, _pp)), _pp));
       (r, newR) = (newR, r - t * newR );
     }
+
+    return q;
   }
 
-  /// @dev Modular exponentiation, b^e % pp
+  /// @dev Modular exponentiation, b^e % _pp
   /// Source: https://github.com/androlo/standard-contracts/blob/master/contracts/src/crypto/ECCMath.sol
-  /// @param base base
-  /// @param e exponent
-  /// @param pp modulus
-  /// @return r such that r = b**e (mod pp)
-  function expMod(uint256 base, uint256 e, uint256 pp) public pure returns (uint256 r) {
-    if (base == 0)
+  /// @param _base base
+  /// @param _exp exponent
+  /// @param _pp modulus
+  /// @return r such that r = b**e (mod _pp)
+  function expMod(uint256 _base, uint256 _exp, uint256 _pp) public pure returns (uint256) {
+    if (_base == 0)
       return 0;
-    if (e == 0)
+    if (_exp == 0)
       return 1;
-    if (pp == 0)
+    if (_pp == 0)
       revert("Modulus is zero");
-    r = 1;
+    uint256 r = 1;
     uint256 bit = 2 ** 255;
 
     assembly {
       for { } gt(bit, 0) { }{
-        r := mulmod(mulmod(r, r, pp), exp(base, iszero(iszero(and(e, bit)))), pp)
-        r := mulmod(mulmod(r, r, pp), exp(base, iszero(iszero(and(e, div(bit, 2))))), pp)
-        r := mulmod(mulmod(r, r, pp), exp(base, iszero(iszero(and(e, div(bit, 4))))), pp)
-        r := mulmod(mulmod(r, r, pp), exp(base, iszero(iszero(and(e, div(bit, 8))))), pp)
+        r := mulmod(mulmod(r, r, _pp), exp(_base, iszero(iszero(and(_exp, bit)))), _pp)
+        r := mulmod(mulmod(r, r, _pp), exp(_base, iszero(iszero(and(_exp, div(bit, 2))))), _pp)
+        r := mulmod(mulmod(r, r, _pp), exp(_base, iszero(iszero(and(_exp, div(bit, 4))))), _pp)
+        r := mulmod(mulmod(r, r, _pp), exp(_base, iszero(iszero(and(_exp, div(bit, 8))))), _pp)
         bit := div(bit, 16)
       }
     }
+
+    return r;
   }
 
   /// @dev Converts a point (x, y, z) expressed in Jacobian coordinates to affine coordinates (x', y', 1)
-  /// @param x coordinate x
-  /// @param y coordinate y
-  /// @param z coordinate z
-  /// @param pp the modulus
+  /// @param _x coordinate x
+  /// @param _y coordinate y
+  /// @param _z coordinate z
+  /// @param _pp the modulus
   /// @return (x', y') affine coordinates
   function toAffine(
-    uint256 x,
-    uint256 y,
-    uint256 z,
-    uint pp)
-  public pure returns (uint256 x2, uint256 y2)
+    uint256 _x,
+    uint256 _y,
+    uint256 _z,
+    uint256 _pp)
+  public pure returns (uint256, uint256)
   {
-    uint zInv = invMod(z, pp);
-    uint zInv2 = mulmod(zInv, zInv, pp);
-    x2 = mulmod(x, zInv2, pp);
-    y2 = mulmod(y, mulmod(zInv, zInv2, pp), pp);
+    uint256 zInv = invMod(_z, _pp);
+    uint256 zInv2 = mulmod(zInv, zInv, _pp);
+    uint256 x2 = mulmod(_x, zInv2, _pp);
+    uint256 y2 = mulmod(_y, mulmod(zInv, zInv2, _pp), _pp);
+
+    return (x2, y2);
   }
 
   /// @dev Derives the y coordinate from a compressed-format point x
-  /// @param prefix parity byte (0x02 even, 0x03 odd)
-  /// @param x coordinate x
-  /// @param a constant of curve
-  /// @param b constant of curve
-  /// @param pp the modulus
+  /// @param _prefix parity byte (0x02 even, 0x03 odd)
+  /// @param _x coordinate x
+  /// @param _a constant of curve
+  /// @param _b constant of curve
+  /// @param _pp the modulus
   /// @return y coordinate y
   function deriveY(
-    uint8 prefix,
-    uint256 x,
-    uint256 a,
-    uint256 b,
-    uint256 pp)
-  public pure returns (uint256 y)
+    uint8 _prefix,
+    uint256 _x,
+    uint256 _a,
+    uint256 _b,
+    uint256 _pp)
+  public pure returns (uint256)
   {
     // x^3 + ax + b
-    uint256 y2 = addmod(mulmod(x, mulmod(x, x, pp), pp), addmod(mulmod(x, a, pp), b, pp), pp);
-    uint256 y_ = expMod(y2, (pp + 1) / 4, pp);
+    uint256 y2 = addmod(mulmod(_x, mulmod(_x, _x, _pp), _pp), addmod(mulmod(_x, _a, _pp), _b, _pp), _pp);
+    y2 = expMod(y2, (_pp + 1) / 4, _pp);
     // uint256 cmp = yBit ^ y_ & 1;
-    y = (y_ + prefix) % 2 == 0 ? y_ : pp - y_;
+    uint256 y = (y2 + _prefix) % 2 == 0 ? y2 : _pp - y2;
+
+    return y;
   }
 
-  /// @dev Check whether point (x,y) is on curve defined by a, b, and pp.
-  /// @param x coordinate x of P1
-  /// @param y coordinate y of P1
-  /// @param a constant of curve
-  /// @param b constant of curve
-  /// @param pp the modulus
+  /// @dev Check whether point (x,y) is on curve defined by a, b, and _pp.
+  /// @param _x coordinate x of P1
+  /// @param _y coordinate y of P1
+  /// @param _a constant of curve
+  /// @param _b constant of curve
+  /// @param _pp the modulus
   /// @return true if x,y in the curve, false else
   function isOnCurve(
-    uint x,
-    uint y,
-    uint a,
-    uint b,
-    uint pp)
+    uint _x,
+    uint _y,
+    uint _a,
+    uint _b,
+    uint _pp)
   public pure returns (bool)
   {
-    if (0 == x || x == pp || 0 == y || y == pp) {
+    if (0 == _x || _x == _pp || 0 == _y || _y == _pp) {
       return false;
     }
     // y^2
-    uint lhs = mulmod(y, y, pp);
+    uint lhs = mulmod(_y, _y, _pp);
     // x^3
-    uint rhs = mulmod(mulmod(x, x, pp), x, pp);
-    if (a != 0) {
+    uint rhs = mulmod(mulmod(_x, _x, _pp), _x, _pp);
+    if (_a != 0) {
       // x^3 + a*x
-      rhs = addmod(rhs, mulmod(x, a, pp), pp);
+      rhs = addmod(rhs, mulmod(_x, _a, _pp), _pp);
     }
-    if (b != 0) {
+    if (_b != 0) {
       // x^3 + a*x + b
-      rhs = addmod(rhs, b, pp);
+      rhs = addmod(rhs, _b, _pp);
     }
 
     return lhs == rhs;
   }
 
   /// @dev Calculate inverse (x, -y) of point (x, y).
-  /// @param x coordinate x of P1
-  /// @param y coordinate y of P1
-  /// @param pp the modulus
+  /// @param _x coordinate x of P1
+  /// @param _y coordinate y of P1
+  /// @param _pp the modulus
   /// @return (x, -y)
   function ecInv(
-    uint256 x,
-    uint256 y,
-    uint256 pp)
-  public pure returns (uint256 qx, uint256 qy)
+    uint256 _x,
+    uint256 _y,
+    uint256 _pp)
+  public pure returns (uint256, uint256)
   {
-    (qx, qy) = (x, (pp - y) % pp);
+    return (_x, (_pp - _y) % _pp);
   }
 
   /// @dev Add two points (x1, y1) and (x2, y2) in affine coordinates.
-  /// @param x1 coordinate x of P1
-  /// @param y1 coordinate y of P1
-  /// @param x2 coordinate x of P2
-  /// @param y2 coordinate y of P2
-  /// @param a constant of the curve
-  /// @param pp the modulus
+  /// @param _x1 coordinate x of P1
+  /// @param _y1 coordinate y of P1
+  /// @param _x2 coordinate x of P2
+  /// @param _y2 coordinate y of P2
+  /// @param _aa constant of the curve
+  /// @param _pp the modulus
   /// @return (qx, qy) = P1+P2 in affine coordinates
   function ecAdd(
-    uint256 x1,
-    uint256 y1,
-    uint256 x2,
-    uint256 y2,
-    uint256 a,
-    uint256 pp)
-    public pure returns(uint256 qx, uint256 qy)
+    uint256 _x1,
+    uint256 _y1,
+    uint256 _x2,
+    uint256 _y2,
+    uint256 _aa,
+    uint256 _pp)
+    public pure returns(uint256, uint256)
   {
     uint x = 0;
     uint y = 0;
     uint z = 0;
     // Double if x1==x2 else add
-    if (x1==x2) {
+    if (_x1==_x2) {
       (x, y, z) = jacDouble(
-        x1,
-        y1,
+        _x1,
+        _y1,
         1,
-        a,
-        pp);
+        _aa,
+        _pp);
     } else {
       (x, y, z) = jacAdd(
-        x1,
-        y1,
+        _x1,
+        _y1,
         1,
-        x2,
-        y2,
+        _x2,
+        _y2,
         1,
-        pp);
+        _pp);
     }
     // Get back to affine
-    (qx, qy) = toAffine(
+    return toAffine(
       x,
       y,
       z,
-      pp);
+      _pp);
   }
 
   /// @dev Substract two points (x1, y1) and (x2, y2) in affine coordinates.
-  /// @param x1 coordinate x of P1
-  /// @param y1 coordinate y of P1
-  /// @param x2 coordinate x of P2
-  /// @param y2 coordinate y of P2
-  /// @param a constant of the curve
-  /// @param pp the modulus
+  /// @param _x1 coordinate x of P1
+  /// @param _y1 coordinate y of P1
+  /// @param _x2 coordinate x of P2
+  /// @param _y2 coordinate y of P2
+  /// @param _aa constant of the curve
+  /// @param _pp the modulus
   /// @return (qx, qy) = P1-P2 in affine coordinates
   function ecSub(
-    uint256 x1,
-    uint256 y1,
-    uint256 x2,
-    uint256 y2,
-    uint256 a,
-    uint256 pp)
-  public pure returns(uint256 qx, uint256 qy)
+    uint256 _x1,
+    uint256 _y1,
+    uint256 _x2,
+    uint256 _y2,
+    uint256 _aa,
+    uint256 _pp)
+  public pure returns(uint256, uint256)
   {
     // invert square
-    (uint256 x, uint256 y) = ecInv(x2, y2, pp);
+    (uint256 x, uint256 y) = ecInv(_x2, _y2, _pp);
     // P1-square
-    (qx, qy) = ecAdd(
-      x1,
-      y1,
+    return ecAdd(
+      _x1,
+      _y1,
       x,
       y,
-      a,
-      pp);
+      _aa,
+      _pp);
   }
 
   /// @dev Decomposition of the scalar k in two scalars k1 and k2 with half bit-length, such that k=k1+k2*LAMBDA (mod n)
   /// @param _k the scalar to be decompose
-  /// @param _n the modulus
-  /// @param _LAMBDA is a root of the characteristic polynomial of an endomorphism of the curve
+  /// @param _nn the modulus
+  /// @param _lambda is a root of the characteristic polynomial of an endomorphism of the curve
   /// @return k1 and k2  such that k=k1+k2*LAMBDA (mod n)
-  function scalarDecomposition (uint256 _k, uint256 _n, uint256 _LAMBDA) public pure returns (int256[2] memory) {
-  // Extended Euclidean Algorithm for n and LAMBDA
+  function decomposeScalar (uint256 _k, uint256 _nn, uint256 _lambda) public pure returns (int256, int256) {
+    uint256 k = _k % _nn;
+    // Extended Euclidean Algorithm for n and LAMBDA
     int256[2] memory t;
     t[0] = 1;
     t[1] = 0;
     uint256[2] memory r;
-    r[0] = uint256(_LAMBDA);
-    r[1] = uint256(_n);
+    r[0] = uint256(_lambda);
+    r[1] = uint256(_nn);
 
-    uint256 quotient;
-
-    while (uint256(r[0]) >= sqrt(_n)) {
-      quotient = r[1] / r[0];
+    while (uint256(r[0]) >= _sqrt(_nn)) {
+      uint256 quotient = r[1] / r[0];
       (r[1], r[0]) = (r[0], r[1] - quotient*r[0]);
       (t[1], t[0]) = (t[0], t[1] - int256(quotient)*t[0]);
     }
     int256[4] memory ab;
-  // the vectors v1=(a1, b1) and v2=(a2,b2)
+
+    // the vectors v1=(a1, b1) and v2=(a2,b2)
     ab[0] = int256(r[0]);
     ab[1] = int256(0 - t[0]);
     ab[2] = int256(r[1]);
-    ab[3] = 0-t[1];
+    ab[3] = 0 - t[1];
 
-  //b2*K
+    //b2*K
     uint[3] memory test;
-    (test[0],test[1], test[2]) = multiply256(uint(ab[3]), uint(_k));
+    (test[0],test[1], test[2]) = _multiply256(uint(ab[3]), uint(k));
 
-  //-b1*k
+    //-b1*k
     uint[3] memory test2;
-    (test2[0], test2[1], test2[2]) = multiply256(uint(-ab[1]), uint(_k));
-  //c1 and c2
+    (test2[0], test2[1], test2[2]) = _multiply256(uint(-ab[1]), uint(k));
+
+    //c1 and c2
     uint[2] memory c1;
-    (c1[0],c1[1]) = bigDivision(uint256 (uint128 (test[0])) << 128 | uint128 (test[1]), uint256(test[2]) + (_n / 2), _n);
-
+    (c1[0],c1[1]) = _bigDivision(uint256 (uint128 (test[0])) << 128 | uint128 (test[1]), uint256(test[2]) + (_nn / 2), _nn);
     uint[2] memory c2;
-    (c2[0],c2[1]) = bigDivision(uint256 (uint128 (test2[0])) << 128 | uint128 (test2[1]), uint256(test2[2]) + (_n / 2), _n);
+    (c2[0],c2[1]) = _bigDivision(uint256 (uint128 (test2[0])) << 128 | uint128 (test2[1]), uint256(test2[2]) + (_nn / 2), _nn);
 
-  // the decomposition of k in k1 and k2
-    int256 k1 = int256((int256(_k) - int256(c1[0]) * int256(ab[0]) - int256(c2[0]) * int256(ab[2])) % int256(_n));
-    int256 k2 = int256((-int256(c1[0]) * int256(ab[1]) - int256(c2[0]) * int256(ab[3])) % int256(_n));
-    if (uint256(abs(k1)) <= (_n / 2)) {
+    // the decomposition of k in k1 and k2
+    int256 k1 = int256((int256(k) - int256(c1[0]) * int256(ab[0]) - int256(c2[0]) * int256(ab[2])) % int256(_nn));
+    int256 k2 = int256((-int256(c1[0]) * int256(ab[1]) - int256(c2[0]) * int256(ab[3])) % int256(_nn));
+    if (uint256(_abs(k1)) <= (_nn / 2)) {
       k1 = k1;
     } else {
-      k1 = int256(uint256(k1) - _n);
+      k1 = int256(uint256(k1) - _nn);
     }
-    if (uint256(abs(k2)) <= (_n / 2)) {
+    if (uint256(_abs(k2)) <= (_nn / 2)) {
       k2 = k2;
     } else {
-      k2 = int256(uint256(k2) - _n);
+      k2 = int256(uint256(k2) - _nn);
     }
 
-    return [k1, k2];
+    return (k1, k2);
   }
 
   /// @dev Multiply point (x1, y1, z1) times d in affine coordinates.
-  /// @param d scalar to multiply
-  /// @param x coordinate x of P1
-  /// @param y coordinate y of P1
-  /// @param a constant of the curve
-  /// @param pp the modulus
+  /// @param _k scalar to multiply
+  /// @param _x coordinate x of P1
+  /// @param _y coordinate y of P1
+  /// @param _aa constant of the curve
+  /// @param _pp the modulus
   /// @return (qx, qy) = d*P in affine coordinates
   function ecMul(
-    uint256 d,
-    uint256 x,
-    uint256 y,
-    uint256 a,
-    uint256 pp)
-  public pure returns(uint256 qx, uint256 qy)
+    uint256 _k,
+    uint256 _x,
+    uint256 _y,
+    uint256 _aa,
+    uint256 _pp)
+  public pure returns(uint256, uint256)
   {
     // Jacobian multiplication
     (uint256 x1, uint256 y1, uint256 z1) = jacMul(
-      d,
-      x,
-      y,
+      _k,
+      _x,
+      _y,
       1,
-      a,
-      pp);
+      _aa,
+      _pp);
     // Get back to affine
-    (qx, qy) = toAffine(
+    return toAffine(
       x1,
       y1,
       z1,
-      pp);
-  }
-  
-  function _lookup_sim_mul(
-    uint256[3][4][4] memory iP, 
-    uint256[4] memory P_Q,
-    uint256 a,
-    uint256 beta,
-    uint256 pp
-  ) internal pure
-  {
-    uint256[3][4] memory iPj;
-    uint256[3] memory double;
-
-    // P1 Lookup Table
-    iPj = iP[0];
-    iPj[0] = [P_Q[0], P_Q[1], 1];  						// P1
-
-    (double[0], double[1], double[2]) = jacDouble(iPj[0][0], iPj[0][1], 1, a, pp);
-    (iPj[1][0], iPj[1][1], iPj[1][2]) = jacAdd(double[0], double[1], double[2], iPj[0][0], iPj[0][1], iPj[0][2], pp);
-    (iPj[2][0], iPj[2][1], iPj[2][2]) = jacAdd(double[0], double[1], double[2], iPj[1][0], iPj[1][1], iPj[1][2], pp);
-    (iPj[3][0], iPj[3][1], iPj[3][2]) = jacAdd(double[0], double[1], double[2], iPj[2][0], iPj[2][1], iPj[2][2], pp);
-
-    // P2 Lookup Table
-    iP[1][0] = [mulmod(beta, P_Q[0], pp), P_Q[1], 1];	// P2
-
-    iP[1][1] = [mulmod(beta, iPj[1][0], pp), iPj[1][1], iPj[1][2]];
-    iP[1][2] = [mulmod(beta, iPj[2][0], pp), iPj[2][1], iPj[2][2]];
-    iP[1][3] = [mulmod(beta, iPj[3][0], pp), iPj[3][1], iPj[3][2]];
-
-    // Q1 Lookup Table
-    iPj = iP[2];
-    iPj[0] = [P_Q[2], P_Q[3], 1];   
-                    	// Q1
-    (double[0], double[1], double[2]) = jacDouble(iPj[0][0], iPj[0][1], 1, a, pp);
-    (iPj[1][0], iPj[1][1], iPj[1][2]) = jacAdd(double[0], double[1], double[2], iPj[0][0], iPj[0][1], iPj[0][2], pp);
-    (iPj[2][0], iPj[2][1], iPj[2][2]) = jacAdd(double[0], double[1], double[2], iPj[1][0], iPj[1][1], iPj[1][2], pp);
-    (iPj[3][0], iPj[3][1], iPj[3][2]) = jacAdd(double[0], double[1], double[2], iPj[2][0], iPj[2][1], iPj[2][2], pp);
-
-    // Q2 Lookup Table
-    iP[3][0] = [mulmod(beta, P_Q[2], pp), P_Q[3], 1];	// P2
-
-    iP[3][1] = [mulmod(beta, iPj[1][0], pp), iPj[1][1], iPj[1][2]];
-    iP[3][2] = [mulmod(beta, iPj[2][0], pp), iPj[2][1], iPj[2][2]];
-    iP[3][3] = [mulmod(beta, iPj[3][0], pp), iPj[3][1], iPj[3][2]];
+      _pp);
   }
 
-  /// @notice Computes the WNAF representation of an integer, and puts the resulting array of coefficients in memory
-  /// @param d A 256-bit integer
-  /// @return (ptr, length) The pointer to the first coefficient, and the total length of the array
-  function _wnaf(int256 d) internal pure  returns (uint256 ptr, uint256 length) {
-
-    int sign = d < 0 ? -1 : int(1);
-    uint256 k = uint256(sign * d);
-
-    length = 0;
-    assembly
-    {
-      let ki := 0
-      ptr := mload(0x40) // Get free memory pointer
-      mstore(0x40, add(ptr, 300)) // Updates free memory pointer to +300 bytes offset
-      for { } gt(k, 0) { } { // while k > 0
-        if and(k, 1) {  // if k is odd:
-          ki := mod(k, 16)
-          k := add(sub(k, ki), mul(gt(ki, 8), 16))
-          // if sign = 1, store ki; if sign = -1, store 16 - ki
-          mstore8(add(ptr, length), add(mul(ki, sign), sub(8, mul(sign, 8))))
-        }
-        length := add(length, 1)
-        k := div(k, 2)
-      }
-    //log3(ptr, 1, 0xfabadaacabada, d, length)    
-    }
-
-    return (ptr, length);
-  }
-  function toUint(int256 a)public pure  returns(uint256 num) {
-    num = uint256(a);
-  }
-  function eqJacobian(
-    uint256[3] memory P, 
-    uint256[3] memory Q,
-    uint256 pp
-  ) internal pure returns(bool) {
-    uint256 p = pp;
-
-    uint256 Qz = Q[2];
-    uint256 Pz = P[2];
-    if(Pz == 0){
-      return Qz == 0;   // P and Q are both zero.
-    } else if(Qz == 0){
-      return false;       // Q is zero but P isn't.
-    }
-
-    // Now we're sure none of them is zero
-
-    uint256 Q_z_squared = mulmod(Qz, Qz, p);
-    uint256 P_z_squared = mulmod(Pz, Pz, p);
-    if (mulmod(P[0], Q_z_squared, p) != mulmod(Q[0], P_z_squared, p)){
-      return false;
-    }
-
-    uint256 Q_z_cubed = mulmod(Q_z_squared, Qz, p);
-    uint256 P_z_cubed = mulmod(P_z_squared, Pz, p);
-    return mulmod(P[1], Q_z_cubed, p) == mulmod(Q[1], P_z_cubed, p);
-  }
-
-  /// @notice Simultaneous multiplication of the form kP + lQ. 
+  /// @notice Simultaneous multiplication of the form kP + lQ.
   /// @dev Scalars k and l are expected to be decomposed such that k = k1 + k2 λ, and l = l1 + l2 λ,
-  /// where λ is specific to the endomorphism of the curve
-  /// @param k_l An array with the decomposition of k and l values, i.e., [k1, k2, l1, l2]
-  /// @param P_Q An array with the affine coordinates of both P and Q, i.e., [P1, P2, Q1, Q2]
-  function _sim_mul(
-    int256[4] memory k_l, 
-    uint256[4] memory P_Q,
-    uint256 a,
-    uint256 beta,
-    uint256 pp
-  ) public pure returns (uint[3] memory Q) {
-
-    /*require(
-      is_on_curve(P_Q[0], P_Q[1]) && is_on_curve(P_Q[2], P_Q[3]), 
-    	"Invalid points"
-  	);*/
-
+  /// where λ is specific to the endomorphism of the curve.
+  /// @param _scalars An array with the decomposition of k and l values, i.e., [k1, k2, l1, l2]
+  /// @param _points An array with the affine coordinates of both P and Q, i.e., [P1, P2, Q1, Q2]
+  function ecSimMul(
+    int256[4] memory _scalars,
+    uint256[4] memory _points,
+    uint256 _aa,
+    uint256 _beta,
+    uint256 _pp)
+  public pure returns (uint256, uint256)
+  {
     uint256[4] memory wnaf;
-    uint256 max_count = 0;
-    uint256 count = 0;        
+    uint256 maxCount = 0;
+    uint256 count = 0;
 
-    for (uint j = 0; j<4; j++){
-      (wnaf[j], count) = _wnaf(k_l[j]);
-      if (count > max_count){
-        max_count = count;
+    for (uint j = 0; j<4; j++) {
+      (wnaf[j], count) = _wnaf(_scalars[j]);
+      if (count > maxCount) {
+        maxCount = count;
       }
     }
 
-    Q = _sim_mul_wnaf(wnaf, max_count, P_Q, a, beta, pp);
-  }
+    (uint256 x, uint256 y, uint256 z) = _simMulWnaf(
+      wnaf,
+      maxCount,
+      _points,
+      _aa,
+      _beta,
+      _pp);
 
-  function _sim_mul_wnaf(
-    uint256[4] memory wnaf_ptr, 
-    uint256 length, 
-    uint256[4] memory P_Q,
-    uint256 a,
-    uint256 beta,
-    uint256 pp
-  ) internal pure  returns (uint[3] memory Q) {
-    uint256[3][4][4] memory iP;
-    _lookup_sim_mul(iP, P_Q, a, beta, pp);
-
-    uint256 i = length;
-    uint256 ki;
-    uint256 ptr;
-    while (i > 0) {
-      i--;
-
-      (Q[0], Q[1], Q[2]) = jacDouble(Q[0], Q[1], Q[2], a, pp);
-
-      ptr = wnaf_ptr[0] + i;
-      assembly {
-        ki := byte(0, mload(ptr))
-      }
-
-      if (ki > 8) {
-        (Q[0], Q[1], Q[2]) = jacAdd(Q[0], Q[1], Q[2], iP[0][(15 - ki) / 2][0], (pp - iP[0][(15 - ki) / 2][1]) % pp, iP[0][(15 - ki) / 2][2], pp);
-      } else if (ki > 0) {
-        (Q[0], Q[1], Q[2]) = jacAdd(Q[0], Q[1], Q[2], iP[0][(ki - 1) / 2][0], iP[0][(ki - 1) / 2][1], iP[0][(ki - 1) / 2][2], pp);
-      }
-
-      ptr = wnaf_ptr[1] + i;
-      assembly {
-        ki := byte(0, mload(ptr))
-      }
-
-      if (ki > 8) {
-        (Q[0], Q[1], Q[2]) = jacAdd(Q[0], Q[1], Q[2], iP[1][(15 - ki) / 2][0], (pp - iP[1][(15 - ki) / 2][1]) % pp, iP[1][(15 - ki) / 2][2], pp);
-
-      } else if (ki > 0) {
-        (Q[0], Q[1], Q[2]) = jacAdd(Q[0], Q[1], Q[2], iP[1][(ki - 1) / 2][0], iP[1][(ki - 1) / 2][1], iP[1][(ki - 1) / 2][2], pp);
-      }
-
-      ptr = wnaf_ptr[2] + i;
-      assembly {
-        ki := byte(0, mload(ptr))
-      }
-
-      if (ki > 8) {
-        (Q[0], Q[1], Q[2]) = jacAdd(Q[0], Q[1], Q[2], iP[2][(15 - ki) / 2][0], (pp - iP[2][(15 - ki) / 2][1]) % pp, iP[2][(15 - ki) / 2][2], pp);
-      } else if (ki > 0) {
-        (Q[0], Q[1], Q[2]) = jacAdd(Q[0], Q[1], Q[2], iP[2][(ki - 1) / 2][0], iP[2][(ki - 1) / 2][1], iP[2][(ki - 1) / 2][2], pp);
-      }
-
-      ptr = wnaf_ptr[3] + i;
-      assembly {
-        ki := byte(0, mload(ptr))
-      }
-
-      if (ki > 8) {
-        (Q[0], Q[1], Q[2]) = jacAdd(Q[0], Q[1], Q[2], iP[3][(15 - ki) / 2][0], (pp - iP[3][(15 - ki) / 2][1]) % pp, iP[3][(15 - ki) / 2][2], pp);
-      } else if (ki > 0) {
-        (Q[0], Q[1], Q[2]) = jacAdd(Q[0], Q[1], Q[2], iP[3][(ki - 1) / 2][0], iP[3][(ki - 1) / 2][1], iP[3][(ki - 1) / 2][2], pp);
-      } 
-    }
+    return toAffine(
+      x,
+      y,
+      z,
+      _pp);
   }
 
   /// @dev Adds two points (x1, y1, z1) and (x2 y2, z2).
@@ -519,7 +363,7 @@ contract EllipticCurve {
   /// @param x2 coordinate x of square
   /// @param y2 coordinate y of square
   /// @param z2 coordinate z of square
-  /// @param pp the modulus
+  /// @param _pp the modulus
   /// @return (qx, qy, qz) P1+square in Jacobian
   function jacAdd(
     uint256 x1,
@@ -528,7 +372,7 @@ contract EllipticCurve {
     uint256 x2,
     uint256 y2,
     uint256 z2,
-    uint256 pp)
+    uint256 _pp)
   internal pure returns (uint256 qx, uint256 qy, uint256 qz)
   {
     if ((x1==0)&&(y1==0))
@@ -538,17 +382,17 @@ contract EllipticCurve {
     // We follow the equations described in https://pdfs.semanticscholar.org/5c64/29952e08025a9649c2b0ba32518e9a7fb5c2.pdf Section 5
 
     uint[4] memory zs; // z1^2, z1^3, z2^2, z2^3
-    zs[0] = mulmod(z1, z1, pp);
-    zs[1] = mulmod(z1, zs[0], pp);
-    zs[2] = mulmod(z2, z2, pp);
-    zs[3] = mulmod(z2, zs[2], pp);
+    zs[0] = mulmod(z1, z1, _pp);
+    zs[1] = mulmod(z1, zs[0], _pp);
+    zs[2] = mulmod(z2, z2, _pp);
+    zs[3] = mulmod(z2, zs[2], _pp);
 
     // u1, s1, u2, s2
     zs = [
-      mulmod(x1, zs[2], pp),
-      mulmod(y1, zs[3], pp),
-      mulmod(x2, zs[0], pp),
-      mulmod(y2, zs[1], pp)
+      mulmod(x1, zs[2], _pp),
+      mulmod(y1, zs[3], _pp),
+      mulmod(x2, zs[0], _pp),
+      mulmod(y2, zs[1], _pp)
     ];
     if (zs[0] == zs[2]) {
       if (zs[1] != zs[3])
@@ -559,28 +403,28 @@ contract EllipticCurve {
     }
     uint[4] memory hr;
     //h
-    hr[0] = addmod(zs[2], pp - zs[0], pp);
+    hr[0] = addmod(zs[2], _pp - zs[0], _pp);
     //r
-    hr[1] = addmod(zs[3], pp - zs[1], pp);
+    hr[1] = addmod(zs[3], _pp - zs[1], _pp);
     //h^2
-    hr[2] = mulmod(hr[0], hr[0], pp);
+    hr[2] = mulmod(hr[0], hr[0], _pp);
     // h^3
-    hr[3] = mulmod(hr[2], hr[0], pp);
+    hr[3] = mulmod(hr[2], hr[0], _pp);
     // qx = -h^3  -2u1h^2+r^2
-    qx = addmod(mulmod(hr[1], hr[1], pp), pp - hr[3], pp);
-    qx = addmod(qx, pp - mulmod(2, mulmod(zs[0], hr[2], pp), pp), pp);
+    qx = addmod(mulmod(hr[1], hr[1], _pp), _pp - hr[3], _pp);
+    qx = addmod(qx, _pp - mulmod(2, mulmod(zs[0], hr[2], _pp), _pp), _pp);
     // qy = -s1*z1*h^3+r(u1*h^2 -x^3)
-    qy = mulmod(hr[1], addmod(mulmod(zs[0], hr[2], pp), pp - qx, pp), pp);
-    qy = addmod(qy, pp - mulmod(zs[1], hr[3], pp), pp);
+    qy = mulmod(hr[1], addmod(mulmod(zs[0], hr[2], _pp), _pp - qx, _pp), _pp);
+    qy = addmod(qy, _pp - mulmod(zs[1], hr[3], _pp), _pp);
     // qz = h*z1*z2
-    qz = mulmod(hr[0], mulmod(z1, z2, pp), pp);
+    qz = mulmod(hr[0], mulmod(z1, z2, _pp), _pp);
   }
 
   /// @dev Doubles a points (x, y, z).
   /// @param x coordinate x of P1
   /// @param y coordinate y of P1
   /// @param z coordinate z of P1
-  /// @param pp the modulus
+  /// @param _pp the modulus
   /// @param a the a scalar in the curve equation
   /// @return (qx, qy, qz) 2P in Jacobian
   function jacDouble(
@@ -588,7 +432,7 @@ contract EllipticCurve {
     uint256 y,
     uint256 z,
     uint256 a,
-    uint256 pp)
+    uint256 _pp)
   internal pure returns (uint256 qx, uint256 qy, uint256 qz)
   {
     if (z == 0)
@@ -596,21 +440,21 @@ contract EllipticCurve {
     uint256[3] memory square;
     // We follow the equations described in https://pdfs.semanticscholar.org/5c64/29952e08025a9649c2b0ba32518e9a7fb5c2.pdf Section 5
     // Note: there is a bug in the paper regarding the m parameter, M=3*(x1^2)+a*(z1^4)
-    square[0] = mulmod(x, x, pp); //x1^2
-    square[1] = mulmod(y, y, pp); //y1^2
-    square[2] = mulmod(z, z, pp); //z1^2
+    square[0] = mulmod(x, x, _pp); //x1^2
+    square[1] = mulmod(y, y, _pp); //y1^2
+    square[2] = mulmod(z, z, _pp); //z1^2
 
     // s
-    uint s = mulmod(4, mulmod(x, square[1], pp), pp);
+    uint s = mulmod(4, mulmod(x, square[1], _pp), _pp);
     // m
-    uint m = addmod(mulmod(3, square[0], pp), mulmod(a, mulmod(square[2], square[2], pp), pp), pp);
+    uint m = addmod(mulmod(3, square[0], _pp), mulmod(a, mulmod(square[2], square[2], _pp), _pp), _pp);
     // t
-    uint256 t = addmod(mulmod(m, m, pp), pp - addmod(s, s, pp), pp);
+    uint256 t = addmod(mulmod(m, m, _pp), _pp - addmod(s, s, _pp), _pp);
     qx = t;
     // qy = -8*y1^4 + M(S-T)
-    qy = addmod(mulmod(m, addmod(s, pp - qx, pp), pp), pp - mulmod(8, mulmod(square[1], square[1], pp), pp), pp);
+    qy = addmod(mulmod(m, addmod(s, _pp - qx, _pp), _pp), _pp - mulmod(8, mulmod(square[1], square[1], _pp), _pp), _pp);
     // qz = 2*y1*z1
-    qz = mulmod(2, mulmod(y, z, pp), pp);
+    qz = mulmod(2, mulmod(y, z, _pp), _pp);
   }
 
   /// @dev Multiply point (x, y, z) times d.
@@ -619,7 +463,7 @@ contract EllipticCurve {
   /// @param y coordinate y of P1
   /// @param z coordinate z of P1
   /// @param a constant of curve
-  /// @param pp the modulus
+  /// @param _pp the modulus
   /// @return (qx, qy, qz) d*P1 in Jacobian
   function jacMul(
     uint256 d,
@@ -627,8 +471,8 @@ contract EllipticCurve {
     uint256 y,
     uint256 z,
     uint256 a,
-    uint256 pp)
-  internal pure returns (uint256 qx, uint256 qy, uint256 qz)
+    uint256 _pp)
+  internal pure  returns (uint256 qx, uint256 qy, uint256 qz)
   {
     uint256 remaining = d;
     uint256[3] memory point;
@@ -652,7 +496,7 @@ contract EllipticCurve {
           point[0],
           point[1],
           point[2],
-          pp);
+          _pp);
       }
       remaining = remaining / 2;
       (point[0], point[1], point[2]) = jacDouble(
@@ -660,17 +504,272 @@ contract EllipticCurve {
         point[1],
         point[2],
         a,
-        pp);
+        _pp);
     }
   }
 
+  function _lookupSimMul(
+    uint256[3][4][4] memory iP,
+    uint256[4] memory _points,
+    uint256 _aa,
+    uint256 _beta,
+    uint256 _pp
+  ) private pure
+  {
+    uint256[3][4] memory iPj;
+    uint256[3] memory double;
+
+    // P1 Lookup Table
+    iPj = iP[0];
+    iPj[0] = [_points[0], _points[1], 1]; // P1
+
+    (double[0], double[1], double[2]) = jacDouble(
+      iPj[0][0],
+      iPj[0][1],
+      1,
+      _aa,
+      _pp);
+    (iPj[1][0], iPj[1][1], iPj[1][2]) = jacAdd(
+      double[0],
+      double[1],
+      double[2],
+      iPj[0][0],
+      iPj[0][1],
+      iPj[0][2],
+      _pp);
+    (iPj[2][0], iPj[2][1], iPj[2][2]) = jacAdd(
+      double[0],
+      double[1],
+      double[2],
+      iPj[1][0],
+      iPj[1][1],
+      iPj[1][2],
+      _pp);
+    (iPj[3][0], iPj[3][1], iPj[3][2]) = jacAdd(
+      double[0],
+      double[1],
+      double[2],
+      iPj[2][0],
+      iPj[2][1],
+      iPj[2][2],
+      _pp);
+
+    // P2 Lookup Table
+    iP[1][0] = [mulmod(_beta, _points[0], _pp), _points[1], 1];	// P2
+
+    iP[1][1] = [mulmod(_beta, iPj[1][0], _pp), iPj[1][1], iPj[1][2]];
+    iP[1][2] = [mulmod(_beta, iPj[2][0], _pp), iPj[2][1], iPj[2][2]];
+    iP[1][3] = [mulmod(_beta, iPj[3][0], _pp), iPj[3][1], iPj[3][2]];
+
+    // Q1 Lookup Table
+    iPj = iP[2];
+    iPj[0] = [_points[2], _points[3], 1];
+                    	// Q1
+    (double[0], double[1], double[2]) = jacDouble(
+      iPj[0][0],
+      iPj[0][1],
+      1,
+      _aa,
+      _pp);
+    (iPj[1][0], iPj[1][1], iPj[1][2]) = jacAdd(
+      double[0],
+      double[1],
+      double[2],
+      iPj[0][0],
+      iPj[0][1],
+      iPj[0][2],
+      _pp);
+    (iPj[2][0], iPj[2][1], iPj[2][2]) = jacAdd(
+      double[0],
+      double[1],
+      double[2],
+      iPj[1][0],
+      iPj[1][1],
+      iPj[1][2],
+      _pp);
+    (iPj[3][0], iPj[3][1], iPj[3][2]) = jacAdd(
+      double[0],
+      double[1],
+      double[2],
+      iPj[2][0],
+      iPj[2][1],
+      iPj[2][2],
+      _pp);
+
+    // Q2 Lookup Table
+    iP[3][0] = [mulmod(_beta, _points[2], _pp), _points[3], 1];	// P2
+
+    iP[3][1] = [mulmod(_beta, iPj[1][0], _pp), iPj[1][1], iPj[1][2]];
+    iP[3][2] = [mulmod(_beta, iPj[2][0], _pp), iPj[2][1], iPj[2][2]];
+    iP[3][3] = [mulmod(_beta, iPj[3][0], _pp), iPj[3][1], iPj[3][2]];
+  }
+
+  /// @notice WNAF integer representation.
+  /// @dev Computes the WNAF representation of an integer, and puts the resulting array of coefficients in memory.
+  /// @param _k A 256-bit integer
+  /// @return (ptr, length) The pointer to the first coefficient, and the total length of the array
+  function _wnaf(int256 _k) private pure  returns (uint256, uint256) {
+    int sign = _k < 0 ? -1 : int(1);
+    uint256 k = uint256(sign * _k);
+
+    uint256 ptr;
+    uint256 length = 0;
+    assembly
+    {
+      let ki := 0
+      ptr := mload(0x40) // Get free memory pointer
+      mstore(0x40, add(ptr, 300)) // Updates free memory pointer to +300 bytes offset
+      for { } gt(k, 0) { } { // while k > 0
+        if and(k, 1) {  // if k is odd:
+          ki := mod(k, 16)
+          k := add(sub(k, ki), mul(gt(ki, 8), 16))
+          // if sign = 1, store ki; if sign = -1, store 16 - ki
+          mstore8(add(ptr, length), add(mul(ki, sign), sub(8, mul(sign, 8))))
+        }
+        length := add(length, 1)
+        k := div(k, 2)
+      }
+    }
+
+    return (ptr, length);
+  }
+
+  function _simMulWnaf(
+    uint256[4] memory _wnafPointer,
+    uint256 _length,
+    uint256[4] memory _points,
+    uint256 _aa,
+    uint256 _beta,
+    uint256 _pp)
+  private pure  returns (uint256, uint256, uint256)
+  {
+    uint[3] memory mulPoint;
+    uint256[3][4][4] memory iP;
+    _lookupSimMul(
+      iP,
+      _points,
+      _aa,
+      _beta,
+      _pp);
+
+    uint256 i = _length;
+    uint256 ki;
+    uint256 ptr;
+    while (i > 0) {
+      i--;
+
+      (mulPoint[0], mulPoint[1], mulPoint[2]) = jacDouble(
+        mulPoint[0],
+        mulPoint[1],
+        mulPoint[2],
+        _aa,
+        _pp);
+
+      ptr = _wnafPointer[0] + i;
+      assembly {
+        ki := byte(0, mload(ptr))
+      }
+
+      if (ki > 8) {
+        (mulPoint[0], mulPoint[1], mulPoint[2]) = jacAdd(
+          mulPoint[0],
+          mulPoint[1],
+          mulPoint[2],
+          iP[0][(15 - ki) / 2][0],
+          (_pp - iP[0][(15 - ki) / 2][1]) % _pp, iP[0][(15 - ki) / 2][2],
+          _pp);
+      } else if (ki > 0) {
+        (mulPoint[0], mulPoint[1], mulPoint[2]) = jacAdd(
+          mulPoint[0],
+          mulPoint[1],
+          mulPoint[2],
+          iP[0][(ki - 1) / 2][0], iP[0][(ki - 1) / 2][1],
+          iP[0][(ki - 1) / 2][2],
+          _pp);
+      }
+
+      ptr = _wnafPointer[1] + i;
+      assembly {
+        ki := byte(0, mload(ptr))
+      }
+
+      if (ki > 8) {
+        (mulPoint[0], mulPoint[1], mulPoint[2]) = jacAdd(
+          mulPoint[0],
+          mulPoint[1],
+          mulPoint[2],
+          iP[1][(15 - ki) / 2][0],
+          (_pp - iP[1][(15 - ki) / 2][1]) % _pp, iP[1][(15 - ki) / 2][2],
+          _pp);
+
+      } else if (ki > 0) {
+        (mulPoint[0], mulPoint[1], mulPoint[2]) = jacAdd(
+          mulPoint[0],
+          mulPoint[1],
+          mulPoint[2],
+          iP[1][(ki - 1) / 2][0],
+          iP[1][(ki - 1) / 2][1], iP[1][(ki - 1) / 2][2],
+          _pp);
+      }
+
+      ptr = _wnafPointer[2] + i;
+      assembly {
+        ki := byte(0, mload(ptr))
+      }
+
+      if (ki > 8) {
+        (mulPoint[0], mulPoint[1], mulPoint[2]) = jacAdd(
+          mulPoint[0],
+          mulPoint[1],
+          mulPoint[2],
+          iP[2][(15 - ki) / 2][0],
+          (_pp - iP[2][(15 - ki) / 2][1]) % _pp, iP[2][(15 - ki) / 2][2],
+          _pp);
+      } else if (ki > 0) {
+        (mulPoint[0], mulPoint[1], mulPoint[2]) = jacAdd(
+          mulPoint[0],
+          mulPoint[1],
+          mulPoint[2],
+          iP[2][(ki - 1) / 2][0],
+          iP[2][(ki - 1) / 2][1],
+          iP[2][(ki - 1) / 2][2],
+          _pp);
+      }
+
+      ptr = _wnafPointer[3] + i;
+      assembly {
+        ki := byte(0, mload(ptr))
+      }
+
+      if (ki > 8) {
+        (mulPoint[0], mulPoint[1], mulPoint[2]) = jacAdd(
+          mulPoint[0],
+          mulPoint[1],
+          mulPoint[2],
+          iP[3][(15 - ki) / 2][0],
+          (_pp - iP[3][(15 - ki) / 2][1]) % _pp,
+          iP[3][(15 - ki) / 2][2],
+          _pp);
+      } else if (ki > 0) {
+        (mulPoint[0], mulPoint[1], mulPoint[2]) = jacAdd(
+          mulPoint[0],
+          mulPoint[1],
+          mulPoint[2],
+          iP[3][(ki - 1) / 2][0],
+          iP[3][(ki - 1) / 2][1], iP[3][(ki - 1) / 2][2],
+          _pp);
+      }
+    }
+
+    return (mulPoint[0], mulPoint[1], mulPoint[2]);
+  }
 
   /// @dev Multiplication of a uint256 a and uint256 b. Because in Solidity each variable can not be greater than 256 bits,
   /// this function separates the result of the multiplication in three parts, so the result would be the concatenation of those three
   /// @param _a uint256
   /// @param _b uint256
   /// @return (ab2, ab1, ab0)
-  function multiply256(uint256 _a, uint256 _b) internal pure returns (uint256, uint256, uint256) {
+  function _multiply256(uint256 _a, uint256 _b) private pure returns (uint256, uint256, uint256) {
     uint256 aM = _a >> 128;
     uint256 am = _a & 2**128-1;
     uint256 bM = _b >> 128;
@@ -689,7 +788,7 @@ contract EllipticCurve {
   /// @param _am the lower 128 bits of the numarator
   /// @param _b the 256-bit denominator
   /// @return q the result of the division and the rest r
-  function bigDivision(uint256 _aM, uint256 _am, uint256 _b) internal pure returns (uint256, uint256) {
+  function _bigDivision(uint256 _aM, uint256 _am, uint256 _b) private pure returns (uint256, uint256) {
     uint256 qM = (_aM / _b) << 128;
     uint256 aM = _aM % _b;
 
@@ -725,10 +824,10 @@ contract EllipticCurve {
     return (q, r);
   }
 
-  /// @dev Sqare root of an 256-bit integer
+  /// @dev Square root of an 256-bit integer
   /// @param _x the integer
   /// @return y the square root of _x
-  function  sqrt(uint256 _x) internal pure returns (uint256) {
+  function _sqrt(uint256 _x) private pure returns (uint256) {
     uint256 z = (_x + 1) / 2;
     uint256 y = _x;
     while (z < y) {
@@ -741,7 +840,7 @@ contract EllipticCurve {
   /// @dev Absolute value of a 25-bit integer
   /// @param _x the integer
   /// @return _x if _x>=0 or -_x if not
-  function abs(int256 _x) internal pure returns (int256) {
+  function _abs(int256 _x) private pure returns (int256) {
     if (_x >= 0)
     return _x;
     return -_x;
