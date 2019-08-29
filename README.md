@@ -139,6 +139,7 @@ Some functions of the contract are based on:
 - [Comparatively Study of ECC and Jacobian Elliptic Curve Cryptography](https://pdfs.semanticscholar.org/5c64/29952e08025a9649c2b0ba32518e9a7fb5c2.pdf) by Anagha P. Zele and Avinash P. Wadhe
 - [Ecsol](https://github.com/jbaylina/ecsol/) written by Jordi Baylina
 - [Crypto](https://github.com/androlo/standard-contracts) written by Andreas Olofsson
+- [Numerology](https://github.com/nucypher/numerology/blob/master/contracts/Numerology.sol) by nucypher
 
 ## License
 
