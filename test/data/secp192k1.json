@@ -1,0 +1,1658 @@
+{
+  "params": {
+    "gx": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+    "gy": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+    "pp": "0xfffffffffffffffffffffffffffffffffffffffeffffee37",
+    "nn": "0xfffffffffffffffffffffffe26f2fc170f69466a74defd8d",
+    "aa": "0x0",
+    "bb": "0x3",
+    "lambda": "0x3d84f26c12238d7b4f3d516613c1759033b1a5800175d0b1",
+    "beta": "0xbb85691939b869c1d087f601554b96b80cb4f55b35f433c2"
+  },
+  "multiplication": {
+    "valid": [
+      {
+        "description": "generator x1",
+        "input": {
+          "k": "1",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        }
+      },
+      {
+        "description": "generator x2",
+        "input": {
+          "k": "2",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xf091cf6331b1747684f5d2549cd1d4b3a8bed93b94f93cb6",
+          "y": "0xfd7af42e1e7565a02e6268661c5e42e603da2d98a18f2ed5"
+        }
+      },
+      {
+        "description": "generator x3",
+        "input": {
+          "k": "3",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x6e43b7dcae2fd5e0bf2a1ba7615ca3b9065487c9a67b4583",
+          "y": "0xc48dcea47ae08e84d5fedc3d09e4c19606a290f7a19a6a58"
+        }
+      },
+      {
+        "description": "generator x4",
+        "input": {
+          "k": "4",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xea525dd5a1353762a14e9e78b9063316d1f2d5e792f87862",
+          "y": "0xa936d583530982690c445427cdf2c5b0bb1c88749247b02e"
+        }
+      },
+      {
+        "description": "generator x5",
+        "input": {
+          "k": "5",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x3cd61e370d02ca0687c0b5f7ebf6d0373f4dd0ccccb7cc2d",
+          "y": "0x2c4befd9b02f301eb4014504f0533aa7eb19e9ea56441f78"
+        }
+      },
+      {
+        "description": "generator x6",
+        "input": {
+          "k": "6",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xd5cfbcca993f384a5eabc46b81a39a40cdd39ec2a6c44ee9",
+          "y": "0xd2b873da35309b7dac745267c7da4467d42115d5efd0922f"
+        }
+      },
+      {
+        "description": "generator x7",
+        "input": {
+          "k": "7",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xdb06629f196458e33eea3a0d6a40f3d34074db3f563d9e83",
+          "y": "0xa5b55dc8c878fcfe37b12b8d1299609e9ea5526d062e718c"
+        }
+      },
+      {
+        "description": "generator x8",
+        "input": {
+          "k": "8",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xeabcf674aafe661300fc77ec078b20f73fb6816851d542aa",
+          "y": "0xd70a622b8f604b9e83d45f07d8a5c8b6136eaac8fb4e8d8f"
+        }
+      },
+      {
+        "description": "generator x9",
+        "input": {
+          "k": "9",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xefd9da261826e62d1e9d4e9fa35e2575cf03a65d3beba73a",
+          "y": "0xa905d8ef35066fdc102ba8e8033b6b232fdcd0813a66e7f4"
+        }
+      },
+      {
+        "description": "generator x10",
+        "input": {
+          "k": "10",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x598955b973468f82ee734058feef3378740882410fa69ec1",
+          "y": "0x376625e46eea0c9171b92a2e52410c37b93f15c18e4d8a9"
+        }
+      },
+      {
+        "description": "generator x11",
+        "input": {
+          "k": "11",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x870bef1fc2e12f4e9da570e29642c1aa3e9430da8df3ae2",
+          "y": "0xf2b1acd05bcd9d71306b6a60915bf9f918c47eedb006d145"
+        }
+      },
+      {
+        "description": "generator x12",
+        "input": {
+          "k": "12",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x85cdf2406f0b5eb222b2eb6bb9d366038331fbe119dbcf9a",
+          "y": "0xd1df90fc9421c8cf194601689c6233389ae85bcece87708b"
+        }
+      },
+      {
+        "description": "generator x13",
+        "input": {
+          "k": "13",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xafc6c0d8c291f69576f5e67f3c8ada23252e5fb8a287ffcb",
+          "y": "0x772f7a0e23bb6a18f5ab6de6390710b844b04145c84e41cc"
+        }
+      },
+      {
+        "description": "generator x14",
+        "input": {
+          "k": "14",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x79f614ff8d118cb981d407139b9b2d3cdbbabc70b1f20b26",
+          "y": "0x8435cf487547e41fe61096553e53b9c5859d827de604fa47"
+        }
+      },
+      {
+        "description": "generator x15",
+        "input": {
+          "k": "15",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x1b3d5a19287851863fb48e5a00c22745b046c3c8df1d6a49",
+          "y": "0x2b8f7fb272534b32532d8f2fa4ce40b6f6ee60b4983322c6"
+        }
+      },
+      {
+        "description": "generator x16",
+        "input": {
+          "k": "16",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xacf5fe0755a890558037f6793a1f9f9879788d85f56c541a",
+          "y": "0x5f716973464ec93b1a5de443ada79dfc605ef641dd2f1c97"
+        }
+      },
+      {
+        "description": "generator x17",
+        "input": {
+          "k": "17",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xcd04834b06e08576a530d2cef7635c6a8d9490ca8578dbbd",
+          "y": "0x7372d1a48719565fc104f2671e7b996afeb668f72229ceb7"
+        }
+      },
+      {
+        "description": "generator x18",
+        "input": {
+          "k": "18",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xd80d8978c462bdbda19bbb4854bd2d9565c78a056dc77d97",
+          "y": "0x691552621745cc2350d3edcaaedaa367725969b67466e255"
+        }
+      },
+      {
+        "description": "generator x19",
+        "input": {
+          "k": "19",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x5926c507c8769658aff2c6ccf64f62faac58f1f5b9a26937",
+          "y": "0x7de878d7c82d6febf138356df95a92f51cdaeeb27539acbc"
+        }
+      },
+      {
+        "description": "generator x20",
+        "input": {
+          "k": "20",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x9c98bfeee470b7095592668d77665b4c0b71ad5d4b7d7fe9",
+          "y": "0xb7b807acf5c1f753796a1982eca001c8772bc43c9987bf45"
+        }
+      },
+      {
+        "description": "generator x112233445566778899",
+        "input": {
+          "k": "112233445566778899",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xa2a8cd70d36a98783e80adf17d0ffc1fc4506fa5f7ccb3a0",
+          "y": "0x3231f5869b77dbce773292ba9d720f4760454c8732601c29"
+        }
+      },
+      {
+        "description": "generator x112233445566778899112233445566778899",
+        "input": {
+          "k": "112233445566778899112233445566778899",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x4db36c605ed1e0c528b7732b9905eebafae28dd364bc7d73",
+          "y": "0x2b7124d694971d107dfd4721d2b54c3ace1241570bf9dcca"
+        }
+      },
+      {
+        "description": "generator x28948022309329048855892746252171976963209391069768726095651290785379540373584",
+        "input": {
+          "k": "28948022309329048855892746252171976963209391069768726095651290785379540373584",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x8ff4f9ed10d7590c6fc29bf03cebb05a51fd886d9d946fb9",
+          "y": "0x208663f03789bee0ad34d16d47b7e50af961eb2744b38bec"
+        }
+      },
+      {
+        "description": "generator x57896044618658097711785492504343953926418782139537452191302581570759080747168",
+        "input": {
+          "k": "57896044618658097711785492504343953926418782139537452191302581570759080747168",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xb4b65b9ed847233da95f1df1926f41f85234f3e0cf9e8553",
+          "y": "0x36a6b6eb441f2391f32557d0acf64f7def635fcaa764a21a"
+        }
+      },
+      {
+        "description": "generator x86844066927987146567678238756515930889628173209306178286953872356138621120752",
+        "input": {
+          "k": "86844066927987146567678238756515930889628173209306178286953872356138621120752",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x368ba26259eb6e4bc26a2c79a7e9a0254d02f6785180801",
+          "y": "0xa3aaa16347267204e40ffc0e2de8830a9fa24bbf104e8b4d"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494317",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494317",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494318",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494318",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x25477d5349019120f7b083c073aec3c0cb3efe6c32c5c06",
+          "y": "0x599dcb8134a5fcb15854e7185dbdbd3e25458eb2434e5324"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494319",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494319",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x7cadec68fe5bf8664aac3138c1b73f39617386e41342f0bc",
+          "y": "0xeb596508c338c2adeb677ce4d07db8f4df0cef375db9c8f6"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494320",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494320",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x2642637898a391617a577fee1994519ea363003dbfb92e61",
+          "y": "0x741bdfc62059f9689d9f2ef3ce6b12ea4d705dd5bdf4c7da"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494321",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494321",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xc6cd077212a151f6677c96529541de697616caefecec0042",
+          "y": "0xbfea0dcf8335074ba4ba05dd3ea990d3688551cbbd2c7173"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494322",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494322",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x1dd41457ee59deb667203b06161c631d986fed05ca2deef6",
+          "y": "0x4cb34a88bc2ac78fb62a520849ac4eac9f7e8e3f4b0c2749"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494323",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494323",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x843bd4e1efc36ded559151400e208afc2ff2eec0bee112d0",
+          "y": "0x1dd362299bfec0a66482ab5e186d4f90482937d21dcbf450"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494324",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494324",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xc8f17f4cbda20a6157cd42acd3233ca6bbce2ec893c43cdf",
+          "y": "0x4015d780a462bc9e02b129468d74d00364ddfe2b2694eb0c"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494325",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494325",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xe3009aff19f38250e2ca6f6c2393d2198b3a2eea956162e8",
+          "y": "0xc07ad43fa7f2b39335c17e4b62b4f9fe319cb7a0a073f5fd"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494326",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494326",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xef2fec00575f5da849a463fd008ef491a1fdd4d614a7b6e8",
+          "y": "0x9f4e729bf8ab66bdaac9eb99d81396220772247efbd2c8db"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494327",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494327",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x339402765dc3e3becfb3090604cbc7676fd407f344c97b24",
+          "y": "0xecf8d6df7c5c0362424e25cbd68d8723e684ff280ac22376"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494328",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494328",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x4e1dc064be9b9971e912a74d1100b43666fe6dea77571257",
+          "y": "0x37f42a58a2be9674b8b16b7063cf3ae4168b8469e1943254"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494329",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494329",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x2b444614e7056872415e6b64b7785571c0b9fc1666216c8e",
+          "y": "0xd80bc655f0eb2bfd1835355d633d54a73b0ee9fb1ef3f219"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494330",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494330",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xca6c6bd5d0715ef318cc13e5a11ca073d879e2e241f1d9be",
+          "y": "0xc8432fbf6ebbe25c19136ee8a63ce58215a14cf07b742403"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494331",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494331",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xa354510f7e2a4861934d559950794a838457d895e988e98f",
+          "y": "0xfcd2c1c614b522c5c368573474c129b651fbe80f9d9447f3"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494332",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494332",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xb6525914a0a53061f3eeb217892668c34d701942da6479ba",
+          "y": "0x33d198dd46e59bc4ba6e91e077837e0a84f4aee024792f4f"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494333",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494333",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x6a86420ec32b45ba7aa6943e6e38281605622230d63c7bcb",
+          "y": "0xbfdf868a7e04194bb204282107d01b466f5c642b9e76c8e2"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494334",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494334",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x58c16bf00c3bde50f0c02f4bdfd7e3de219c19b8bf5c4d46",
+          "y": "0xcecb9a9c3a7f21b986ab65b06b8fd8b6d65d32fca61c0960"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494335",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494335",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x7efb560163b4a7cb68b9f7a01ebf905e10880f4cb44beca1",
+          "y": "0xed51b2029bef6545fef7750e37488e6c2c48e65a6c83b80f"
+        }
+      },
+      {
+        "description": "generator x115792089237316195423570985008687907852837564279074904382605163141518161494336",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494336",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x2759c68d0117db53827c75b6f5ca48efb0616924200cc08d",
+          "y": "0x24d42386524dd039a02089596189efb548a7033691e5bb5b"
+        }
+      },
+      {
+        "description": "generator x77059549740374936337596179780007572461065571555507600191520924336939429631266",
+        "input": {
+          "k": "77059549740374936337596179780007572461065571555507600191520924336939429631266",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x7ffce731dca41fee85bb44f747093b2c7f81447993abc844",
+          "y": "0xd1d7c22fb2ccf982576451f7a838ebb6a8b0346cedc10e9b"
+        }
+      },
+      {
+        "description": "generator x32670510020758816978083085130507043184471273380659243275938904335757337482424",
+        "input": {
+          "k": "32670510020758816978083085130507043184471273380659243275938904335757337482424",
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xa0ccbab8bfa3dc330343940e18ba73401aaa208ccff0ec44",
+          "y": "0xd2c499ea52104d1ffa58c823321f20327a1e3d9ca1e3ba20"
+        }
+      }
+    ],
+    "invalid": []
+  },
+  "addition": {
+    "valid": [
+      {
+        "description": "addition generator small scalar xG1 plus generator",
+        "input": {
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xf091cf6331b1747684f5d2549cd1d4b3a8bed93b94f93cb6",
+          "y": "0xfd7af42e1e7565a02e6268661c5e42e603da2d98a18f2ed5"
+        }
+      },
+      {
+        "description": "addition generator small scalar xG2 plus generator",
+        "input": {
+          "x1": "0xf091cf6331b1747684f5d2549cd1d4b3a8bed93b94f93cb6",
+          "y1": "0xfd7af42e1e7565a02e6268661c5e42e603da2d98a18f2ed5",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x6e43b7dcae2fd5e0bf2a1ba7615ca3b9065487c9a67b4583",
+          "y": "0xc48dcea47ae08e84d5fedc3d09e4c19606a290f7a19a6a58"
+        }
+      },
+      {
+        "description": "addition generator small scalar xG3 plus generator",
+        "input": {
+          "x1": "0x6e43b7dcae2fd5e0bf2a1ba7615ca3b9065487c9a67b4583",
+          "y1": "0xc48dcea47ae08e84d5fedc3d09e4c19606a290f7a19a6a58",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xea525dd5a1353762a14e9e78b9063316d1f2d5e792f87862",
+          "y": "0xa936d583530982690c445427cdf2c5b0bb1c88749247b02e"
+        }
+      },
+      {
+        "description": "addition generator small scalar xG4 plus generator",
+        "input": {
+          "x1": "0xea525dd5a1353762a14e9e78b9063316d1f2d5e792f87862",
+          "y1": "0xa936d583530982690c445427cdf2c5b0bb1c88749247b02e",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x3cd61e370d02ca0687c0b5f7ebf6d0373f4dd0ccccb7cc2d",
+          "y": "0x2c4befd9b02f301eb4014504f0533aa7eb19e9ea56441f78"
+        }
+      },
+      {
+        "description": "addition generator small scalar xG5 plus generator",
+        "input": {
+          "x1": "0x3cd61e370d02ca0687c0b5f7ebf6d0373f4dd0ccccb7cc2d",
+          "y1": "0x2c4befd9b02f301eb4014504f0533aa7eb19e9ea56441f78",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xd5cfbcca993f384a5eabc46b81a39a40cdd39ec2a6c44ee9",
+          "y": "0xd2b873da35309b7dac745267c7da4467d42115d5efd0922f"
+        }
+      },
+      {
+        "description": "addition generator small scalar xG6 plus generator",
+        "input": {
+          "x1": "0xd5cfbcca993f384a5eabc46b81a39a40cdd39ec2a6c44ee9",
+          "y1": "0xd2b873da35309b7dac745267c7da4467d42115d5efd0922f",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xdb06629f196458e33eea3a0d6a40f3d34074db3f563d9e83",
+          "y": "0xa5b55dc8c878fcfe37b12b8d1299609e9ea5526d062e718c"
+        }
+      },
+      {
+        "description": "addition generator small scalar xG7 plus generator",
+        "input": {
+          "x1": "0xdb06629f196458e33eea3a0d6a40f3d34074db3f563d9e83",
+          "y1": "0xa5b55dc8c878fcfe37b12b8d1299609e9ea5526d062e718c",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xeabcf674aafe661300fc77ec078b20f73fb6816851d542aa",
+          "y": "0xd70a622b8f604b9e83d45f07d8a5c8b6136eaac8fb4e8d8f"
+        }
+      },
+      {
+        "description": "addition generator small scalar xG8 plus generator",
+        "input": {
+          "x1": "0xeabcf674aafe661300fc77ec078b20f73fb6816851d542aa",
+          "y1": "0xd70a622b8f604b9e83d45f07d8a5c8b6136eaac8fb4e8d8f",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xefd9da261826e62d1e9d4e9fa35e2575cf03a65d3beba73a",
+          "y": "0xa905d8ef35066fdc102ba8e8033b6b232fdcd0813a66e7f4"
+        }
+      },
+      {
+        "description": "addition generator small scalar xG9 plus generator",
+        "input": {
+          "x1": "0xefd9da261826e62d1e9d4e9fa35e2575cf03a65d3beba73a",
+          "y1": "0xa905d8ef35066fdc102ba8e8033b6b232fdcd0813a66e7f4",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x598955b973468f82ee734058feef3378740882410fa69ec1",
+          "y": "0x376625e46eea0c9171b92a2e52410c37b93f15c18e4d8a9"
+        }
+      },
+      {
+        "description": "addition generator small scalar xG10 plus generator",
+        "input": {
+          "x1": "0x598955b973468f82ee734058feef3378740882410fa69ec1",
+          "y1": "0x376625e46eea0c9171b92a2e52410c37b93f15c18e4d8a9",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x870bef1fc2e12f4e9da570e29642c1aa3e9430da8df3ae2",
+          "y": "0xf2b1acd05bcd9d71306b6a60915bf9f918c47eedb006d145"
+        }
+      },
+      {
+        "description": "addition generator small scalar xG11 plus generator",
+        "input": {
+          "x1": "0x870bef1fc2e12f4e9da570e29642c1aa3e9430da8df3ae2",
+          "y1": "0xf2b1acd05bcd9d71306b6a60915bf9f918c47eedb006d145",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x85cdf2406f0b5eb222b2eb6bb9d366038331fbe119dbcf9a",
+          "y": "0xd1df90fc9421c8cf194601689c6233389ae85bcece87708b"
+        }
+      },
+      {
+        "description": "addition generator small scalar xG12 plus generator",
+        "input": {
+          "x1": "0x85cdf2406f0b5eb222b2eb6bb9d366038331fbe119dbcf9a",
+          "y1": "0xd1df90fc9421c8cf194601689c6233389ae85bcece87708b",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xafc6c0d8c291f69576f5e67f3c8ada23252e5fb8a287ffcb",
+          "y": "0x772f7a0e23bb6a18f5ab6de6390710b844b04145c84e41cc"
+        }
+      },
+      {
+        "description": "addition generator small scalar xG13 plus generator",
+        "input": {
+          "x1": "0xafc6c0d8c291f69576f5e67f3c8ada23252e5fb8a287ffcb",
+          "y1": "0x772f7a0e23bb6a18f5ab6de6390710b844b04145c84e41cc",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x79f614ff8d118cb981d407139b9b2d3cdbbabc70b1f20b26",
+          "y": "0x8435cf487547e41fe61096553e53b9c5859d827de604fa47"
+        }
+      },
+      {
+        "description": "addition generator small scalar xG14 plus generator",
+        "input": {
+          "x1": "0x79f614ff8d118cb981d407139b9b2d3cdbbabc70b1f20b26",
+          "y1": "0x8435cf487547e41fe61096553e53b9c5859d827de604fa47",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x1b3d5a19287851863fb48e5a00c22745b046c3c8df1d6a49",
+          "y": "0x2b8f7fb272534b32532d8f2fa4ce40b6f6ee60b4983322c6"
+        }
+      },
+      {
+        "description": "addition generator small scalar xG15 plus generator",
+        "input": {
+          "x1": "0x1b3d5a19287851863fb48e5a00c22745b046c3c8df1d6a49",
+          "y1": "0x2b8f7fb272534b32532d8f2fa4ce40b6f6ee60b4983322c6",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xacf5fe0755a890558037f6793a1f9f9879788d85f56c541a",
+          "y": "0x5f716973464ec93b1a5de443ada79dfc605ef641dd2f1c97"
+        }
+      },
+      {
+        "description": "addition generator small scalar xG16 plus generator",
+        "input": {
+          "x1": "0xacf5fe0755a890558037f6793a1f9f9879788d85f56c541a",
+          "y1": "0x5f716973464ec93b1a5de443ada79dfc605ef641dd2f1c97",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xcd04834b06e08576a530d2cef7635c6a8d9490ca8578dbbd",
+          "y": "0x7372d1a48719565fc104f2671e7b996afeb668f72229ceb7"
+        }
+      },
+      {
+        "description": "addition generator small scalar xG17 plus generator",
+        "input": {
+          "x1": "0xcd04834b06e08576a530d2cef7635c6a8d9490ca8578dbbd",
+          "y1": "0x7372d1a48719565fc104f2671e7b996afeb668f72229ceb7",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xd80d8978c462bdbda19bbb4854bd2d9565c78a056dc77d97",
+          "y": "0x691552621745cc2350d3edcaaedaa367725969b67466e255"
+        }
+      },
+      {
+        "description": "addition generator small scalar xG18 plus generator",
+        "input": {
+          "x1": "0xd80d8978c462bdbda19bbb4854bd2d9565c78a056dc77d97",
+          "y1": "0x691552621745cc2350d3edcaaedaa367725969b67466e255",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x5926c507c8769658aff2c6ccf64f62faac58f1f5b9a26937",
+          "y": "0x7de878d7c82d6febf138356df95a92f51cdaeeb27539acbc"
+        }
+      },
+      {
+        "description": "addition generator small scalar xG19 plus generator",
+        "input": {
+          "x1": "0x5926c507c8769658aff2c6ccf64f62faac58f1f5b9a26937",
+          "y1": "0x7de878d7c82d6febf138356df95a92f51cdaeeb27539acbc",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x9c98bfeee470b7095592668d77665b4c0b71ad5d4b7d7fe9",
+          "y": "0xb7b807acf5c1f753796a1982eca001c8772bc43c9987bf45"
+        }
+      },
+      {
+        "description": "addition big scalar 1 xG plus big scalar 2 xG",
+        "input": {
+          "x1": "0x8ff4f9ed10d7590c6fc29bf03cebb05a51fd886d9d946fb9",
+          "y1": "0x208663f03789bee0ad34d16d47b7e50af961eb2744b38bec",
+          "x2": "0xb4b65b9ed847233da95f1df1926f41f85234f3e0cf9e8553",
+          "y2": "0x36a6b6eb441f2391f32557d0acf64f7def635fcaa764a21a"
+        },
+        "output": {
+          "x": "0x368ba26259eb6e4bc26a2c79a7e9a0254d02f6785180801",
+          "y": "0xa3aaa16347267204e40ffc0e2de8830a9fa24bbf104e8b4d"
+        }
+      },
+      {
+        "description": "addition small scalar 1xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x25477d5349019120f7b083c073aec3c0cb3efe6c32c5c06",
+          "y": "0x599dcb8134a5fcb15854e7185dbdbd3e25458eb2434e5324"
+        }
+      },
+      {
+        "description": "addition small scalar 2xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0xf091cf6331b1747684f5d2549cd1d4b3a8bed93b94f93cb6",
+          "y2": "0xfd7af42e1e7565a02e6268661c5e42e603da2d98a18f2ed5"
+        },
+        "output": {
+          "x": "0x7cadec68fe5bf8664aac3138c1b73f39617386e41342f0bc",
+          "y": "0xeb596508c338c2adeb677ce4d07db8f4df0cef375db9c8f6"
+        }
+      },
+      {
+        "description": "addition small scalar 3xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0x6e43b7dcae2fd5e0bf2a1ba7615ca3b9065487c9a67b4583",
+          "y2": "0xc48dcea47ae08e84d5fedc3d09e4c19606a290f7a19a6a58"
+        },
+        "output": {
+          "x": "0x2642637898a391617a577fee1994519ea363003dbfb92e61",
+          "y": "0x741bdfc62059f9689d9f2ef3ce6b12ea4d705dd5bdf4c7da"
+        }
+      },
+      {
+        "description": "addition small scalar 4xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0xea525dd5a1353762a14e9e78b9063316d1f2d5e792f87862",
+          "y2": "0xa936d583530982690c445427cdf2c5b0bb1c88749247b02e"
+        },
+        "output": {
+          "x": "0xc6cd077212a151f6677c96529541de697616caefecec0042",
+          "y": "0xbfea0dcf8335074ba4ba05dd3ea990d3688551cbbd2c7173"
+        }
+      },
+      {
+        "description": "addition small scalar 5xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0x3cd61e370d02ca0687c0b5f7ebf6d0373f4dd0ccccb7cc2d",
+          "y2": "0x2c4befd9b02f301eb4014504f0533aa7eb19e9ea56441f78"
+        },
+        "output": {
+          "x": "0x1dd41457ee59deb667203b06161c631d986fed05ca2deef6",
+          "y": "0x4cb34a88bc2ac78fb62a520849ac4eac9f7e8e3f4b0c2749"
+        }
+      },
+      {
+        "description": "addition small scalar 6xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0xd5cfbcca993f384a5eabc46b81a39a40cdd39ec2a6c44ee9",
+          "y2": "0xd2b873da35309b7dac745267c7da4467d42115d5efd0922f"
+        },
+        "output": {
+          "x": "0x843bd4e1efc36ded559151400e208afc2ff2eec0bee112d0",
+          "y": "0x1dd362299bfec0a66482ab5e186d4f90482937d21dcbf450"
+        }
+      },
+      {
+        "description": "addition small scalar 7xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0xdb06629f196458e33eea3a0d6a40f3d34074db3f563d9e83",
+          "y2": "0xa5b55dc8c878fcfe37b12b8d1299609e9ea5526d062e718c"
+        },
+        "output": {
+          "x": "0xc8f17f4cbda20a6157cd42acd3233ca6bbce2ec893c43cdf",
+          "y": "0x4015d780a462bc9e02b129468d74d00364ddfe2b2694eb0c"
+        }
+      },
+      {
+        "description": "addition small scalar 8xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0xeabcf674aafe661300fc77ec078b20f73fb6816851d542aa",
+          "y2": "0xd70a622b8f604b9e83d45f07d8a5c8b6136eaac8fb4e8d8f"
+        },
+        "output": {
+          "x": "0xe3009aff19f38250e2ca6f6c2393d2198b3a2eea956162e8",
+          "y": "0xc07ad43fa7f2b39335c17e4b62b4f9fe319cb7a0a073f5fd"
+        }
+      },
+      {
+        "description": "addition small scalar 9xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0xefd9da261826e62d1e9d4e9fa35e2575cf03a65d3beba73a",
+          "y2": "0xa905d8ef35066fdc102ba8e8033b6b232fdcd0813a66e7f4"
+        },
+        "output": {
+          "x": "0xef2fec00575f5da849a463fd008ef491a1fdd4d614a7b6e8",
+          "y": "0x9f4e729bf8ab66bdaac9eb99d81396220772247efbd2c8db"
+        }
+      },
+      {
+        "description": "addition small scalar 10xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0x598955b973468f82ee734058feef3378740882410fa69ec1",
+          "y2": "0x376625e46eea0c9171b92a2e52410c37b93f15c18e4d8a9"
+        },
+        "output": {
+          "x": "0x339402765dc3e3becfb3090604cbc7676fd407f344c97b24",
+          "y": "0xecf8d6df7c5c0362424e25cbd68d8723e684ff280ac22376"
+        }
+      },
+      {
+        "description": "addition small scalar 11xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0x870bef1fc2e12f4e9da570e29642c1aa3e9430da8df3ae2",
+          "y2": "0xf2b1acd05bcd9d71306b6a60915bf9f918c47eedb006d145"
+        },
+        "output": {
+          "x": "0x4e1dc064be9b9971e912a74d1100b43666fe6dea77571257",
+          "y": "0x37f42a58a2be9674b8b16b7063cf3ae4168b8469e1943254"
+        }
+      },
+      {
+        "description": "addition small scalar 12xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0x85cdf2406f0b5eb222b2eb6bb9d366038331fbe119dbcf9a",
+          "y2": "0xd1df90fc9421c8cf194601689c6233389ae85bcece87708b"
+        },
+        "output": {
+          "x": "0x2b444614e7056872415e6b64b7785571c0b9fc1666216c8e",
+          "y": "0xd80bc655f0eb2bfd1835355d633d54a73b0ee9fb1ef3f219"
+        }
+      },
+      {
+        "description": "addition small scalar 13xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0xafc6c0d8c291f69576f5e67f3c8ada23252e5fb8a287ffcb",
+          "y2": "0x772f7a0e23bb6a18f5ab6de6390710b844b04145c84e41cc"
+        },
+        "output": {
+          "x": "0xca6c6bd5d0715ef318cc13e5a11ca073d879e2e241f1d9be",
+          "y": "0xc8432fbf6ebbe25c19136ee8a63ce58215a14cf07b742403"
+        }
+      },
+      {
+        "description": "addition small scalar 14xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0x79f614ff8d118cb981d407139b9b2d3cdbbabc70b1f20b26",
+          "y2": "0x8435cf487547e41fe61096553e53b9c5859d827de604fa47"
+        },
+        "output": {
+          "x": "0xa354510f7e2a4861934d559950794a838457d895e988e98f",
+          "y": "0xfcd2c1c614b522c5c368573474c129b651fbe80f9d9447f3"
+        }
+      },
+      {
+        "description": "addition small scalar 15xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0x1b3d5a19287851863fb48e5a00c22745b046c3c8df1d6a49",
+          "y2": "0x2b8f7fb272534b32532d8f2fa4ce40b6f6ee60b4983322c6"
+        },
+        "output": {
+          "x": "0xb6525914a0a53061f3eeb217892668c34d701942da6479ba",
+          "y": "0x33d198dd46e59bc4ba6e91e077837e0a84f4aee024792f4f"
+        }
+      },
+      {
+        "description": "addition small scalar 16xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0xacf5fe0755a890558037f6793a1f9f9879788d85f56c541a",
+          "y2": "0x5f716973464ec93b1a5de443ada79dfc605ef641dd2f1c97"
+        },
+        "output": {
+          "x": "0x6a86420ec32b45ba7aa6943e6e38281605622230d63c7bcb",
+          "y": "0xbfdf868a7e04194bb204282107d01b466f5c642b9e76c8e2"
+        }
+      },
+      {
+        "description": "addition small scalar 17xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0xcd04834b06e08576a530d2cef7635c6a8d9490ca8578dbbd",
+          "y2": "0x7372d1a48719565fc104f2671e7b996afeb668f72229ceb7"
+        },
+        "output": {
+          "x": "0x58c16bf00c3bde50f0c02f4bdfd7e3de219c19b8bf5c4d46",
+          "y": "0xcecb9a9c3a7f21b986ab65b06b8fd8b6d65d32fca61c0960"
+        }
+      },
+      {
+        "description": "addition small scalar 18xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0xd80d8978c462bdbda19bbb4854bd2d9565c78a056dc77d97",
+          "y2": "0x691552621745cc2350d3edcaaedaa367725969b67466e255"
+        },
+        "output": {
+          "x": "0x7efb560163b4a7cb68b9f7a01ebf905e10880f4cb44beca1",
+          "y": "0xed51b2029bef6545fef7750e37488e6c2c48e65a6c83b80f"
+        }
+      },
+      {
+        "description": "addition small scalar 19xG plus big scalar 4 xG",
+        "input": {
+          "x1": "0xc986e5abcbf2640b880095a23c3ff60aa7c01300dc58da16",
+          "y1": "0x4493d57b35dc88e1631fc18d108621a1224befb3917f3216",
+          "x2": "0x5926c507c8769658aff2c6ccf64f62faac58f1f5b9a26937",
+          "y2": "0x7de878d7c82d6febf138356df95a92f51cdaeeb27539acbc"
+        },
+        "output": {
+          "x": "0x2759c68d0117db53827c75b6f5ca48efb0616924200cc08d",
+          "y": "0x24d42386524dd039a02089596189efb548a7033691e5bb5b"
+        }
+      }
+    ],
+    "invalid": []
+  },
+  "subtraction": {
+    "valid": [
+      {
+        "description": "subtraction small scalar 5 xG minus generator",
+        "input": {
+          "x1": "0xf091cf6331b1747684f5d2549cd1d4b3a8bed93b94f93cb6",
+          "y1": "0xfd7af42e1e7565a02e6268661c5e42e603da2d98a18f2ed5",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        }
+      },
+      {
+        "description": "subtraction small scalar 6 xG minus generator",
+        "input": {
+          "x1": "0x6e43b7dcae2fd5e0bf2a1ba7615ca3b9065487c9a67b4583",
+          "y1": "0xc48dcea47ae08e84d5fedc3d09e4c19606a290f7a19a6a58",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xf091cf6331b1747684f5d2549cd1d4b3a8bed93b94f93cb6",
+          "y": "0xfd7af42e1e7565a02e6268661c5e42e603da2d98a18f2ed5"
+        }
+      },
+      {
+        "description": "subtraction small scalar 7 xG minus generator",
+        "input": {
+          "x1": "0xea525dd5a1353762a14e9e78b9063316d1f2d5e792f87862",
+          "y1": "0xa936d583530982690c445427cdf2c5b0bb1c88749247b02e",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x6e43b7dcae2fd5e0bf2a1ba7615ca3b9065487c9a67b4583",
+          "y": "0xc48dcea47ae08e84d5fedc3d09e4c19606a290f7a19a6a58"
+        }
+      },
+      {
+        "description": "subtraction small scalar 8 xG minus generator",
+        "input": {
+          "x1": "0x3cd61e370d02ca0687c0b5f7ebf6d0373f4dd0ccccb7cc2d",
+          "y1": "0x2c4befd9b02f301eb4014504f0533aa7eb19e9ea56441f78",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xea525dd5a1353762a14e9e78b9063316d1f2d5e792f87862",
+          "y": "0xa936d583530982690c445427cdf2c5b0bb1c88749247b02e"
+        }
+      },
+      {
+        "description": "subtraction small scalar 9 xG minus generator",
+        "input": {
+          "x1": "0xd5cfbcca993f384a5eabc46b81a39a40cdd39ec2a6c44ee9",
+          "y1": "0xd2b873da35309b7dac745267c7da4467d42115d5efd0922f",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x3cd61e370d02ca0687c0b5f7ebf6d0373f4dd0ccccb7cc2d",
+          "y": "0x2c4befd9b02f301eb4014504f0533aa7eb19e9ea56441f78"
+        }
+      },
+      {
+        "description": "subtraction small scalar 10 xG minus generator",
+        "input": {
+          "x1": "0xdb06629f196458e33eea3a0d6a40f3d34074db3f563d9e83",
+          "y1": "0xa5b55dc8c878fcfe37b12b8d1299609e9ea5526d062e718c",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xd5cfbcca993f384a5eabc46b81a39a40cdd39ec2a6c44ee9",
+          "y": "0xd2b873da35309b7dac745267c7da4467d42115d5efd0922f"
+        }
+      },
+      {
+        "description": "subtraction small scalar 11 xG minus generator",
+        "input": {
+          "x1": "0xeabcf674aafe661300fc77ec078b20f73fb6816851d542aa",
+          "y1": "0xd70a622b8f604b9e83d45f07d8a5c8b6136eaac8fb4e8d8f",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xdb06629f196458e33eea3a0d6a40f3d34074db3f563d9e83",
+          "y": "0xa5b55dc8c878fcfe37b12b8d1299609e9ea5526d062e718c"
+        }
+      },
+      {
+        "description": "subtraction small scalar 12 xG minus generator",
+        "input": {
+          "x1": "0xefd9da261826e62d1e9d4e9fa35e2575cf03a65d3beba73a",
+          "y1": "0xa905d8ef35066fdc102ba8e8033b6b232fdcd0813a66e7f4",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xeabcf674aafe661300fc77ec078b20f73fb6816851d542aa",
+          "y": "0xd70a622b8f604b9e83d45f07d8a5c8b6136eaac8fb4e8d8f"
+        }
+      },
+      {
+        "description": "subtraction small scalar 13 xG minus generator",
+        "input": {
+          "x1": "0x598955b973468f82ee734058feef3378740882410fa69ec1",
+          "y1": "0x376625e46eea0c9171b92a2e52410c37b93f15c18e4d8a9",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xefd9da261826e62d1e9d4e9fa35e2575cf03a65d3beba73a",
+          "y": "0xa905d8ef35066fdc102ba8e8033b6b232fdcd0813a66e7f4"
+        }
+      },
+      {
+        "description": "subtraction small scalar 14 xG minus generator",
+        "input": {
+          "x1": "0x870bef1fc2e12f4e9da570e29642c1aa3e9430da8df3ae2",
+          "y1": "0xf2b1acd05bcd9d71306b6a60915bf9f918c47eedb006d145",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x598955b973468f82ee734058feef3378740882410fa69ec1",
+          "y": "0x376625e46eea0c9171b92a2e52410c37b93f15c18e4d8a9"
+        }
+      },
+      {
+        "description": "subtraction small scalar 15 xG minus generator",
+        "input": {
+          "x1": "0x85cdf2406f0b5eb222b2eb6bb9d366038331fbe119dbcf9a",
+          "y1": "0xd1df90fc9421c8cf194601689c6233389ae85bcece87708b",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x870bef1fc2e12f4e9da570e29642c1aa3e9430da8df3ae2",
+          "y": "0xf2b1acd05bcd9d71306b6a60915bf9f918c47eedb006d145"
+        }
+      },
+      {
+        "description": "subtraction small scalar 16 xG minus generator",
+        "input": {
+          "x1": "0xafc6c0d8c291f69576f5e67f3c8ada23252e5fb8a287ffcb",
+          "y1": "0x772f7a0e23bb6a18f5ab6de6390710b844b04145c84e41cc",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x85cdf2406f0b5eb222b2eb6bb9d366038331fbe119dbcf9a",
+          "y": "0xd1df90fc9421c8cf194601689c6233389ae85bcece87708b"
+        }
+      },
+      {
+        "description": "subtraction small scalar 17 xG minus generator",
+        "input": {
+          "x1": "0x79f614ff8d118cb981d407139b9b2d3cdbbabc70b1f20b26",
+          "y1": "0x8435cf487547e41fe61096553e53b9c5859d827de604fa47",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xafc6c0d8c291f69576f5e67f3c8ada23252e5fb8a287ffcb",
+          "y": "0x772f7a0e23bb6a18f5ab6de6390710b844b04145c84e41cc"
+        }
+      },
+      {
+        "description": "subtraction small scalar 18 xG minus generator",
+        "input": {
+          "x1": "0x1b3d5a19287851863fb48e5a00c22745b046c3c8df1d6a49",
+          "y1": "0x2b8f7fb272534b32532d8f2fa4ce40b6f6ee60b4983322c6",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x79f614ff8d118cb981d407139b9b2d3cdbbabc70b1f20b26",
+          "y": "0x8435cf487547e41fe61096553e53b9c5859d827de604fa47"
+        }
+      },
+      {
+        "description": "subtraction small scalar 19 xG minus generator",
+        "input": {
+          "x1": "0xacf5fe0755a890558037f6793a1f9f9879788d85f56c541a",
+          "y1": "0x5f716973464ec93b1a5de443ada79dfc605ef641dd2f1c97",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x1b3d5a19287851863fb48e5a00c22745b046c3c8df1d6a49",
+          "y": "0x2b8f7fb272534b32532d8f2fa4ce40b6f6ee60b4983322c6"
+        }
+      },
+      {
+        "description": "subtraction small scalar 20 xG minus generator",
+        "input": {
+          "x1": "0xcd04834b06e08576a530d2cef7635c6a8d9490ca8578dbbd",
+          "y1": "0x7372d1a48719565fc104f2671e7b996afeb668f72229ceb7",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xacf5fe0755a890558037f6793a1f9f9879788d85f56c541a",
+          "y": "0x5f716973464ec93b1a5de443ada79dfc605ef641dd2f1c97"
+        }
+      },
+      {
+        "description": "subtraction small scalar 21 xG minus generator",
+        "input": {
+          "x1": "0xd80d8978c462bdbda19bbb4854bd2d9565c78a056dc77d97",
+          "y1": "0x691552621745cc2350d3edcaaedaa367725969b67466e255",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xcd04834b06e08576a530d2cef7635c6a8d9490ca8578dbbd",
+          "y": "0x7372d1a48719565fc104f2671e7b996afeb668f72229ceb7"
+        }
+      },
+      {
+        "description": "subtraction small scalar 22 xG minus generator",
+        "input": {
+          "x1": "0x5926c507c8769658aff2c6ccf64f62faac58f1f5b9a26937",
+          "y1": "0x7de878d7c82d6febf138356df95a92f51cdaeeb27539acbc",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xd80d8978c462bdbda19bbb4854bd2d9565c78a056dc77d97",
+          "y": "0x691552621745cc2350d3edcaaedaa367725969b67466e255"
+        }
+      },
+      {
+        "description": "subtraction small scalar 23 xG minus generator",
+        "input": {
+          "x1": "0x9c98bfeee470b7095592668d77665b4c0b71ad5d4b7d7fe9",
+          "y1": "0xb7b807acf5c1f753796a1982eca001c8772bc43c9987bf45",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x5926c507c8769658aff2c6ccf64f62faac58f1f5b9a26937",
+          "y": "0x7de878d7c82d6febf138356df95a92f51cdaeeb27539acbc"
+        }
+      }
+    ],
+    "invalid": []
+  },
+  "mulAddMul": {
+    "valid": [
+      {
+        "description": "big scalar 1 xG plus big scalar 2 xG",
+        "input": {
+          "k": "28948022309329048855892746252171976963209391069768726095651290785379540373584",
+          "l": "57896044618658097711785492504343953926418782139537452191302581570759080747168",
+          "px": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "py": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "qx": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "qy": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x368ba26259eb6e4bc26a2c79a7e9a0254d02f6785180801",
+          "y": "0xa3aaa16347267204e40ffc0e2de8830a9fa24bbf104e8b4d"
+        }
+      },
+      {
+        "description": "small scalar 1xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494317",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x25477d5349019120f7b083c073aec3c0cb3efe6c32c5c06",
+          "y": "0x599dcb8134a5fcb15854e7185dbdbd3e25458eb2434e5324"
+        }
+      },
+      {
+        "description": "small scalar 2xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494318",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x7cadec68fe5bf8664aac3138c1b73f39617386e41342f0bc",
+          "y": "0xeb596508c338c2adeb677ce4d07db8f4df0cef375db9c8f6"
+        }
+      },
+      {
+        "description": "small scalar 3xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494319",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x2642637898a391617a577fee1994519ea363003dbfb92e61",
+          "y": "0x741bdfc62059f9689d9f2ef3ce6b12ea4d705dd5bdf4c7da"
+        }
+      },
+      {
+        "description": "small scalar 4xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494320",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xc6cd077212a151f6677c96529541de697616caefecec0042",
+          "y": "0xbfea0dcf8335074ba4ba05dd3ea990d3688551cbbd2c7173"
+        }
+      },
+      {
+        "description": "small scalar 5xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494321",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x1dd41457ee59deb667203b06161c631d986fed05ca2deef6",
+          "y": "0x4cb34a88bc2ac78fb62a520849ac4eac9f7e8e3f4b0c2749"
+        }
+      },
+      {
+        "description": "small scalar 6xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494322",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x843bd4e1efc36ded559151400e208afc2ff2eec0bee112d0",
+          "y": "0x1dd362299bfec0a66482ab5e186d4f90482937d21dcbf450"
+        }
+      },
+      {
+        "description": "small scalar 7xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494323",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xc8f17f4cbda20a6157cd42acd3233ca6bbce2ec893c43cdf",
+          "y": "0x4015d780a462bc9e02b129468d74d00364ddfe2b2694eb0c"
+        }
+      },
+      {
+        "description": "small scalar 8xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494324",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xe3009aff19f38250e2ca6f6c2393d2198b3a2eea956162e8",
+          "y": "0xc07ad43fa7f2b39335c17e4b62b4f9fe319cb7a0a073f5fd"
+        }
+      },
+      {
+        "description": "small scalar 9xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494325",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xef2fec00575f5da849a463fd008ef491a1fdd4d614a7b6e8",
+          "y": "0x9f4e729bf8ab66bdaac9eb99d81396220772247efbd2c8db"
+        }
+      },
+      {
+        "description": "small scalar 10xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494326",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x339402765dc3e3becfb3090604cbc7676fd407f344c97b24",
+          "y": "0xecf8d6df7c5c0362424e25cbd68d8723e684ff280ac22376"
+        }
+      },
+      {
+        "description": "small scalar 11xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494327",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x4e1dc064be9b9971e912a74d1100b43666fe6dea77571257",
+          "y": "0x37f42a58a2be9674b8b16b7063cf3ae4168b8469e1943254"
+        }
+      },
+      {
+        "description": "small scalar 12xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494328",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x2b444614e7056872415e6b64b7785571c0b9fc1666216c8e",
+          "y": "0xd80bc655f0eb2bfd1835355d633d54a73b0ee9fb1ef3f219"
+        }
+      },
+      {
+        "description": "small scalar 13xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494329",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xca6c6bd5d0715ef318cc13e5a11ca073d879e2e241f1d9be",
+          "y": "0xc8432fbf6ebbe25c19136ee8a63ce58215a14cf07b742403"
+        }
+      },
+      {
+        "description": "small scalar 14xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494330",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xa354510f7e2a4861934d559950794a838457d895e988e98f",
+          "y": "0xfcd2c1c614b522c5c368573474c129b651fbe80f9d9447f3"
+        }
+      },
+      {
+        "description": "small scalar 15xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494331",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0xb6525914a0a53061f3eeb217892668c34d701942da6479ba",
+          "y": "0x33d198dd46e59bc4ba6e91e077837e0a84f4aee024792f4f"
+        }
+      },
+      {
+        "description": "small scalar 16xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494332",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x6a86420ec32b45ba7aa6943e6e38281605622230d63c7bcb",
+          "y": "0xbfdf868a7e04194bb204282107d01b466f5c642b9e76c8e2"
+        }
+      },
+      {
+        "description": "small scalar 17xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494333",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x58c16bf00c3bde50f0c02f4bdfd7e3de219c19b8bf5c4d46",
+          "y": "0xcecb9a9c3a7f21b986ab65b06b8fd8b6d65d32fca61c0960"
+        }
+      },
+      {
+        "description": "small scalar 18xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494334",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x7efb560163b4a7cb68b9f7a01ebf905e10880f4cb44beca1",
+          "y": "0xed51b2029bef6545fef7750e37488e6c2c48e65a6c83b80f"
+        }
+      },
+      {
+        "description": "small scalar 19xG plus big scalar 4 xG",
+        "input": {
+          "k": "115792089237316195423570985008687907852837564279074904382605163141518161494335",
+          "l": "1",
+          "x1": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y1": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d",
+          "x2": "0xdb4ff10ec057e9ae26b07d0280b7f4341da5d1b1eae06c7d",
+          "y2": "0x9b2f2f6d9c5628a7844163d015be86344082aa88d95e2f9d"
+        },
+        "output": {
+          "x": "0x2759c68d0117db53827c75b6f5ca48efb0616924200cc08d",
+          "y": "0x24d42386524dd039a02089596189efb548a7033691e5bb5b"
+        }
+      }
+    ],
+    "invalid": []
+  },
+  "scalarDecomposition": {
+    "valid": [],
+    "invalid": []
+  },
+  "simultaneousMultiplication": {
+    "valid": [],
+    "invalid": []
+  }
+}

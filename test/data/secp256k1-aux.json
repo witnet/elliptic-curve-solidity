@@ -1,0 +1,139 @@
+{
+  "params": {
+    "gx": "0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",
+    "gy": "0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8",
+    "pp": "0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f",
+    "nn": "0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141",
+    "aa": "0x0",
+    "bb": "0x7",
+    "lambda": "0x5363ad4cc05c30e0a5261c028812645a122e22ea20816678df02967c1b23bd72",
+    "beta": "0x7ae96a2b657c07106e64479eac3434e99cf0497512f58995c1396c28719501ee"
+  },
+  "toAffine": {
+    "valid": [
+      {
+        "input": {
+          "x": "0x7D152C041EA8E1DC2191843D1FA9DB55B68F88FEF695E2C791D40444B365AFC2",
+          "y": "0x56915849F52CC8F76F5FD7E4BF60DB4A43BF633E1B1383F85FE89164BFADCBDB",
+          "z": "0x9075B4EE4D4788CABB49F7F81C221151FA2F68914D0AA833388FA11FF621A970"
+        },
+        "output": {
+          "x": "0xC6047F9441ED7D6D3045406E95C07CD85C778E4B8CEF3CA7ABAC09B95C709EE5",
+          "y": "0x1AE168FEA63DC339A3C58419466CEAEEF7F632653266D0E1236431A950CFE52A"
+        }
+      }
+    ]
+  },
+  "invMod": {
+    "valid": [
+      {
+        "description": "1, pp",
+        "input": {
+          "k": "1"
+        },
+        "output": {
+          "k": "1"
+        }
+      },
+      {
+        "description": "k, pp",
+        "input": {
+          "k": "71131047696589954191631680573398728609344574897947288563661795659842666029638"
+        },
+        "output": {
+          "k": "57176992357862496962988842880061836337889463570480608132525303518135191486668"
+        }
+      },
+      {
+        "description": "inv(k), pp",
+        "input": {
+          "k": "57176992357862496962988842880061836337889463570480608132525303518135191486668"
+        },
+        "output": {
+          "k": "71131047696589954191631680573398728609344574897947288563661795659842666029638"
+        }
+      }
+    ],
+    "invalid": [
+      {
+        "description": "0, pp",
+        "input": {
+          "k": "0",
+          "mod": "0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f"
+        },
+        "output": {
+          "error": "Invalid number"
+        }
+      },
+      {
+        "description": "pp, pp",
+        "input": {
+          "k": "0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f",
+          "mod": "0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f"
+        },
+        "output": {
+          "error": "Invalid number"
+        }
+      },
+      {
+        "description": "pp, 0",
+        "input": {
+          "k": "0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f",
+          "mod": "0"
+        },
+        "output": {
+          "error": "Invalid number"
+        }
+      }
+    ]
+  },
+  "deriveY": {
+    "valid": [
+      {
+        "input": {
+          "sign": "0x03",
+          "x": "0xc2704fed5dc41d3979235b85edda8f86f1806c17ce0a516a034c605d2b4f9a26"
+        },
+        "output": {
+          "y": "0x6970c3dd18910d09250143db08fed1065a522403df0c204ed240a07d123b29d5"
+        }
+      }
+    ]
+  },
+  "isOnCurve": {
+    "valid": [
+      {
+        "input": {
+          "x": "0xe906a3b4379ddbff598994b2ff026766fb66424710776099b85111f23f8eebcc",
+          "y": "0x7638965bf85f5f2b6641324389ef2ffb99576ba72ec19d8411a5ea1dd251b112"
+        },
+        "output": {
+          "isOnCurve": true
+        }
+      },
+      {
+        "input": {
+          "x": "0x3bf754f48bc7c5fb077736c7d2abe85354be649caa94971f907b3a81759e5b5e",
+          "y": "0x6b936ce0a2a40016bbb2eb0a4a1347b5af76a41d44b56dec26108269a45bce78"
+        },
+        "output": {
+          "isOnCurve": false
+        }
+      }
+    ]
+  },
+  "invertPoint": {
+    "valid": [
+      {
+        "input": {
+          "x": "0x1c2a90c4c30f60e878d1fe317acf4f2e059300e3deaa1c949628096ecaf993b2",
+          "y": "0x9d42bf0c35d765c2242712205e8f8b1ea588f470a6980b21bc9efb4ab33ae246"
+        },
+        "output": {
+          "x": "0x1c2a90c4c30f60e878d1fe317acf4f2e059300e3deaa1c949628096ecaf993b2",
+          "y": "0x62bd40f3ca289a3ddbd8eddfa17074e15a770b8f5967f4de436104b44cc519e9"
+        }
+      }
+    ]
+  }
+}

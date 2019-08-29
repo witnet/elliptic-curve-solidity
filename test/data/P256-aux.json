@@ -1,0 +1,137 @@
+{
+  "params": {
+    "gx": "0x6b17d1f2e12c4247f8bce6e563a440f277037d812deb33a0f4a13945d898c296",
+    "gy": "0x4fe342e2fe1a7f9b8ee7eb4a7c0f9e162bce33576b315ececbb6406837bf51f5",
+    "pp": "0xffffffff00000001000000000000000000000000ffffffffffffffffffffffff",
+    "nn": "0xffffffff00000000ffffffffffffffffbce6faada7179e84f3b9cac2fc632551",
+    "aa": "0xffffffff00000001000000000000000000000000fffffffffffffffffffffffc",
+    "bb": "0x5ac635d8aa3a93e7b3ebbd55769886bc651d06b0cc53b0f63bce3c3e27d2604b"
+  },
+  "toAffine": {
+    "valid": [
+      {
+        "input": {
+          "x": "0x88E6BB871813A28C4E9AFDCD94B79D85DE4794A3C4695B311FB3C7EF1CECE619",
+          "y": "0x3D709DD3A0B3293201BCEE8E02249399DB3C130F2642C8F954417DC639ADDD22",
+          "z": "0xEEEAA21B71DA080527B358D3EE861B774FB5BCC79D304533C096F3A44F0E7A2"
+        },
+        "output": {
+          "x": "0xE2534A3532D08FBBA02DDE659EE62BD0031FE2DB785596EF509302446B030852",
+          "y": "0xE0F1575A4C633CC719DFEE5FDA862D764EFC96C3F30EE0055C42C23F184ED8C6"
+        }
+      }
+    ]
+  },
+  "invMod": {
+    "valid": [
+      {
+        "description": "1, pp",
+        "input": {
+          "k": "1"
+        },
+        "output": {
+          "k": "1"
+        }
+      },
+      {
+        "description": "k, pp",
+        "input": {
+          "k": "71131047696589954191631680573398728609344574897947288563661795659842666029638"
+        },
+        "output": {
+          "k": "75881117857300922090859164656390883038744552631631346740125228215921778111342"
+        }
+      },
+      {
+        "description": "inv(k), pp",
+        "input": {
+          "k": "75881117857300922090859164656390883038744552631631346740125228215921778111342"
+        },
+        "output": {
+          "k": "71131047696589954191631680573398728609344574897947288563661795659842666029638"
+        }
+      }
+    ],
+    "invalid": [
+      {
+        "description": "0, pp",
+        "input": {
+          "k": "0",
+          "mod": "0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f"
+        },
+        "output": {
+          "error": "Invalid number"
+        }
+      },
+      {
+        "description": "pp, pp",
+        "input": {
+          "k": "0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f",
+          "mod": "0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f"
+        },
+        "output": {
+          "error": "Invalid number"
+        }
+      },
+      {
+        "description": "pp, 0",
+        "input": {
+          "k": "0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f",
+          "mod": "0"
+        },
+        "output": {
+          "error": "Invalid number"
+        }
+      }
+    ]
+  },
+  "deriveY": {
+    "valid": [
+      {
+        "input": {
+          "sign": "0x03",
+          "x": "0x6b17d1f2e12c4247f8bce6e563a440f277037d812deb33a0f4a13945d898c296"
+        },
+        "output": {
+          "y": "0x4fe342e2fe1a7f9b8ee7eb4a7c0f9e162bce33576b315ececbb6406837bf51f5"
+        }
+      }
+    ]
+  },
+  "isOnCurve": {
+    "valid": [
+      {
+        "input": {
+          "x": "0x6b17d1f2e12c4247f8bce6e563a440f277037d812deb33a0f4a13945d898c296",
+          "y": "0x4fe342e2fe1a7f9b8ee7eb4a7c0f9e162bce33576b315ececbb6406837bf51f5"
+        },
+        "output": {
+          "isOnCurve": true
+        }
+      },
+      {
+        "input": {
+          "x": "0x6B17D1F3E12C4247F8BCE6E563A440F277037D812DEB33A0F4A13945D898C296",
+          "y": "0x4FE342E2FE1A7F9B8EE7EB4A7C0F9E162BCE33576B315ECECBB6406837BF51F5"
+        },
+        "output": {
+          "isOnCurve": false
+        }
+      }
+    ]
+  },
+  "invertPoint": {
+    "valid": [
+      {
+        "input": {
+          "x": "0x7CF27B188D034F7E8A52380304B51AC3C08969E277F21B35A60B48FC47669978",
+          "y": "0x07775510DB8ED040293D9AC69F7430DBBA7DADE63CE982299E04B79D227873D1"
+        },
+        "output": {
+          "x": "0x7CF27B188D034F7E8A52380304B51AC3C08969E277F21B35A60B48FC47669978",
+          "y": "0xF888AAEE24712FC0D6C26539608BCF244582521AC3167DD661FB4862DD878C2E"
+        }
+      }
+    ]
+  }
+}
