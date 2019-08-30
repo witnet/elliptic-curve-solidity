@@ -3,12 +3,12 @@ pragma solidity ^0.5.0;
 
 /**
  * @title Elliptic Curve Library
- * @dev Library providing arithmetic operations over elliptic curves
+ * @dev Library providing arithmetic operations over elliptic curves.
  * @author Witnet Foundation
  */
 contract EllipticCurve {
 
-  /// @dev Modular euclidean inverse of a number (mod p)
+  /// @dev Modular euclidean inverse of a number (mod p).
   /// @param _x The number
   /// @param _pp The modulus
   /// @return q such that x*q = 1 (mod _pp)
@@ -30,7 +30,7 @@ contract EllipticCurve {
     return q;
   }
 
-  /// @dev Modular exponentiation, b^e % _pp
+  /// @dev Modular exponentiation, b^e % _pp.
   /// Source: https://github.com/androlo/standard-contracts/blob/master/contracts/src/crypto/ECCMath.sol
   /// @param _base base
   /// @param _exp exponent
@@ -59,7 +59,7 @@ contract EllipticCurve {
     return r;
   }
 
-  /// @dev Converts a point (x, y, z) expressed in Jacobian coordinates to affine coordinates (x', y', 1)
+  /// @dev Converts a point (x, y, z) expressed in Jacobian coordinates to affine coordinates (x', y', 1).
   /// @param _x coordinate x
   /// @param _y coordinate y
   /// @param _z coordinate z
@@ -80,7 +80,7 @@ contract EllipticCurve {
     return (x2, y2);
   }
 
-  /// @dev Derives the y coordinate from a compressed-format point x
+  /// @dev Derives the y coordinate from a compressed-format point x.
   /// @param _prefix parity byte (0x02 even, 0x03 odd)
   /// @param _x coordinate x
   /// @param _aa constant of curve
@@ -614,8 +614,7 @@ contract EllipticCurve {
     _iP[3][3] = [mulmod(_beta, iPj[3][0], _pp), iPj[3][1], iPj[3][2]];
   }
 
-  /// @notice WNAF integer representation.
-  /// @dev Computes the WNAF representation of an integer, and puts the resulting array of coefficients in memory.
+  /// @dev WNAF integer representation. Computes the WNAF representation of an integer, and puts the resulting array of coefficients in memory.
   /// @param _k A 256-bit integer
   /// @return (ptr, length) The pointer to the first coefficient, and the total length of the array
   function _wnaf(int256 _k) private pure  returns (uint256, uint256) {
@@ -782,7 +781,7 @@ contract EllipticCurve {
   }
 
   /// @dev Multiplication of a uint256 a and uint256 b. Because in Solidity each variable can not be greater than 256 bits,
-  /// this function separates the result of the multiplication in three parts, so the result would be the concatenation of those three
+  /// this function separates the result of the multiplication in three parts, so the result would be the concatenation of those three.
   /// @param _a uint256
   /// @param _b uint256
   /// @return (ab2, ab1, ab0)
@@ -800,7 +799,7 @@ contract EllipticCurve {
     return (ab2, ab1, ab0);
   }
 
-  /// @dev Division of an integer of 312 bits by a 256-bit integer
+  /// @dev Division of an integer of 312 bits by a 256-bit integer.
   /// @param _aM the higher 256 bits of the numarator
   /// @param _am the lower 128 bits of the numarator
   /// @param _b the 256-bit denominator
@@ -841,7 +840,7 @@ contract EllipticCurve {
     return (q, r);
   }
 
-  /// @dev Square root of an 256-bit integer
+  /// @dev Square root of an 256-bit integer.
   /// @param _x the integer
   /// @return y the square root of _x
   function _sqrt(uint256 _x) private pure returns (uint256) {
@@ -854,7 +853,7 @@ contract EllipticCurve {
     return (y);
   }
 
-  /// @dev Absolute value of a 25-bit integer
+  /// @dev Absolute value of a 25-bit integer.
   /// @param _x the integer
   /// @return _x if _x>=0 or -_x if not
   function _abs(int256 _x) private pure returns (int256) {
