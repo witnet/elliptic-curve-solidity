@@ -4,12 +4,19 @@
 
 _DISCLAIMER: This is experimental software. **Use it at your own risk**!_
 
-The solidity library has been generalized in order to support any elliptic curve based on prime numbers up to 256 bits. It provides functions for:
+The solidity contracts have been generalized in order to support any elliptic curve based on prime numbers up to 256 bits.
+
+`elliptic-curve-solidity` has been designed as a library with **only pure functions** aiming at decreasing gas consumption as much as possible. Additionally, gas consumption comparison can be found in the benchmark section.
+It contains 2 solidity libraries:
+
+1. `EllipticCurve.sol`: provides main elliptic curve operations in affine and Jacobian coordinates.
+2. `FastEcMul.sol`: provides a fast elliptic curve multiplication by using scalar decomposition and wNAF scalar representation.
+
+`EllipticCurve` library provides functions for:
 
 - Modular
   - inverse
   - exponentiation
-  - scalar decomposition
 - Jacobian coordinates
   - addition
   - double
@@ -19,15 +26,15 @@ The solidity library has been generalized in order to support any elliptic curve
   - addition
   - subtraction
   - multiplication
-  - simultaneous multiplication (using wNAF)
 - Auxiliary
   - conversion to affine coordinates
   - derive coordinate Y from compressed ec point
   - check if ec point is on curve
 
-`elliptic-curve-solidity` has been designed as a library with **only pure functions** aiming at decreasing gas consumption as much as possible.
-A modified library with a constructor for setting the curve parameters can be found at the branch `ref/constructor`.
-Additionally, gas consumption comparison can be found in [gas report][benchmark].
+`FastEcMul` library provides support for:
+
+- Scalar decomposition
+- Simultaneous multiplication (computes 2 EC multiplications using wNAF scalar representation)
 
 ## Supported curves
 
@@ -36,9 +43,9 @@ The `elliptic-curve-solidity` contract supports up to 256-bit curves. However, i
 - `secp256k1`
 - `secp224k1`
 - `secp192k1`
-- `secp256r1`
-- `secp192r1`
-- `secp224r1`
+- `secp256r1` (aka P256)
+- `secp192r1` (aka P192)
+- `secp224r1` (aka P224)
 
 Known limitations:
 
@@ -82,11 +89,11 @@ The cost of a key derivation operation in Secp256k1 is around 550k gas.
 ·--------------------------------------------------|--------------------------·
 |                      Gas                         · Block limit: 6721975 gas │
 ···················································|···························
-|                 ·          20 gwei/gas           ·      289.62 usd/eth      │
+|                 ·          20 gwei/gas           ·      170.72 usd/eth      │
 ··················|··········|··········|··········|············|··············
 |  Method         ·  Min     ·  Max     ·  Avg     ·  # calls   ·  usd (avg)  │
 ··················|··········|··········|··········|············|··············
-|  deriveKey      ·  528127  ·  572545  ·  552976  ·        18  ·       3.71  │
+|  derivePubKey   ·  538288  ·  583518  ·  563556  ·        18  ·       1.92  │
 ··················|··········|··········|··········|············|··············
 ```
 
@@ -100,33 +107,35 @@ Gas consumption and USD price estimation with a gas price of 20 Gwei, derived fr
 ·---------------------------------------|---------------------------|-------------|----------------------------·
 |  Solc version: 0.5.8+commit.23d335f2  ·  Optimizer enabled: true  ·  Runs: 200  ·  Block limit: 6721975 gas  │
 ········································|···························|·············|·····························
-|  Methods                              ·               20 gwei/gas               ·       169.15 usd/eth       │
-···················|····················|·············|·············|·············|··············|··············
-|  Contract        ·  Method            ·  Min        ·  Max        ·  Avg        ·  # calls     ·  usd (avg)  │
-···················|····················|·············|·············|·············|··············|··············
-|  EllipticCurve   ·  decomposeScalar   ·     656255  ·    1083667  ·    1054756  ·          17  ·       3.57  │
-···················|····················|·············|·············|·············|··············|··············
-|  EllipticCurve   ·  deriveY           ·      50485  ·      59039  ·      54762  ·           8  ·       0.19  │
-···················|····················|·············|·············|·············|··············|··············
-|  EllipticCurve   ·  ecAdd             ·      48747  ·      64887  ·      57093  ·         468  ·       0.19  │
-···················|····················|·············|·············|·············|··············|··············
-|  EllipticCurve   ·  ecInv             ·      27285  ·      28181  ·      27733  ·           4  ·       0.09  │
-···················|····················|·············|·············|·············|··············|··············
-|  EllipticCurve   ·  ecMul             ·      29163  ·     683483  ·     385920  ·         561  ·       1.31  │
-···················|····················|·············|·············|·············|··············|··············
-|  EllipticCurve   ·  ecSimMul          ·      91299  ·     521542  ·     276388  ·           7  ·       0.94  │
-···················|····················|·············|·············|·············|··············|··············
-|  EllipticCurve   ·  ecSub             ·      48926  ·      64712  ·      57395  ·         228  ·       0.19  │
-···················|····················|·············|·············|·············|··············|··············
-|  EllipticCurve   ·  invMod            ·      23245  ·      52739  ·      42166  ·          12  ·       0.14  │
-···················|····················|·············|·············|·············|··············|··············
-|  EllipticCurve   ·  toAffine          ·      56836  ·      56911  ·      56874  ·           4  ·       0.19  │
-···················|····················|·············|·············|·············|··············|··············
-|  Migrations      ·  setCompleted      ·          -  ·          -  ·      26939  ·           1  ·       0.09  │
-···················|····················|·············|·············|·············|··············|··············
+|  Methods                              ·               20 gwei/gas               ·       169.63 usd/eth       │
+··················|·····················|·············|·············|·············|··············|··············
+|  Contract       ·  Method             ·  Min        ·  Max        ·  Avg        ·  # calls     ·  usd (avg)  │
+··················|·····················|·············|·············|·············|··············|··············
+|  EcGasHelper    ·  _decomposeScalar   ·     658191  ·    1085603  ·     943298  ·         134  ·       3.20  │
+··················|·····················|·············|·············|·············|··············|··············
+|  EcGasHelper    ·  _deriveY           ·      52544  ·      61098  ·      56821  ·           4  ·       0.19  │
+··················|·····················|·············|·············|·············|··············|··············
+|  EcGasHelper    ·  _ecAdd             ·      50892  ·      67032  ·      59238  ·         468  ·       0.20  │
+··················|·····················|·············|·············|·············|··············|··············
+|  EcGasHelper    ·  _ecInv             ·      29220  ·      30116  ·      29668  ·           2  ·       0.10  │
+··················|·····················|·············|·············|·············|··············|··············
+|  EcGasHelper    ·  _ecMul             ·      31305  ·     695810  ·     393472  ·         561  ·       1.33  │
+··················|·····················|·············|·············|·············|··············|··············
+|  EcGasHelper    ·  _ecSimMul          ·      94010  ·     531737  ·     272883  ·         125  ·       0.93  │
+··················|·····················|·············|·············|·············|··············|··············
+|  EcGasHelper    ·  _ecSub             ·      51138  ·      66924  ·      59607  ·         228  ·       0.20  │
+··················|·····················|·············|·············|·············|··············|··············
+|  EcGasHelper    ·  _invMod            ·      25111  ·      54605  ·      44032  ·          12  ·       0.15  │
+··················|·····················|·············|·············|·············|··············|··············
+|  EcGasHelper    ·  _isOnCurve         ·      30763  ·      33009  ·      31902  ·           8  ·       0.11  │
+··················|·····················|·············|·············|·············|··············|··············
+|  EcGasHelper    ·  _toAffine          ·      58922  ·      58997  ·      58960  ·           4  ·       0.20  │
+··················|·····················|·············|·············|·············|··············|··············
 |  Deployments                          ·                                         ·  % of limit  ·             │
 ········································|·············|·············|·············|··············|··············
-|  EllipticCurve                        ·          -  ·          -  ·    1869605  ·      27.8 %  ·       6.32  │
+|  EcGasHelper                          ·          -  ·          -  ·     690055  ·      10.3 %  ·       2.34  │
+········································|·············|·············|·············|··············|··············
+|  EllipticCurve                        ·          -  ·          -  ·    1876205  ·      27.9 %  ·       6.40  │
 ·---------------------------------------|-------------|-------------|-------------|--------------|-------------·
 ```
 
@@ -137,13 +146,13 @@ More detailed results can be found in [gas report][benchmark].
 Some functions of the contract are based on:
 
 - [Comparatively Study of ECC and Jacobian Elliptic Curve Cryptography](https://pdfs.semanticscholar.org/5c64/29952e08025a9649c2b0ba32518e9a7fb5c2.pdf) by Anagha P. Zele and Avinash P. Wadhe
-- [Numerology](https://github.com/nucypher/numerology/blob/master/contracts/Numerology.sol) by NuCypher
-- [Ecsol](https://github.com/jbaylina/ecsol/) written by Jordi Baylina
-- [Crypto](https://github.com/androlo/standard-contracts) written by Andreas Olofsson
+- [`Numerology`](https://github.com/nucypher/numerology) by NuCypher
+- [`solidity-arithmetic`](https://github.com/gnosis/solidity-arithmetic) by Gnosis
+- [`ecsol`](https://github.com/jbaylina/ecsol) written by Jordi Baylina
+- [`standard contracts`](https://github.com/androlo/standard-contracts) written by Andreas Olofsson
 
 ## License
 
 `elliptic-curve-solidity` is published under the [MIT license][license].
 
 [license]: https://github.com/witnet/elliptic-curve-solidity/blob/master/LICENSE
-[benchmark]: https://github.com/witnet/elliptic-curve-solidity/blob/master/benchmark/GAS.md

@@ -37,7 +37,7 @@
     "lint": "eslint ./test",
     "lint:fix": "eslint ./test --fix",
     "coverage": "solidity-coverage",
-    "gas-analysis": "truffle test ./benchmark/EcGasHelper.sol ./benchmark/secp256k1.js"
+    "gas-analysis": "truffle test ./benchmark/EcGasHelper.sol ./benchmark/gas.js"
   },
   "dependencies": {
     "truffle-hdwallet-provider": "^1.0.11"
