@@ -14,11 +14,12 @@ module.exports = {
     },
   },
   mocha: {
-    // timeout: 100000
     reporter: "eth-gas-reporter",
     reporterOptions: {
       currency: "USD",
       gasPrice: 20,
+      excludeContracts: ["Migrations"],
+      src: "benchmark",
     },
   },
   compilers: {

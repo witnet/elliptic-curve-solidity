@@ -1,6 +1,6 @@
 {
   "name": "elliptic-curve-solidity",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Elliptic Curve arithmetic for up to 256-bit curves written in solidity",
   "repository": {
     "type": "git",
@@ -30,13 +30,14 @@
     "console": "truffle console",
     "postinstall": "npm run compile-contracts",
     "compile-contracts": "truffle compile --all",
-    "fmt": "solium -d contracts && eslint ./test",
-    "fmt!": "solium -d contracts --fix && eslint ./test --fix",
+    "fmt": "solium -d contracts && eslint ./test ./benchmark",
+    "fmt!": "solium -d contracts --fix && eslint ./test --fix ./benchmark --fix",
     "solium": "solium -d contracts",
     "solium:fix": "solium -d contracts --fix",
     "lint": "eslint ./test",
     "lint:fix": "eslint ./test --fix",
-    "coverage": "solidity-coverage"
+    "coverage": "solidity-coverage",
+    "gas-analysis": "truffle test ./benchmark/EcGasHelper.sol ./benchmark/secp256k1.js"
   },
   "dependencies": {
     "truffle-hdwallet-provider": "^1.0.11"
