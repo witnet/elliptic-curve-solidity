@@ -6,7 +6,7 @@ pragma solidity ^0.5.0;
  * @dev Library providing arithmetic operations over elliptic curves.
  * @author Witnet Foundation
  */
-contract EllipticCurve {
+library EllipticCurve {
 
   /// @dev Modular euclidean inverse of a number (mod p).
   /// @param _x The number
@@ -227,6 +227,37 @@ contract EllipticCurve {
       _pp);
   }
 
+  /// @dev Multiply point (x1, y1, z1) times d in affine coordinates.
+  /// @param _k scalar to multiply
+  /// @param _x coordinate x of P1
+  /// @param _y coordinate y of P1
+  /// @param _aa constant of the curve
+  /// @param _pp the modulus
+  /// @return (qx, qy) = d*P in affine coordinates
+  function ecMul(
+    uint256 _k,
+    uint256 _x,
+    uint256 _y,
+    uint256 _aa,
+    uint256 _pp)
+  public pure returns(uint256, uint256)
+  {
+    // Jacobian multiplication
+    (uint256 x1, uint256 y1, uint256 z1) = jacMul(
+      _k,
+      _x,
+      _y,
+      1,
+      _aa,
+      _pp);
+    // Get back to affine
+    return toAffine(
+      x1,
+      y1,
+      z1,
+      _pp);
+  }
+
   /// @dev Decomposition of the scalar k in two scalars k1 and k2 with half bit-length, such that k=k1+k2*LAMBDA (mod n)
   /// @param _k the scalar to be decompose
   /// @param _nn the modulus
@@ -284,37 +315,6 @@ contract EllipticCurve {
     }
 
     return (k1, k2);
-  }
-
-  /// @dev Multiply point (x1, y1, z1) times d in affine coordinates.
-  /// @param _k scalar to multiply
-  /// @param _x coordinate x of P1
-  /// @param _y coordinate y of P1
-  /// @param _aa constant of the curve
-  /// @param _pp the modulus
-  /// @return (qx, qy) = d*P in affine coordinates
-  function ecMul(
-    uint256 _k,
-    uint256 _x,
-    uint256 _y,
-    uint256 _aa,
-    uint256 _pp)
-  public pure returns(uint256, uint256)
-  {
-    // Jacobian multiplication
-    (uint256 x1, uint256 y1, uint256 z1) = jacMul(
-      _k,
-      _x,
-      _y,
-      1,
-      _aa,
-      _pp);
-    // Get back to affine
-    return toAffine(
-      x1,
-      y1,
-      z1,
-      _pp);
   }
 
   /// @notice Simultaneous multiplication of the form kP + lQ.
