@@ -1,5 +1,6 @@
 const EcGasHelper = artifacts.require("EcGasHelper")
 const EllipticCurve = artifacts.require("../contracts/EllipticCurve")
+const FastEcMul = artifacts.require("../contracts/FastEcMul")
 
 contract("EcGasHelper - Gas consumption analysis", accounts => {
   // /////////////////////////////////////////// //
@@ -16,8 +17,11 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
 
       let helper
       before(async () => {
-        await EllipticCurve.deployed()
+        await EllipticCurve.new()
+        await FastEcMul.link(EllipticCurve)
+        await FastEcMul.new()
         await EcGasHelper.link(EllipticCurve)
+        await EcGasHelper.link(FastEcMul)
         helper = await EcGasHelper.new()
       })
 
@@ -95,10 +99,13 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
       const lambda = web3.utils.toBN(curveData.params.lambda)
       const beta = web3.utils.toBN(curveData.params.beta)
 
-      let ecLib, helper
+      let helper
       before(async () => {
-        ecLib = await EllipticCurve.deployed()
+        await EllipticCurve.new()
+        await FastEcMul.link(EllipticCurve)
+        await FastEcMul.new()
         await EcGasHelper.link(EllipticCurve)
+        await EcGasHelper.link(FastEcMul)
         helper = await EcGasHelper.new()
       })
 
@@ -179,7 +186,7 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
       // MulAddMul
       for (let [index, test] of curveData.mulAddMul.valid.entries()) {
         it(`should do decompose scalar and simult. multiplication (${index + 1}) - ${test.description}`, async () => {
-          const k = await ecLib.decomposeScalar(
+          const k = await helper._decomposeScalar.call(
             web3.utils.toBN(test.input.k),
             nn,
             lambda)
@@ -187,7 +194,7 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
             web3.utils.toBN(test.input.k),
             nn,
             lambda)
-          const l = await ecLib.decomposeScalar(
+          const l = await helper._decomposeScalar.call(
             web3.utils.toBN(test.input.l),
             nn,
             lambda)

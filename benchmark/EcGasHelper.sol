@@ -1,6 +1,7 @@
 pragma solidity ^0.5.0;
 
 import "../contracts/EllipticCurve.sol";
+import "../contracts/FastEcMul.sol";
 
 
 /**
@@ -124,7 +125,7 @@ contract EcGasHelper {
   }
 
   function _decomposeScalar (uint256 _k, uint256 _nn, uint256 _lambda) public returns (int256, int256) {
-    return EllipticCurve.decomposeScalar(_k, _nn, _lambda);
+    return FastEcMul.decomposeScalar(_k, _nn, _lambda);
   }
 
   function _ecSimMul(
@@ -135,7 +136,7 @@ contract EcGasHelper {
     uint256 _pp)
   public returns (uint256, uint256)
   {
-    return EllipticCurve.ecSimMul(
+    return FastEcMul.ecSimMul(
       _scalars,
       _points,
       _aa,

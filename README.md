@@ -139,8 +139,6 @@ Gas consumption and USD price estimation with a gas price of 20 Gwei, derived fr
 ·---------------------------------------|-------------|-------------|-------------|--------------|-------------·
 ```
 
-More detailed results can be found in [gas report][benchmark].
-
 ## Acknowledgements
 
 Some functions of the contract are based on:
