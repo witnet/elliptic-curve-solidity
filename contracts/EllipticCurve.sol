@@ -80,7 +80,7 @@ library EllipticCurve {
     return (x2, y2);
   }
 
-  /// @dev Derives the y coordinate from a compressed-format point x.
+  /// @dev Derives the y coordinate from a compressed-format point x [[SEC-1]](https://www.secg.org/SEC1-Ver-1.0.pdf).
   /// @param _prefix parity byte (0x02 even, 0x03 odd)
   /// @param _x coordinate x
   /// @param _aa constant of curve
@@ -95,6 +95,8 @@ library EllipticCurve {
     uint256 _pp)
   public pure returns (uint256)
   {
+    require(_prefix == 0x02 || _prefix == 0x03, "Invalid compressed EC point prefix");
+
     // x^3 + ax + b
     uint256 y2 = addmod(mulmod(_x, mulmod(_x, _x, _pp), _pp), addmod(mulmod(_x, _aa, _pp), _bb, _pp), _pp);
     y2 = expMod(y2, (_pp + 1) / 4, _pp);
