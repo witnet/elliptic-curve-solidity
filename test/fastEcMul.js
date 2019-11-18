@@ -2,7 +2,7 @@ const FastEcMul = artifacts.require("./FastEcMul")
 
 contract("FastEcMul", accounts => {
   const curves = ["secp256k1", "secp192k1", "secp224k1", "P256", "P192", "P224"]
-  for (let curve of curves) {
+  for (const curve of curves) {
     describe(`Arithmetic operations - Curve ${curve}`, () => {
       const curveData = require(`./data/${curve}.json`)
 
@@ -18,7 +18,7 @@ contract("FastEcMul", accounts => {
       })
 
       // Scalar decomposition
-      for (let [index, test] of curveData.decomposeScalar.valid.entries()) {
+      for (const [index, test] of curveData.decomposeScalar.valid.entries()) {
         it(`should decompose an scalar (${index + 1}) - ${test.description}`, async () => {
           const res = await fastEcMul.decomposeScalar(
             web3.utils.toBN(test.input.k),
@@ -32,7 +32,7 @@ contract("FastEcMul", accounts => {
       }
 
       // Simultaneous multiplication
-      for (let [index, test] of curveData.simMul.valid.entries()) {
+      for (const [index, test] of curveData.simMul.valid.entries()) {
         it(`should do a simultaneous multiplication (${index + 1}) - ${test.description}`, async () => {
           const res = await fastEcMul.ecSimMul(
             [
@@ -59,7 +59,7 @@ contract("FastEcMul", accounts => {
       }
 
       // MulAddMul
-      for (let [index, test] of curveData.mulAddMul.valid.entries()) {
+      for (const [index, test] of curveData.mulAddMul.valid.entries()) {
         it(`should do decompose scalar and simult. multiplication (${index + 1}) - ${test.description}`, async () => {
           const k = await fastEcMul.decomposeScalar(
             web3.utils.toBN(test.input.k),

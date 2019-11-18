@@ -5,7 +5,7 @@ contract("EllipticCurve", accounts => {
   // Check auxiliary operations for given curves //
   // /////////////////////////////////////////// //
   const auxCurves = ["secp256k1", "P256"]
-  for (let curve of auxCurves) {
+  for (const curve of auxCurves) {
     describe(`Aux. operations - Curve ${curve}`, () => {
       const curveData = require(`./data/${curve}-aux.json`)
 
@@ -19,7 +19,7 @@ contract("EllipticCurve", accounts => {
       })
 
       // toAffine
-      for (let [index, test] of curveData.toAffine.valid.entries()) {
+      for (const [index, test] of curveData.toAffine.valid.entries()) {
         it(`should convert a Jacobian point to affine (${index + 1})`, async () => {
           const affine = await ecLib.toAffine(
             web3.utils.toBN(test.input.x),
@@ -35,7 +35,7 @@ contract("EllipticCurve", accounts => {
       }
 
       // invMod
-      for (let [index, test] of curveData.invMod.valid.entries()) {
+      for (const [index, test] of curveData.invMod.valid.entries()) {
         it(`should invert a scalar (${index + 1}) - ${test.description}`, async () => {
           const inv = await ecLib.invMod(
             web3.utils.toBN(test.input.k),
@@ -46,7 +46,7 @@ contract("EllipticCurve", accounts => {
       }
 
       // invMod - invalid inputs
-      for (let [index, test] of curveData.invMod.invalid.entries()) {
+      for (const [index, test] of curveData.invMod.invalid.entries()) {
         it(`should fail when inverting with invalid inputs (${index + 1}) - ${test.description}`, async () => {
           try {
             await ecLib.invMod(
@@ -60,7 +60,7 @@ contract("EllipticCurve", accounts => {
       }
 
       // deriveY
-      for (let [index, test] of curveData.deriveY.valid.entries()) {
+      for (const [index, test] of curveData.deriveY.valid.entries()) {
         it(`should decode coordinate y from compressed point (${index + 1})`, async () => {
           const coordY = await ecLib.deriveY(
             web3.utils.hexToBytes(test.input.sign),
@@ -74,7 +74,7 @@ contract("EllipticCurve", accounts => {
       }
 
       // isOnCurve
-      for (let [index, test] of curveData.isOnCurve.valid.entries()) {
+      for (const [index, test] of curveData.isOnCurve.valid.entries()) {
         it(`should identify if point is on the curve (${index + 1}) - ${test.output.isOnCurve}`, async () => {
           assert.equal(
             await ecLib.isOnCurve(
@@ -89,7 +89,7 @@ contract("EllipticCurve", accounts => {
       }
 
       // invertPoint
-      for (let [index, test] of curveData.invertPoint.valid.entries()) {
+      for (const [index, test] of curveData.invertPoint.valid.entries()) {
         it(`should invert an EC point (${index + 1})`, async () => {
           const invertedPoint = await ecLib.ecInv(
             web3.utils.hexToBytes(test.input.x),
@@ -109,7 +109,7 @@ contract("EllipticCurve", accounts => {
   // Check EC arithmetic operations for given curves //
   // /////////////////////////////////////////////// //
   const curves = ["secp256k1", "secp192k1", "secp224k1", "P256", "P192", "P224"]
-  for (let curve of curves) {
+  for (const curve of curves) {
     describe(`Arithmetic operations - Curve ${curve}`, () => {
       const curveData = require(`./data/${curve}.json`)
 
@@ -122,7 +122,7 @@ contract("EllipticCurve", accounts => {
       })
 
       // Addition
-      for (let [index, test] of curveData.addition.valid.entries()) {
+      for (const [index, test] of curveData.addition.valid.entries()) {
         it(`should add two numbers (${index + 1}) - ${test.description}`, async () => {
           const res = await ecLib.ecAdd(
             web3.utils.toBN(test.input.x1),
@@ -140,7 +140,7 @@ contract("EllipticCurve", accounts => {
       }
 
       // Subtraction
-      for (let [index, test] of curveData.subtraction.valid.entries()) {
+      for (const [index, test] of curveData.subtraction.valid.entries()) {
         it(`should subtract two numbers (${index + 1}) - ${test.description}`, async () => {
           const res = await ecLib.ecSub(
             web3.utils.toBN(test.input.x1),
@@ -158,7 +158,7 @@ contract("EllipticCurve", accounts => {
       }
 
       // Multiplication
-      for (let [index, test] of curveData.multiplication.valid.entries()) {
+      for (const [index, test] of curveData.multiplication.valid.entries()) {
         it(`should multiply EC points (${index + 1}) - ${test.description}`, async () => {
           const res = await ecLib.ecMul(
             web3.utils.toBN(test.input.k),

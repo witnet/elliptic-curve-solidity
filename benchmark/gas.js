@@ -7,7 +7,7 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
   // Check auxiliary operations for given curves //
   // /////////////////////////////////////////// //
   const auxCurves = ["secp256k1", "P256"]
-  for (let curve of auxCurves) {
+  for (const curve of auxCurves) {
     describe(`Aux. operations - Curve ${curve}`, () => {
       const curveData = require(`../test/data/${curve}-aux.json`)
 
@@ -26,7 +26,7 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
       })
 
       // toAffine
-      for (let [index, test] of curveData.toAffine.valid.entries()) {
+      for (const [index, test] of curveData.toAffine.valid.entries()) {
         it(`should convert a Jacobian point to affine (${index + 1})`, async () => {
           await helper._toAffine(
             web3.utils.toBN(test.input.x),
@@ -38,7 +38,7 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
       }
 
       // invMod
-      for (let [index, test] of curveData.invMod.valid.entries()) {
+      for (const [index, test] of curveData.invMod.valid.entries()) {
         it(`should invert a scalar (${index + 1}) - ${test.description}`, async () => {
           await helper._invMod(
             web3.utils.toBN(test.input.k),
@@ -48,7 +48,7 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
       }
 
       // deriveY
-      for (let [index, test] of curveData.deriveY.valid.entries()) {
+      for (const [index, test] of curveData.deriveY.valid.entries()) {
         it(`should decode coordinate y from compressed point (${index + 1})`, async () => {
           await helper._deriveY(
             web3.utils.hexToBytes(test.input.sign),
@@ -61,7 +61,7 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
       }
 
       // isOnCurve
-      for (let [index, test] of curveData.isOnCurve.valid.entries()) {
+      for (const [index, test] of curveData.isOnCurve.valid.entries()) {
         it(`should identify if point is on the curve (${index + 1}) - ${test.output.isOnCurve}`, async () => {
           await helper._isOnCurve(
             web3.utils.hexToBytes(test.input.x),
@@ -73,7 +73,7 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
       }
 
       // invertPoint
-      for (let [index, test] of curveData.invertPoint.valid.entries()) {
+      for (const [index, test] of curveData.invertPoint.valid.entries()) {
         it(`should invert an EC point (${index + 1})`, async () => {
           await helper._ecInv(
             web3.utils.hexToBytes(test.input.x),
@@ -89,7 +89,7 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
   // Check EC arithmetic operations for given curves //
   // /////////////////////////////////////////////// //
   const curves = ["secp256k1", "secp192k1", "secp224k1", "P256", "P192", "P224"]
-  for (let curve of curves) {
+  for (const curve of curves) {
     describe(`Arithmetic operations - Curve ${curve}`, () => {
       const curveData = require(`../test/data/${curve}.json`)
 
@@ -110,7 +110,7 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
       })
 
       // Addition
-      for (let [index, test] of curveData.addition.valid.entries()) {
+      for (const [index, test] of curveData.addition.valid.entries()) {
         it(`should add two numbers (${index + 1}) - ${test.description}`, async () => {
           await helper._ecAdd(
             web3.utils.toBN(test.input.x1),
@@ -124,7 +124,7 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
       }
 
       // Subtraction
-      for (let [index, test] of curveData.subtraction.valid.entries()) {
+      for (const [index, test] of curveData.subtraction.valid.entries()) {
         it(`should subtract two numbers (${index + 1}) - ${test.description}`, async () => {
           await helper._ecSub(
             web3.utils.toBN(test.input.x1),
@@ -138,7 +138,7 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
       }
 
       // Multiplication
-      for (let [index, test] of curveData.multiplication.valid.entries()) {
+      for (const [index, test] of curveData.multiplication.valid.entries()) {
         it(`should multiply EC points (${index + 1}) - ${test.description}`, async () => {
           await helper._ecMul(
             web3.utils.toBN(test.input.k),
@@ -151,7 +151,7 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
       }
 
       // Scalar decomposition
-      for (let [index, test] of curveData.decomposeScalar.valid.entries()) {
+      for (const [index, test] of curveData.decomposeScalar.valid.entries()) {
         it(`should decompose an scalar (${index + 1}) - ${test.description}`, async () => {
           await helper._decomposeScalar(
             web3.utils.toBN(test.input.k),
@@ -161,7 +161,7 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
       }
 
       // Simultaneous multiplication
-      for (let [index, test] of curveData.simMul.valid.entries()) {
+      for (const [index, test] of curveData.simMul.valid.entries()) {
         it(`should do a simultaneous multiplication (${index + 1}) - ${test.description}`, async () => {
           await helper._ecSimMul(
             [
@@ -184,7 +184,7 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
       }
 
       // MulAddMul
-      for (let [index, test] of curveData.mulAddMul.valid.entries()) {
+      for (const [index, test] of curveData.mulAddMul.valid.entries()) {
         it(`should do decompose scalar and simult. multiplication (${index + 1}) - ${test.description}`, async () => {
           const k = await helper._decomposeScalar.call(
             web3.utils.toBN(test.input.k),
