@@ -28,8 +28,8 @@ It contains 2 solidity libraries:
   - multiplication
 - Auxiliary
   - conversion to affine coordinates
-  - derive coordinate Y from compressed ec point
-  - check if ec point is on curve
+  - derive coordinate Y from compressed EC point
+  - check if EC point is on curve
 
 `FastEcMul` library provides support for:
 
@@ -54,16 +54,17 @@ Known limitations:
 
 ## Usage
 
-`EllipticCurve.sol` contract can be used directly by inheritance or by instantiating it.
+`EllipticCurve.sol` contract can be used directly by importing and linking it.
 
-The [Secp256k1](https://github.com/witnet/elliptic-curve-solidity/blob/master/examples/Secp256k1.sol) example depicts how to inherit the library by providing a function to derive a public key from a secret key:
+The [Secp256k1](https://github.com/witnet/elliptic-curve-solidity/blob/master/examples/Secp256k1.sol) example depicts how to use the library by providing a function to derive a public key from a secret key:
 
 ```solidity
 pragma solidity ^0.5.0;
 
-import "./EllipticCurve.sol";
+import "elliptic-curve-solidity/contracts/EllipticCurve.sol";
 
-contract Secp256k1 is EllipticCurve {
+
+contract Secp256k1 {
 
   uint256 constant GX = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798;
   uint256 constant GY = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8;
@@ -72,7 +73,7 @@ contract Secp256k1 is EllipticCurve {
   uint256 constant BB = 7;
 
   function derivePubKey(uint256 privKey) public pure returns(uint256 qx, uint256 qy) {
-    (qx, qy) = ecMul(
+    (qx, qy) = EllipticCurve.ecMul(
       privKey,
       GX,
       GY,
