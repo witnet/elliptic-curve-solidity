@@ -17,7 +17,7 @@ library FastEcMul {
   /// @param _nn the modulus
   /// @param _lambda is a root of the characteristic polynomial of an endomorphism of the curve
   /// @return k1 and k2  such that k=k1+k2*LAMBDA (mod n)
-  function decomposeScalar (uint256 _k, uint256 _nn, uint256 _lambda) public pure returns (int256, int256) {
+  function decomposeScalar(uint256 _k, uint256 _nn, uint256 _lambda) internal pure returns (int256, int256) {
     uint256 k = _k % _nn;
     // Extended Euclidean Algorithm for n and LAMBDA
     int256[2] memory t;
@@ -82,7 +82,7 @@ library FastEcMul {
     uint256 _aa,
     uint256 _beta,
     uint256 _pp)
-  public pure returns (uint256, uint256)
+  internal pure returns (uint256, uint256)
   {
     uint256[4] memory wnaf;
     uint256 maxCount = 0;
@@ -122,8 +122,8 @@ library FastEcMul {
     uint256[4] memory _points,
     uint256 _aa,
     uint256 _beta,
-    uint256 _pp
-  ) private pure
+    uint256 _pp)
+  private pure
   {
     uint256[3][4] memory iPj;
     uint256[3] memory double;
