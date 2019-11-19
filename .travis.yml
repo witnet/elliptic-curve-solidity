@@ -14,7 +14,7 @@ jobs:
   include:
     - stage: tests
       name: "Linter"
-      script: npm run lint
+      script: npm run fmt
 
     - stage: tests
       name: "Unit tests"
