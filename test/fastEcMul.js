@@ -1,4 +1,4 @@
-const FastEcMul = artifacts.require("./FastEcMul")
+const EllipticCurve = artifacts.require("./TestEllipticCurve")
 
 contract("FastEcMul", accounts => {
   const curves = ["secp256k1", "secp192k1", "secp224k1", "P256", "P192", "P224"]
@@ -14,7 +14,7 @@ contract("FastEcMul", accounts => {
 
       let fastEcMul
       before(async () => {
-        fastEcMul = await FastEcMul.deployed()
+        fastEcMul = await EllipticCurve.new()
       })
 
       // Scalar decomposition

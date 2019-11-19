@@ -1,4 +1,4 @@
-const EllipticCurve = artifacts.require("./EllipticCurve")
+const EllipticCurve = artifacts.require("./TestEllipticCurve")
 
 contract("EllipticCurve", accounts => {
   // /////////////////////////////////////////// //
@@ -15,7 +15,7 @@ contract("EllipticCurve", accounts => {
 
       let ecLib
       before(async () => {
-        ecLib = await EllipticCurve.deployed()
+        ecLib = await EllipticCurve.new()
       })
 
       // toAffine
@@ -118,7 +118,7 @@ contract("EllipticCurve", accounts => {
 
       let ecLib
       before(async () => {
-        ecLib = await EllipticCurve.deployed()
+        ecLib = await EllipticCurve.new()
       })
 
       // Addition
