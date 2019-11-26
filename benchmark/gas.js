@@ -1,6 +1,4 @@
 const EcGasHelper = artifacts.require("EcGasHelper")
-const EllipticCurve = artifacts.require("../contracts/EllipticCurve")
-const FastEcMul = artifacts.require("../contracts/FastEcMul")
 
 contract("EcGasHelper - Gas consumption analysis", accounts => {
   // /////////////////////////////////////////// //
@@ -17,11 +15,6 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
 
       let helper
       before(async () => {
-        await EllipticCurve.new()
-        await FastEcMul.link(EllipticCurve)
-        await FastEcMul.new()
-        await EcGasHelper.link(EllipticCurve)
-        await EcGasHelper.link(FastEcMul)
         helper = await EcGasHelper.new()
       })
 
@@ -101,11 +94,6 @@ contract("EcGasHelper - Gas consumption analysis", accounts => {
 
       let helper
       before(async () => {
-        await EllipticCurve.new()
-        await FastEcMul.link(EllipticCurve)
-        await FastEcMul.new()
-        await EcGasHelper.link(EllipticCurve)
-        await EcGasHelper.link(FastEcMul)
         helper = await EcGasHelper.new()
       })
 
