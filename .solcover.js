@@ -1,5 +1,5 @@
 module.exports = {
-	norpc: false, 
-	compileCommand: 'truffle compile', 
-	testCommand: 'export ETHEREUM_RPC_PORT=8555&& truffle test --network coverage --timeout 10000', 
+	norpc: false,
+	testCommand: 'node --max-old-space-size=4096 ../node_modules/.bin/truffle test --network coverage --timeout 10000',
+	compileCommand: 'node --max-old-space-size=4096 ../node_modules/.bin/truffle compile --network coverage'
 }

@@ -1,7 +1,13 @@
+const SOLIDITY_COVERAGE = process.env.SOLIDITY_COVERAGE
 const EllipticCurve = artifacts.require("./TestEllipticCurve")
 
 contract("FastEcMul", accounts => {
-  const curves = ["secp256k1", "secp192k1", "secp224k1", "P256", "P192", "P224"]
+  let curves
+  if (SOLIDITY_COVERAGE) {
+    curves = ["secp256k1"]
+  } else {
+    curves = ["secp256k1", "secp192k1", "secp224k1", "P256", "P192", "P224"]
+  }
   for (const curve of curves) {
     describe(`Arithmetic operations - Curve ${curve}`, () => {
       const curveData = require(`./data/${curve}.json`)
@@ -20,7 +26,7 @@ contract("FastEcMul", accounts => {
       // Scalar decomposition
       for (const [index, test] of curveData.decomposeScalar.valid.entries()) {
         it(`should decompose an scalar (${index + 1}) - ${test.description}`, async () => {
-          const res = await fastEcMul.decomposeScalar(
+          const res = await fastEcMul.decomposeScalar.call(
             web3.utils.toBN(test.input.k),
             nn,
             lambda)
@@ -34,7 +40,7 @@ contract("FastEcMul", accounts => {
       // Simultaneous multiplication
       for (const [index, test] of curveData.simMul.valid.entries()) {
         it(`should do a simultaneous multiplication (${index + 1}) - ${test.description}`, async () => {
-          const res = await fastEcMul.ecSimMul(
+          const res = await fastEcMul.ecSimMul.call(
             [
               web3.utils.toBN(test.input.k1),
               web3.utils.toBN(test.input.k2),
@@ -61,15 +67,15 @@ contract("FastEcMul", accounts => {
       // MulAddMul
       for (const [index, test] of curveData.mulAddMul.valid.entries()) {
         it(`should do decompose scalar and simult. multiplication (${index + 1}) - ${test.description}`, async () => {
-          const k = await fastEcMul.decomposeScalar(
+          const k = await fastEcMul.decomposeScalar.call(
             web3.utils.toBN(test.input.k),
             nn,
             lambda)
-          const l = await fastEcMul.decomposeScalar(
+          const l = await fastEcMul.decomposeScalar.call(
             web3.utils.toBN(test.input.l),
             nn,
             lambda)
-          const res = await fastEcMul.ecSimMul(
+          const res = await fastEcMul.ecSimMul.call(
             [
               web3.utils.toBN(k[0]),
               web3.utils.toBN(k[1]),

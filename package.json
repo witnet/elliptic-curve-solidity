@@ -36,7 +36,7 @@
     "solium:fix": "solium -d contracts --fix",
     "lint": "eslint ./test",
     "lint:fix": "eslint ./test --fix",
-    "coverage": "solidity-coverage",
+    "coverage": "SOLIDITY_COVERAGE=true ./node_modules/.bin/solidity-coverage",
     "gas-analysis": "truffle test ./benchmark/EcGasHelper.sol ./benchmark/gas.js"
   },
   "devDependencies": {
