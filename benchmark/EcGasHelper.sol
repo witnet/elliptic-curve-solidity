@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity 0.6.4;
 
 import "../contracts/EllipticCurve.sol";
 import "../contracts/FastEcMul.sol";
@@ -18,7 +18,7 @@ contract EcGasHelper {
     uint256 _y,
     uint256 _z,
     uint256 _pp)
-  public returns (uint256, uint256)
+  external returns (uint256, uint256)
   {
     return EllipticCurve.toAffine(
       _x,
@@ -27,7 +27,7 @@ contract EcGasHelper {
       _pp);
   }
 
-  function _invMod(uint256 _x, uint256 _pp) public returns (uint256) {
+  function _invMod(uint256 _x, uint256 _pp) external returns (uint256) {
     return EllipticCurve.invMod(_x, _pp);
   }
 
@@ -37,7 +37,7 @@ contract EcGasHelper {
     uint256 _aa,
     uint256 _bb,
     uint256 _pp)
-  public returns (uint256)
+  external returns (uint256)
   {
     return EllipticCurve.deriveY(
       _prefix,
@@ -53,7 +53,7 @@ contract EcGasHelper {
     uint _aa,
     uint _bb,
     uint _pp)
-  public returns (bool)
+  external returns (bool)
   {
     return EllipticCurve.isOnCurve(
       _x,
@@ -67,7 +67,7 @@ contract EcGasHelper {
     uint256 _x,
     uint256 _y,
     uint256 _pp)
-  public returns (uint256, uint256)
+  external returns (uint256, uint256)
   {
     return EllipticCurve.ecInv(_x, _y, _pp);
   }
@@ -79,7 +79,7 @@ contract EcGasHelper {
     uint256 _y2,
     uint256 _aa,
     uint256 _pp)
-    public returns(uint256, uint256)
+    external returns(uint256, uint256)
   {
     return EllipticCurve.ecAdd(
       _x1,
@@ -97,7 +97,7 @@ contract EcGasHelper {
     uint256 _y2,
     uint256 _aa,
     uint256 _pp)
-  public returns(uint256, uint256)
+  external returns(uint256, uint256)
   {
     return EllipticCurve.ecSub(
       _x1,
@@ -114,7 +114,7 @@ contract EcGasHelper {
     uint256 _y,
     uint256 _aa,
     uint256 _pp)
-  public returns(uint256, uint256)
+  external returns(uint256, uint256)
   {
     return EllipticCurve.ecMul(
       _k,
@@ -124,17 +124,17 @@ contract EcGasHelper {
       _pp);
   }
 
-  function _decomposeScalar (uint256 _k, uint256 _nn, uint256 _lambda) public returns (int256, int256) {
+  function _decomposeScalar (uint256 _k, uint256 _nn, uint256 _lambda) external returns (int256, int256) {
     return FastEcMul.decomposeScalar(_k, _nn, _lambda);
   }
 
   function _ecSimMul(
-    int256[4] memory _scalars,
-    uint256[4] memory _points,
+    int256[4] calldata _scalars,
+    uint256[4] calldata _points,
     uint256 _aa,
     uint256 _beta,
     uint256 _pp)
-  public returns (uint256, uint256)
+  external returns (uint256, uint256)
   {
     return FastEcMul.ecSimMul(
       _scalars,

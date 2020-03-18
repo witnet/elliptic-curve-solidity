@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity 0.6.4;
 
 import "../contracts/EllipticCurve.sol";
 
@@ -16,7 +16,7 @@ contract Secp256k1GasHelper {
   uint256 constant BB = 7;
   uint256 constant PP = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F;
 
-  function derivePubKey(uint256 privKey) public returns(uint256 qx, uint256 qy) {
+  function derivePubKey(uint256 privKey) external returns(uint256 qx, uint256 qy) {
     (qx, qy) = EllipticCurve.ecMul(
       privKey,
       GX,

@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity >=0.5.3 <0.7.0;
 
 import "./EllipticCurve.sol";
 
@@ -116,7 +116,6 @@ library FastEcMul {
   /// @param _aa constant of the curve
   /// @param _beta constant of the curve (endomorphism)
   /// @param _pp the modulus
-  /// @return (qx, qy, qz) d*P1 in Jacobian
   function _lookupSimMul(
     uint256[3][4][4] memory _iP,
     uint256[4] memory _points,

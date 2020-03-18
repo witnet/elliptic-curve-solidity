@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity >=0.5.3 <0.7.0;
 
 
 /**
@@ -13,9 +13,7 @@ library EllipticCurve {
   /// @param _pp The modulus
   /// @return q such that x*q = 1 (mod _pp)
   function invMod(uint256 _x, uint256 _pp) internal pure returns (uint256) {
-    if (_x == 0 || _x == _pp || _pp == 0) {
-      revert("Invalid number");
-    }
+    require(_x != 0 && _x != _pp && _pp != 0, "Invalid number");
     uint256 q = 0;
     uint256 newT = 1;
     uint256 r = _pp;
@@ -37,15 +35,15 @@ library EllipticCurve {
   /// @param _pp modulus
   /// @return r such that r = b**e (mod _pp)
   function expMod(uint256 _base, uint256 _exp, uint256 _pp) internal pure returns (uint256) {
+    require(_pp!=0, "Modulus is zero");
+
     if (_base == 0)
       return 0;
     if (_exp == 0)
       return 1;
-    if (_pp == 0)
-      revert("Modulus is zero");
+
     uint256 r = 1;
     uint256 bit = 2 ** 255;
-
     assembly {
       for { } gt(bit, 0) { }{
         r := mulmod(mulmod(r, r, _pp), exp(_base, iszero(iszero(and(_exp, bit)))), _pp)
@@ -298,13 +296,10 @@ library EllipticCurve {
       mulmod(_x2, zs[0], _pp),
       mulmod(_y2, zs[1], _pp)
     ];
-    if (zs[0] == zs[2]) {
-      if (zs[1] != zs[3])
-        revert("Wrong data");
-      else {
-        revert("Use double instead");
-      }
-    }
+
+    // In case of zs[0] == zs[2] && zs[1] == zs[3], double function should be used
+    require(zs[0] != zs[2], "Invalid data");
+
     uint[4] memory hr;
     //h
     hr[0] = addmod(zs[2], _pp - zs[0], _pp);

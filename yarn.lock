@@ -218,9 +218,9 @@
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
 "@types/node@*":
-  version "13.9.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.9.1.tgz#96f606f8cd67fb018847d9b61e93997dabdefc72"
-  integrity sha512-E6M6N0blf/jiZx8Q3nb0vNaswQeEyn0XlupO+xN6DtJ6r6IT4nXrTry7zhIfYvFCl3/8Cu6WIysmUBKiqV0bqQ==
+  version "13.9.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.9.2.tgz#ace1880c03594cc3e80206d96847157d8e7fa349"
+  integrity sha512-bnoqK579sAYrQbp73wwglccjJ4sfRdKU7WNEZ5FW4K2U6Kc0/eZ5kvXG0JKsEKFB50zrFmfFt52/cvBbZa7eXg==
 
 "@types/node@^10.0.3", "@types/node@^10.12.18", "@types/node@^10.3.2":
   version "10.17.17"
@@ -1778,9 +1778,9 @@ eth-ens-namehash@2.0.8:
     js-sha3 "^0.5.7"
 
 eth-gas-reporter@^0.2.15:
-  version "0.2.15"
-  resolved "https://registry.yarnpkg.com/eth-gas-reporter/-/eth-gas-reporter-0.2.15.tgz#663752ac05bad1054c3c54d6fa611865a6a75fc1"
-  integrity sha512-nia5IswXUX9XQvc9b3t/PeS+uZFGeq2thzPOot4uLbovpoQRFjxOpo1lz8gbKIfsdOsKYC7pCaTdcScio8bX3Q==
+  version "0.2.16"
+  resolved "https://registry.yarnpkg.com/eth-gas-reporter/-/eth-gas-reporter-0.2.16.tgz#e4d93b4bde057b0dd1472df98c0e5a157fd5bc36"
+  integrity sha512-E/RdhLK93XiiHxdrh3WmpjrH42o9IA+6KRSPOjsbbCpRazzQq9aKaIz4e+GRlHKP+dpamna4GNxILJOTIdVebA==
   dependencies:
     "@ethersproject/abi" "5.0.0-beta.142"
     cli-table3 "^0.5.0"
@@ -2356,9 +2356,9 @@ fs.realpath@^1.0.0:
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
 
 fsevents@^1.0.0:
-  version "1.2.11"
-  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-1.2.11.tgz#67bf57f4758f02ede88fb2a1712fef4d15358be3"
-  integrity sha512-+ux3lx6peh0BpvY0JebGyZoiR4D+oYzdPZMKJwkZ+sFkNJzpL7tXc/wehS49gUAxg3tmMHPHZkA8JU2rhhgDHw==
+  version "1.2.12"
+  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-1.2.12.tgz#db7e0d8ec3b0b45724fd4d83d43554a8f1f0de5c"
+  integrity sha512-Ggd/Ktt7E7I8pxZRbGIs7vwqAPscSESMrCSkx2FtWeqmheJgCo2R74fTsZFCifr0VTPwqRpPv17+6b8Zp7th0Q==
   dependencies:
     bindings "^1.5.0"
     nan "^2.12.1"
@@ -2382,7 +2382,7 @@ ganache-cli@6.9.0:
     source-map-support "0.5.12"
     yargs "13.2.4"
 
-ganache-cli@^6.7.0:
+ganache-cli@^6.9.1:
   version "6.9.1"
   resolved "https://registry.yarnpkg.com/ganache-cli/-/ganache-cli-6.9.1.tgz#1e13eee098fb9f19b031a191ec3f62ae926ea8b3"
   integrity sha512-VPBumkNUZzXDRQwVOby5YyQpd5t1clkr06xMgB28lZdEIn5ht1GMwUskOTFOAxdkQ4J12IWP0gdeacVRGowqbA==
@@ -5543,10 +5543,10 @@ truffle-assertions@^0.9.2:
     assertion-error "^1.1.0"
     lodash.isequal "^4.5.0"
 
-truffle@^5.1.0:
-  version "5.1.17"
-  resolved "https://registry.yarnpkg.com/truffle/-/truffle-5.1.17.tgz#9c821274afee807b64a04e680a89e8688981cdb4"
-  integrity sha512-x8CNCjtsX3B34Q6TI467+kgxqzjCRMvLsGIqf/MHo1NpntP1tIOySGJ+idEg857X0hJz8zfOVz9QKbvrrsKUGQ==
+truffle@^5.1.18:
+  version "5.1.18"
+  resolved "https://registry.yarnpkg.com/truffle/-/truffle-5.1.18.tgz#2fefaed849698b7fb865b417a197d1b6d9229db3"
+  integrity sha512-9oxmLmyTXML5Auxl8adPd3kLcOZVhYNapCmPUcMnYCOXthxa3NEOW9y3PTcoDnwFyuIOETGIiJp4Ew9bmY8v6Q==
   dependencies:
     app-module-path "^2.2.0"
     mocha "5.2.0"
