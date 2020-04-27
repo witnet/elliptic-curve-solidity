@@ -581,6 +581,19 @@
   "addition": {
     "valid": [
       {
+        "description": "should try to add inverse points",
+        "input": {
+          "x1": "0x1c2a90c4c30f60e878d1fe317acf4f2e059300e3deaa1c949628096ecaf993b2",
+          "y1": "0x9d42bf0c35d765c2242712205e8f8b1ea588f470a6980b21bc9efb4ab33ae246",
+          "x2": "0x1c2a90c4c30f60e878d1fe317acf4f2e059300e3deaa1c949628096ecaf993b2",
+          "y2": "0x62bd40f3ca289a3ddbd8eddfa17074e15a770b8f5967f4de436104b44cc519e9"
+        },
+        "output": {
+          "x": "0x00",
+          "y": "0x00"
+        }
+      },
+      {
         "description": "small scalar 1 xG plus G",
         "input": {
           "x1": "0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",

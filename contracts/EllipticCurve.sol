@@ -4,6 +4,8 @@ pragma solidity >=0.5.3 <0.7.0;
 /**
  * @title Elliptic Curve Library
  * @dev Library providing arithmetic operations over elliptic curves.
+ * This library does not check whether the inserted points belong to the curve
+ * `isOnCurve` function should be used by the library user to check the aforementioned statement.
  * @author Witnet Foundation
  */
 library EllipticCurve {
@@ -172,14 +174,21 @@ library EllipticCurve {
     uint x = 0;
     uint y = 0;
     uint z = 0;
+
     // Double if x1==x2 else add
     if (_x1==_x2) {
-      (x, y, z) = jacDouble(
-        _x1,
-        _y1,
-        1,
-        _aa,
-        _pp);
+      // y1 = -y2 mod p
+      if (addmod(_y1, _y2, _pp) == 0) {
+        return(0, 0);
+      } else {
+        // P1 = P2
+        (x, y, z) = jacDouble(
+          _x1,
+          _y1,
+          1,
+          _aa,
+          _pp);
+      }
     } else {
       (x, y, z) = jacAdd(
         _x1,

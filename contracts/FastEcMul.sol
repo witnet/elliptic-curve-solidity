@@ -8,6 +8,8 @@ import "./EllipticCurve.sol";
  * @dev Library providing the following speed ups to an elliptic curve multiplication operation.
  * - wNAF scalar representation
  * - scalar decomposition through endomorphism
+ * This library does not check whether the inserted points belong to the curve
+ * `isOnCurve` function should be used by the library user to check the aforementioned statement.
  * @author Witnet Foundation
  */
 library FastEcMul {

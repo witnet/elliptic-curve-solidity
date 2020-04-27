@@ -30,7 +30,7 @@ module.exports = {
           runs: 200,
         },
       },
-      version: "^0.6.4",
+      version: "0.6.4",
     },
   },
 }

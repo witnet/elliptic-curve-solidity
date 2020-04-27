@@ -6,7 +6,8 @@ _DISCLAIMER: This is experimental software. **Use it at your own risk**!_
 
 The solidity contracts have been generalized in order to support any elliptic curve based on prime numbers up to 256 bits.
 
-`elliptic-curve-solidity` has been designed as a library with **only pure functions** aiming at decreasing gas consumption as much as possible. Additionally, gas consumption comparison can be found in the benchmark section.
+`elliptic-curve-solidity` has been designed as a library with **only pure functions** aiming at decreasing gas consumption as much as possible. Additionally, gas consumption comparison can be found in the benchmark section. This library **does not check whether the points passed as arguments to the library belong to the curve**. However, the library exposes a method called *`isOnCurve`* that can be utilized before using the library functions.
+
 It contains 2 solidity libraries:
 
 1. `EllipticCurve.sol`: provides main elliptic curve operations in affine and Jacobian coordinates.
