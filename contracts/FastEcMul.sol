@@ -441,7 +441,13 @@ library FastEcMul {
   /// @param _x the integer
   /// @return y the square root of _x
   function _sqrt(uint256 _x) private pure returns (uint256) {
-    uint256 z = (_x + 1) / 2;
+    uint256 z;
+    // Separate in two cases to avoid overflow
+    if (_x + 1 > _x) {
+      z = _x / 2;
+    } else {
+      z = (_x + 1) / 2;
+    }
     uint256 y = _x;
     while (z < y) {
       y = z;
