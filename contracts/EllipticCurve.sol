@@ -348,23 +348,26 @@ library EllipticCurve {
 
     // We follow the equations described in https://pdfs.semanticscholar.org/5c64/29952e08025a9649c2b0ba32518e9a7fb5c2.pdf Section 5
     // Note: there is a bug in the paper regarding the m parameter, M=3*(x1^2)+a*(z1^4)
-    uint256[3] memory square;
-    square[0] = mulmod(_x, _x, _pp); //x1^2
-    square[1] = mulmod(_y, _y, _pp); //y1^2
-    square[2] = mulmod(_z, _z, _pp); //z1^2
+    // x, y, z at this point represent the squares of _x, _y, _z
+    uint256 x = mulmod(_x, _x, _pp); //x1^2
+    uint256 y = mulmod(_y, _y, _pp); //y1^2
+    uint256 z = mulmod(_z, _z, _pp); //z1^2
 
     // s
-    uint s = mulmod(4, mulmod(_x, square[1], _pp), _pp);
+    uint s = mulmod(4, mulmod(_x, y, _pp), _pp);
     // m
-    uint m = addmod(mulmod(3, square[0], _pp), mulmod(_aa, mulmod(square[2], square[2], _pp), _pp), _pp);
-    // qx
-    uint256 qx = addmod(mulmod(m, m, _pp), _pp - addmod(s, s, _pp), _pp);
-    // qy = -8*y1^4 + M(S-T)
-    uint256 qy = addmod(mulmod(m, addmod(s, _pp - qx, _pp), _pp), _pp - mulmod(8, mulmod(square[1], square[1], _pp), _pp), _pp);
-    // qz = 2*y1*z1
-    uint256 qz = mulmod(2, mulmod(_y, _z, _pp), _pp);
+    uint m = addmod(mulmod(3, x, _pp), mulmod(_aa, mulmod(z, z, _pp), _pp), _pp);
 
-    return (qx, qy, qz);
+    // x, y, z at this point will be reassigned and rather represent qx, qy, qz from the paper
+    // This allows to reduce the gas cost and stack footprint of the algorithm
+    // qx
+    x = addmod(mulmod(m, m, _pp), _pp - addmod(s, s, _pp), _pp);
+    // qy = -8*y1^4 + M(S-T)
+    y = addmod(mulmod(m, addmod(s, _pp - x, _pp), _pp), _pp - mulmod(8, mulmod(y, y, _pp), _pp), _pp);
+    // qz = 2*y1*z1
+    z = mulmod(2, mulmod(_y, _z, _pp), _pp);
+
+    return (x, y, z);
   }
 
   /// @dev Multiply point (x, y, z) times d.
@@ -385,10 +388,6 @@ library EllipticCurve {
   internal pure returns (uint256, uint256, uint256)
   {
     uint256 remaining = _d;
-    uint256[3] memory point;
-    point[0] = _x;
-    point[1] = _y;
-    point[2] = _z;
     uint256 qx = 0;
     uint256 qy = 0;
     uint256 qz = 1;
@@ -403,16 +402,16 @@ library EllipticCurve {
           qx,
           qy,
           qz,
-          point[0],
-          point[1],
-          point[2],
+          _x,
+          _y,
+          _z,
           _pp);
       }
       remaining = remaining / 2;
-      (point[0], point[1], point[2]) = jacDouble(
-        point[0],
-        point[1],
-        point[2],
+      (_x, _y, _z) = jacDouble(
+        _x,
+        _y,
+        _z,
         _aa,
         _pp);
     }
