@@ -268,11 +268,10 @@ library FastEcMul {
       _beta,
       _pp);
 
-    uint256 i = _length;
     uint256 ki;
     uint256 ptr;
-    while (i > 0) {
-      i--;
+    while (_length > 0) {
+      _length--;
 
       (mulPoint[0], mulPoint[1], mulPoint[2]) = EllipticCurve.jacDouble(
         mulPoint[0],
@@ -281,7 +280,7 @@ library FastEcMul {
         _aa,
         _pp);
 
-      ptr = _wnafPointer[0] + i;
+      ptr = _wnafPointer[0] + _length;
       assembly {
         ki := byte(0, mload(ptr))
       }
@@ -304,7 +303,7 @@ library FastEcMul {
           _pp);
       }
 
-      ptr = _wnafPointer[1] + i;
+      ptr = _wnafPointer[1] + _length;
       assembly {
         ki := byte(0, mload(ptr))
       }
@@ -328,7 +327,7 @@ library FastEcMul {
           _pp);
       }
 
-      ptr = _wnafPointer[2] + i;
+      ptr = _wnafPointer[2] + _length;
       assembly {
         ki := byte(0, mload(ptr))
       }
@@ -352,7 +351,7 @@ library FastEcMul {
           _pp);
       }
 
-      ptr = _wnafPointer[3] + i;
+      ptr = _wnafPointer[3] + _length;
       assembly {
         ki := byte(0, mload(ptr))
       }
