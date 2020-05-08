@@ -414,22 +414,21 @@ library FastEcMul {
     shift = 256 - shift;
     aM = (_aM << shift) + (shift > 128 ? _am << (shift - 128) : _am >> (128 - shift));
     uint256 a0 = (_am << shift) & 2**128-1;
-    uint256[2] memory b;
 
-    (b[1], b[0]) = ((_b << shift) >> 128, (_b << shift) & 2**128-1);
+    (uint256 b1, uint256 b0) = ((_b << shift) >> 128, (_b << shift) & 2**128-1);
 
     uint256 rM;
-    uint256 q = aM / b[1];
-    rM = aM % b[1];
+    uint256 q = aM / b1;
+    rM = aM % b1;
 
-    uint256 rsub0 = (q & 2**128-1) * b[0];
-    uint256 rsub21 = (q >> 128) * b[0] + (rsub0 >> 128);
+    uint256 rsub0 = (q & 2**128-1) * b0;
+    uint256 rsub21 = (q >> 128) * b0 + (rsub0 >> 128);
     rsub0 &= 2**128-1;
 
     while (rsub21 > rM || rsub21 == rM && rsub0 > a0) {
       q--;
-      a0 += b[0];
-      rM += b[1] + (a0 >> 128);
+      a0 += b0;
+      rM += b1 + (a0 >> 128);
       a0 &= 2**128-1;
     }
 
