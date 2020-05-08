@@ -19,12 +19,11 @@ library EllipticCurve {
     uint256 q = 0;
     uint256 newT = 1;
     uint256 r = _pp;
-    uint256 newR = _x;
     uint256 t;
-    while (newR != 0) {
-      t = r / newR;
+    while (_x != 0) {
+      t = r / _x;
       (q, newT) = (newT, addmod(q, (_pp - mulmod(t, newT, _pp)), _pp));
-      (r, newR) = (newR, r - t * newR );
+      (r, _x) = (_x, r - t * _x);
     }
 
     return q;
