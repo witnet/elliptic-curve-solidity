@@ -29,7 +29,10 @@ library FastEcMul {
     r[0] = uint256(_lambda);
     r[1] = uint256(_nn);
 
-    while (uint256(r[0]) >= _sqrt(_nn)) {
+    // Reuse variables because stack is not cheap
+    uint[3] memory test;
+    test[0] = _sqrt(_nn);
+    while (uint256(r[0]) >= test[0]) {
       uint256 quotient = r[1] / r[0];
       (r[1], r[0]) = (r[0], r[1] - quotient*r[0]);
       (t[1], t[0]) = (t[0], t[1] - int256(quotient)*t[0]);
@@ -43,7 +46,6 @@ library FastEcMul {
     ab[3] = 0 - t[1];
 
     //b2*K
-    uint[3] memory test;
     (test[0],test[1], test[2]) = _multiply256(uint(ab[3]), uint(k));
 
     //-b1*k
