@@ -404,7 +404,6 @@ library FastEcMul {
   /// @param _b the 256-bit denominator
   /// @return q the result of the division and the rest r
   function _bigDivision(uint256 _aM, uint256 _am, uint256 _b) private pure returns (uint256, uint256) {
-    uint256 qM = (_aM / _b) << 128;
     uint256 aM = _aM % _b;
 
     uint256 shift = 0;
@@ -432,10 +431,10 @@ library FastEcMul {
       a0 &= 2**128-1;
     }
 
-    q += qM;
     uint256 r = (((rM - rsub21) << 128) + _am - rsub0) >> shift;
 
-    return (q, r);
+    //  `_aM / _b` is qM from the original algorithm, inlined here to reduce stack usage
+    return (q + _aM / _b, r);
   }
 
   /// @dev Square root of an 256-bit integer.
