@@ -14,6 +14,9 @@ import "./EllipticCurve.sol";
  */
 library FastEcMul {
 
+  /// Pre-computed constant for 2 ** 128 - 1
+  uint256 private constant TWO_TO_THE_ONE_HUNDRED_TWENTY_EIGHT_MINUS_ONE = 340282366920938463463374607431768211455;
+
   /// @dev Decomposition of the scalar k in two scalars k1 and k2 with half bit-length, such that k=k1+k2*LAMBDA (mod n)
   /// @param _k the scalar to be decompose
   /// @param _nn the modulus
@@ -386,14 +389,15 @@ library FastEcMul {
   /// @return (ab2, ab1, ab0)
   function _multiply256(uint256 _a, uint256 _b) private pure returns (uint256, uint256, uint256) {
     uint256 aM = _a >> 128;
-    uint256 am = _a & 2**128-1;
+    uint256 am = _a & TWO_TO_THE_ONE_HUNDRED_TWENTY_EIGHT_MINUS_ONE;
     uint256 bM = _b >> 128;
-    uint256 bm = _b & 2**128-1;
+    uint256 bm = _b & TWO_TO_THE_ONE_HUNDRED_TWENTY_EIGHT_MINUS_ONE;
     uint256 ab0 = am * bm;
-    uint256 ab1 = (ab0 >> 128) + (aM * bm & 2**128-1) + (am * bM & 2**128 - 1);
+    uint256 ab1 = (ab0 >> 128) + (aM * bm & TWO_TO_THE_ONE_HUNDRED_TWENTY_EIGHT_MINUS_ONE) +
+      (am * bM & TWO_TO_THE_ONE_HUNDRED_TWENTY_EIGHT_MINUS_ONE);
     uint256 ab2 = (ab1 >> 128) + aM * bM + (aM * bm >> 128) + (am * bM >> 128);
-    ab1 &= 2**128 - 1;
-    ab0 &= 2**128 - 1;
+    ab1 &= TWO_TO_THE_ONE_HUNDRED_TWENTY_EIGHT_MINUS_ONE;
+    ab0 &= TWO_TO_THE_ONE_HUNDRED_TWENTY_EIGHT_MINUS_ONE;
 
     return (ab2, ab1, ab0);
   }
@@ -412,23 +416,23 @@ library FastEcMul {
     }
     shift = 256 - shift;
     aM = (_aM << shift) + (shift > 128 ? _am << (shift - 128) : _am >> (128 - shift));
-    uint256 a0 = (_am << shift) & 2**128-1;
+    uint256 a0 = (_am << shift) & TWO_TO_THE_ONE_HUNDRED_TWENTY_EIGHT_MINUS_ONE;
 
-    (uint256 b1, uint256 b0) = ((_b << shift) >> 128, (_b << shift) & 2**128-1);
+    (uint256 b1, uint256 b0) = ((_b << shift) >> 128, (_b << shift) & TWO_TO_THE_ONE_HUNDRED_TWENTY_EIGHT_MINUS_ONE);
 
     uint256 rM;
     uint256 q = aM / b1;
     rM = aM % b1;
 
-    uint256 rsub0 = (q & 2**128-1) * b0;
+    uint256 rsub0 = (q & TWO_TO_THE_ONE_HUNDRED_TWENTY_EIGHT_MINUS_ONE) * b0;
     uint256 rsub21 = (q >> 128) * b0 + (rsub0 >> 128);
-    rsub0 &= 2**128-1;
+    rsub0 &= TWO_TO_THE_ONE_HUNDRED_TWENTY_EIGHT_MINUS_ONE;
 
     while (rsub21 > rM || rsub21 == rM && rsub0 > a0) {
       q--;
       a0 += b0;
       rM += b1 + (a0 >> 128);
-      a0 &= 2**128-1;
+      a0 &= TWO_TO_THE_ONE_HUNDRED_TWENTY_EIGHT_MINUS_ONE;
     }
 
     uint256 r = (((rM - rsub21) << 128) + _am - rsub0) >> shift;
