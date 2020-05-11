@@ -38,9 +38,9 @@ library FastEcMul {
 
     // the vectors v1=(a1, b1) and v2=(a2,b2)
     ab[0] = int256(r[0]);
-    ab[1] = int256(0 - t[0]);
+    ab[1] = int256(- t[0]);
     ab[2] = int256(r[1]);
-    ab[3] = 0 - t[1];
+    ab[3] = int256(- t[1]);
 
     //b2*K
     uint[3] memory test;
@@ -456,8 +456,9 @@ library FastEcMul {
   /// @param _x the integer
   /// @return _x if _x>=0 or -_x if not
   function _abs(int256 _x) private pure returns (int256) {
-    if (_x >= 0)
-    return _x;
+    if (_x >= 0) {
+      return _x;
+    }
     return -_x;
   }
 }

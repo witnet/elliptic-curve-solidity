@@ -16,7 +16,8 @@ contract Secp256k1 {
   uint256 public constant BB = 7;
   uint256 public constant PP = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F;
 
-  /// @dev Public Key derivation from private key
+  /// @notice Public Key derivation from private key
+  /// Warning: this is just an example. Do not expose your private key.
   /// @param privKey The private key
   /// @return (qx, qy) The Public Key
   function derivePubKey(uint256 privKey) external pure returns (uint256, uint256) {
