@@ -244,6 +244,7 @@ library FastEcMul {
 
   /// @dev Compute the simultaneous multiplication with wnaf decomposed scalar.
   /// @param _wnafPointer the decomposed scalars to be multiplied in wnaf form (k1, k2, l1, l2)
+  /// @param  _length the length of the WNAF representation array
   /// @param _points the points P and Q to be multiplied
   /// @param _aa constant of the curve
   /// @param _beta constant of the curve (endomorphism)
