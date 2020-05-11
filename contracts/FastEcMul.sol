@@ -32,7 +32,10 @@ library FastEcMul {
     r[0] = uint256(_lambda);
     r[1] = uint256(_nn);
 
-    while (uint256(r[0]) >= _sqrt(_nn)) {
+    // Loop while `r[0] >= sqrt(_nn)`
+    // Or in other words, `r[0] * r[0] >= _nn`
+    // When `r[0] >= 2**128`, `r[0] * r[0]` will overflow so we must check that before
+    while ((r[0] >= 2**128) || (r[0] * r[0] >= _nn)) {
       uint256 quotient = r[1] / r[0];
       (r[1], r[0]) = (r[0], r[1] - quotient*r[0]);
       (t[1], t[0]) = (t[0], t[1] - int256(quotient)*t[0]);
@@ -435,25 +438,6 @@ library FastEcMul {
 
     //  `_aM / _b` is qM from the original algorithm, inlined here to reduce stack usage
     return (q + _aM / _b, r);
-  }
-
-  /// @dev Square root of an 256-bit integer.
-  /// @param _x the integer
-  /// @return y the square root of _x
-  function _sqrt(uint256 _x) private pure returns (uint256) {
-    uint256 z;
-    // Separate in two cases to avoid overflow
-    if (_x + 1 > _x) {
-      z = _x / 2;
-    } else {
-      z = (_x + 1) / 2;
-    }
-    uint256 y = _x;
-    while (z < y) {
-      y = z;
-      z = (_x / z + z) / 2;
-    }
-    return (y);
   }
 
   /// @dev Absolute value of a 25-bit integer.
