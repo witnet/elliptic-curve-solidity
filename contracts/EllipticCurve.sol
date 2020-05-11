@@ -390,14 +390,16 @@ library EllipticCurve {
     uint256 _pp)
   internal pure returns (uint256, uint256, uint256)
   {
+    // Early return in case that `_d == 0`
+    if (_d == 0) {
+      return (_x, _y, _z);
+    }
+
     uint256 remaining = _d;
     uint256 qx = 0;
     uint256 qy = 0;
     uint256 qz = 1;
 
-    if (_d == 0) {
-      return (qx, qy, qz);
-    }
     // Double and add algorithm
     while (remaining != 0) {
       if ((remaining & 1) != 0) {
