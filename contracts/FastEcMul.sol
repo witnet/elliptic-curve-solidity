@@ -62,14 +62,10 @@ library FastEcMul {
     // the decomposition of k in k1 and k2
     int256 k1 = int256((int256(k) - int256(c1[0]) * int256(ab[0]) - int256(c2[0]) * int256(ab[2])) % int256(_nn));
     int256 k2 = int256((-int256(c1[0]) * int256(ab[1]) - int256(c2[0]) * int256(ab[3])) % int256(_nn));
-    if (uint256(_abs(k1)) <= (_nn / 2)) {
-      k1 = k1;
-    } else {
+    if (uint256(_abs(k1)) > (_nn / 2)) {
       k1 = int256(uint256(k1) - _nn);
     }
-    if (uint256(_abs(k2)) <= (_nn / 2)) {
-      k2 = k2;
-    } else {
+    if (uint256(_abs(k2)) > (_nn / 2)) {
       k2 = int256(uint256(k2) - _nn);
     }
 
