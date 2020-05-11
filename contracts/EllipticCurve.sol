@@ -10,6 +10,9 @@ pragma solidity >=0.5.3 <0.7.0;
  */
 library EllipticCurve {
 
+  /// Pre-computed constant for 2 ** 255
+  uint256 constant private TWO_TO_THE_TWO_HUNDRED_AND_FIFTY_FIVE = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
+
   /// @dev Modular euclidean inverse of a number (mod p).
   /// @param _x The number
   /// @param _pp The modulus
@@ -44,7 +47,7 @@ library EllipticCurve {
       return 1;
 
     uint256 r = 1;
-    uint256 bit = 2 ** 255;
+    uint256 bit = TWO_TO_THE_TWO_HUNDRED_AND_FIFTY_FIVE;
     assembly {
       for { } gt(bit, 0) { }{
         r := mulmod(mulmod(r, r, _pp), exp(_base, iszero(iszero(and(_exp, bit)))), _pp)
