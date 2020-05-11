@@ -286,12 +286,12 @@ library EllipticCurve {
     uint256 _pp)
   internal pure returns (uint256, uint256, uint256)
   {
-    if ((_x1==0)&&(_y1==0))
+    if (_x1==0 && _y1==0)
       return (_x2, _y2, _z2);
-    if ((_x2==0)&&(_y2==0))
+    if (_x2==0 && _y2==0)
       return (_x1, _y1, _z1);
-    // We follow the equations described in https://pdfs.semanticscholar.org/5c64/29952e08025a9649c2b0ba32518e9a7fb5c2.pdf Section 5
 
+    // We follow the equations described in https://pdfs.semanticscholar.org/5c64/29952e08025a9649c2b0ba32518e9a7fb5c2.pdf Section 5
     uint[4] memory zs; // z1^2, z1^3, z2^2, z2^3
     zs[0] = mulmod(_z1, _z1, _pp);
     zs[1] = mulmod(_z1, zs[0], _pp);
@@ -307,7 +307,7 @@ library EllipticCurve {
     ];
 
     // In case of zs[0] == zs[2] && zs[1] == zs[3], double function should be used
-    require(zs[0] != zs[2], "Invalid data");
+    require(zs[0] != zs[2] || zs[1] != zs[3], "Use jacDouble function instead");
 
     uint[4] memory hr;
     //h
@@ -333,8 +333,8 @@ library EllipticCurve {
   /// @param _x coordinate x of P1
   /// @param _y coordinate y of P1
   /// @param _z coordinate z of P1
-  /// @param _pp the modulus
   /// @param _aa the a scalar in the curve equation
+  /// @param _pp the modulus
   /// @return (qx, qy, qz) 2P in Jacobian
   function jacDouble(
     uint256 _x,
@@ -346,9 +346,10 @@ library EllipticCurve {
   {
     if (_z == 0)
       return (_x, _y, _z);
-    uint256[3] memory square;
+
     // We follow the equations described in https://pdfs.semanticscholar.org/5c64/29952e08025a9649c2b0ba32518e9a7fb5c2.pdf Section 5
     // Note: there is a bug in the paper regarding the m parameter, M=3*(x1^2)+a*(z1^4)
+    uint256[3] memory square;
     square[0] = mulmod(_x, _x, _pp); //x1^2
     square[1] = mulmod(_y, _y, _pp); //y1^2
     square[2] = mulmod(_z, _z, _pp); //z1^2
