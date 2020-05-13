@@ -123,7 +123,7 @@ library EllipticCurve {
     uint _pp)
   internal pure returns (bool)
   {
-    if (0 == _x || _x == _pp || 0 == _y || _y == _pp) {
+    if (0 == _x || _x >= _pp || 0 == _y || _y >= _pp) {
       return false;
     }
     // y^2

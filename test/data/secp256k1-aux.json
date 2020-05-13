@@ -119,6 +119,42 @@
         "output": {
           "isOnCurve": false
         }
+      },
+      {
+        "input": {
+          "x": "0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc30",
+          "y": "0x7638965bf85f5f2b6641324389ef2ffb99576ba72ec19d8411a5ea1dd251b112"
+        },
+        "output": {
+          "isOnCurve": false
+        }
+      },
+      {
+        "input": {
+          "x": "0x3bf754f48bc7c5fb077736c7d2abe85354be649caa94971f907b3a81759e5b5e",
+          "y": "0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc30"
+        },
+        "output": {
+          "isOnCurve": false
+        }
+      },
+      {
+        "input": {
+          "x": "0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f",
+          "y": "0x7638965bf85f5f2b6641324389ef2ffb99576ba72ec19d8411a5ea1dd251b112"
+        },
+        "output": {
+          "isOnCurve": false
+        }
+      },
+      {
+        "input": {
+          "x": "0x3bf754f48bc7c5fb077736c7d2abe85354be649caa94971f907b3a81759e5b5e",
+          "y": "0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f"
+        },
+        "output": {
+          "isOnCurve": false
+        }
       }
     ]
   },
