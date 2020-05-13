@@ -85,6 +85,30 @@
       }
     ]
   },
+  "expMod": {
+    "valid": [
+      {
+        "description": "base 0",
+        "input": {
+          "base": "0",
+          "exp": "1"
+        },
+        "output": {
+          "k": "0"
+        }
+      },
+      {
+        "description": "exp 0 and base not 0",
+        "input": {
+          "base": "1",
+          "exp": "0"
+        },
+        "output": {
+          "k": "1"
+        }
+      }
+    ]
+  },
   "deriveY": {
     "valid": [
       {

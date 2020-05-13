@@ -1,13 +1,8 @@
-const SOLIDITY_COVERAGE = process.env.SOLIDITY_COVERAGE
 const EllipticCurve = artifacts.require("./TestEllipticCurve")
 
 contract("FastEcMul", accounts => {
-  let curves
-  if (SOLIDITY_COVERAGE) {
-    curves = ["secp256k1"]
-  } else {
-    curves = ["secp256k1", "secp192k1", "secp224k1", "P256", "P192", "P224"]
-  }
+  const curves = ["secp256k1", "secp192k1", "secp224k1", "P256", "P192", "P224"]
+
   for (const curve of curves) {
     describe(`Arithmetic operations - Curve ${curve}`, () => {
       const curveData = require(`./data/${curve}.json`)

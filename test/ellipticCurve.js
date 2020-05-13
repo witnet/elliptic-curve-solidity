@@ -1,17 +1,10 @@
-const SOLIDITY_COVERAGE = process.env.SOLIDITY_COVERAGE
 const EllipticCurve = artifacts.require("./TestEllipticCurve")
 
 contract("EllipticCurve", accounts => {
-  
   // /////////////////////////////////////////// //
   // Check auxiliary operations for given curves //
   // /////////////////////////////////////////// //
-  let auxCurves
-  if (SOLIDITY_COVERAGE) {
-    auxCurves = ["secp256k1"]
-  } else {
-    auxCurves = ["secp256k1", "P256"]
-  }
+  const auxCurves = ["secp256k1", "P256"]
 
   for (const curve of auxCurves) {
     describe(`Aux. operations - Curve ${curve}`, () => {
@@ -67,6 +60,18 @@ contract("EllipticCurve", accounts => {
         })
       }
 
+      // expMod
+      for (const [index, test] of curveData.expMod.valid.entries()) {
+        it(`should do an expMod with ${test.description} - (${index + 1})`, async () => {
+          const exp = await ecLib.expMod.call(
+            web3.utils.toBN(test.input.base),
+            web3.utils.toBN(test.input.exp),
+            pp,
+          )
+          assert.equal(exp.toString(), test.output.k)
+        })
+      }
+
       // deriveY
       for (const [index, test] of curveData.deriveY.valid.entries()) {
         it(`should decode coordinate y from compressed point (${index + 1})`, async () => {
@@ -116,12 +121,7 @@ contract("EllipticCurve", accounts => {
   // /////////////////////////////////////////////// //
   // Check EC arithmetic operations for given curves //
   // /////////////////////////////////////////////// //
-  let curves
-  if (SOLIDITY_COVERAGE) {
-    curves = ["secp256k1"]
-  } else {
-    curves = ["secp256k1", "secp192k1", "secp224k1", "P256", "P192", "P224"]
-  }
+  const curves = ["secp256k1", "secp192k1", "secp224k1", "P256", "P192", "P224"]
 
   for (const curve of curves) {
     describe(`Arithmetic operations - Curve ${curve}`, () => {
