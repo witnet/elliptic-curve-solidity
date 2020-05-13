@@ -1,7 +1,7 @@
 pragma solidity 0.6.4;
 
-import "../contracts/EllipticCurve.sol";
-import "../contracts/FastEcMul.sol";
+import "../EllipticCurve.sol";
+import "../FastEcMul.sol";
 
 
 /**

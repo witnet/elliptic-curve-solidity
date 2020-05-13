@@ -2,12 +2,13 @@ const SOLIDITY_COVERAGE = process.env.SOLIDITY_COVERAGE
 const EllipticCurve = artifacts.require("./TestEllipticCurve")
 
 contract("EllipticCurve", accounts => {
+  
   // /////////////////////////////////////////// //
   // Check auxiliary operations for given curves //
   // /////////////////////////////////////////// //
   let auxCurves
   if (SOLIDITY_COVERAGE) {
-    auxCurves = ["secp256k1"]// "secp256k1", "secp192k1", "secp224k1", "P256", "P192", "P224"]
+    auxCurves = ["secp256k1"]
   } else {
     auxCurves = ["secp256k1", "P256"]
   }
