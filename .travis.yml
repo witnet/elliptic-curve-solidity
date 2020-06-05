@@ -19,3 +19,7 @@ jobs:
     - stage: tests
       name: "Unit tests"
       script: npm run test
+
+    - stage: tests
+      name: "Coveralls"
+      script: npm run coveralls

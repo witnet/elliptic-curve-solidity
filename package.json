@@ -37,9 +37,11 @@
     "lint": "eslint ./test",
     "lint:fix": "eslint ./test --fix",
     "coverage": "truffle run coverage --temp build",
-    "gas-analysis": "truffle test ./benchmark/EcGasHelper.sol ./benchmark/gas.js"
+    "gas-analysis": "truffle test ./benchmark/EcGasHelper.sol ./benchmark/gas.js",
+    "coveralls": "truffle run coverage --temp build && cat coverage/lcov.info | coveralls"
   },
   "devDependencies": {
+    "coveralls": "^3.1.0",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
