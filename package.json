@@ -41,19 +41,18 @@
     "coveralls": "truffle run coverage --temp build && cat coverage/lcov.info | coveralls"
   },
   "devDependencies": {
-    "coveralls": "^3.1.0",
-    "eslint": "^6.8.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-node": "^11.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "eth-gas-reporter": "^0.2.15",
-    "ethlint": "^1.2.5",
-    "ganache-cli": "^6.9.1",
-    "solidity-coverage": "^0.7.5",
-    "solium": "^1.2.5",
-    "truffle": "^5.1.18",
-    "truffle-assertions": "^0.9.2"
+    "eslint": "7.13.0",
+    "eslint-config-standard": "16.0.1",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-standard": "4.1.0",
+    "eth-gas-reporter": "0.2.18",
+    "ethlint": "1.2.5",
+    "ganache-cli": "6.12.1",
+    "solidity-coverage": "0.7.12",
+    "solium": "1.2.5",
+    "truffle": "5.1.53",
+    "truffle-assertions": "0.9.2"
   }
 }

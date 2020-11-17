@@ -28,8 +28,8 @@ contract("EllipticCurve", accounts => {
             web3.utils.toBN(test.input.z),
             pp
           )
-          var expectedX = web3.utils.toBN(test.output.x)
-          var expectedY = web3.utils.toBN(test.output.y)
+          const expectedX = web3.utils.toBN(test.output.x)
+          const expectedY = web3.utils.toBN(test.output.y)
           assert.equal(affine[0].toString(), expectedX.toString())
           assert.equal(affine[1].toString(), expectedY.toString())
         })

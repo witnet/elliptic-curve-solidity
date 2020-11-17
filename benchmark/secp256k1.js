@@ -9,7 +9,7 @@ contract("Secp256k1 - Gas consumption analysis", accounts => {
     })
     it("Should derive a public key", async () => {
       for (const pair of testdata.keypairs) {
-        var priv = web3.utils.toBN(pair.priv)
+        const priv = web3.utils.toBN(pair.priv)
         await helper.derivePubKey(priv)
       }
     })
