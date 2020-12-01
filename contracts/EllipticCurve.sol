@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 pragma solidity >=0.5.3 <0.7.0;
 
 
@@ -10,7 +12,7 @@ pragma solidity >=0.5.3 <0.7.0;
  */
 library EllipticCurve {
 
-  /// Pre-computed constant for 2 ** 255
+  // Pre-computed constant for 2 ** 255
   uint256 constant private U255_MAX_PLUS_1 = 57896044618658097711785492504343953926634992332820282019728792003956564819968;
 
   /// @dev Modular euclidean inverse of a number (mod p).

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 pragma solidity >=0.5.3 <0.7.0;
 
 import "./EllipticCurve.sol";
@@ -14,7 +16,7 @@ import "./EllipticCurve.sol";
  */
 library FastEcMul {
 
-  /// Pre-computed constant for 2 ** 128 - 1
+  // Pre-computed constant for 2 ** 128 - 1
   uint256 private constant U128_MAX = 340282366920938463463374607431768211455;
 
   /// @dev Decomposition of the scalar k in two scalars k1 and k2 with half bit-length, such that k=k1+k2*LAMBDA (mod n)
