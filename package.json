@@ -1,6 +1,6 @@
 {
   "name": "elliptic-curve-solidity",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Elliptic Curve arithmetic for up to 256-bit curves written in solidity",
   "repository": {
     "type": "git",
