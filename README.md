@@ -60,7 +60,7 @@ Known limitations:
 The [Secp256k1](https://github.com/witnet/elliptic-curve-solidity/blob/master/examples/Secp256k1.sol) example depicts how to use the library by providing a function to derive a public key from a secret key:
 
 ```solidity
-pragma solidity 0.6.4;
+pragma solidity 0.6.12;
 
 import "elliptic-curve-solidity/contracts/EllipticCurve.sol";
 
@@ -91,11 +91,11 @@ The cost of a key derivation operation in Secp256k1 is around 550k gas.
 ·--------------------------------------------------|--------------------------·
 |                      Gas                         · Block limit: 6721975 gas │
 ···················································|···························
-|                 ·          20 gwei/gas           ·      176.75 usd/eth      │
+|                 ·          100 gwei/gas           ·     592.30 usd/eth      │
 ··················|··········|··········|··········|············|··············
 |  Method         ·  Min     ·  Max     ·  Avg     ·  # calls   ·  usd (avg)  │
 ··················|··········|··········|··········|············|··············
-|  derivePubKey   ·  535930  ·  581097  ·  561168  ·        18  ·       1.98  │
+|  derivePubKey   ·  476146  ·  518863  ·  499884  ·        18  ·      29.61  │
 ··················|··········|··········|··········|············|··············
 ```
 
