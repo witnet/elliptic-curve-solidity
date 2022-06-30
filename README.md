@@ -60,7 +60,7 @@ Known limitations:
 The [Secp256k1](https://github.com/witnet/elliptic-curve-solidity/blob/master/examples/Secp256k1.sol) example depicts how to use the library by providing a function to derive a public key from a secret key:
 
 ```solidity
-pragma solidity 0.6.12;
+pragma solidity 0.8.15;
 
 import "elliptic-curve-solidity/contracts/EllipticCurve.sol";
 
