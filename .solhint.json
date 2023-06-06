@@ -13,6 +13,7 @@
         "ignoreConstructors": true
       }
     ],
+    "no-global-import": "off",
     "modifier-name-mixedcase": "warn",
     "no-empty-blocks": "off",
     "no-inline-assembly": "off",
