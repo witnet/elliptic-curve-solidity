@@ -1,5 +1,4 @@
 module.exports = {
-  plugins: ["solidity-coverage"],
   networks: {
     local: {
       host: "127.0.0.1",
@@ -9,12 +8,6 @@ module.exports = {
   },
   mocha: {
     reporter: "eth-gas-reporter",
-    reporterOptions: {
-      currency: "USD",
-      gasPrice: 100,
-      excludeContracts: ["Migrations"],
-      src: "benchmark",
-    },
   },
   compilers: {
     solc: {
@@ -24,7 +17,7 @@ module.exports = {
           runs: 200,
         },
       },
-      version: "0.6.12",
+      version: "0.8.17",
     },
   },
 }
