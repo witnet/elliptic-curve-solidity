@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x]
+        node-version: [16.x]
 
     steps:
     - uses: actions/checkout@v1
@@ -28,7 +28,7 @@ jobs:
         npm run fmt
     - name: Compile solidity contracts
       run: |
-        npm run compile-contracts
+        npm run compile
     - name: Run tests
       run: |
         npm run test
