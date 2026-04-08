@@ -18,7 +18,7 @@ library FastEcMul {
     uint256 private constant U128_MAX = 340282366920938463463374607431768211455;
 
     /// @dev Decomposition of the scalar k in two scalars k1 and k2 with half bit-length, such that k=k1+k2*LAMBDA (mod n)
-    /// @param _k the scalar to be decompose
+    /// @param _k the scalar to be decomposed
     /// @param _nn the modulus
     /// @param _lambda is a root of the characteristic polynomial of an endomorphism of the curve
     /// @return k1 and k2  such that k=k1+k2*LAMBDA (mod n)
@@ -464,8 +464,8 @@ library FastEcMul {
     }
 
     /// @dev Division of an integer of 312 bits by a 256-bit integer.
-    /// @param _aM the higher 256 bits of the numarator
-    /// @param _am the lower 128 bits of the numarator
+    /// @param _aM the higher 256 bits of the numerator
+    /// @param _am the lower 128 bits of the numerator
     /// @param _b the 256-bit denominator
     /// @return q the result of the division and the rest r
     function _bigDivision(

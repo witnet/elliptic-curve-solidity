@@ -129,7 +129,7 @@ library EllipticCurve {
     {
         require(
             _prefix == 0x02 || _prefix == 0x03,
-            "EllipticCurve:innvalid compressed EC point prefix"
+            "EllipticCurve:invalid compressed EC point prefix"
         );
 
         // x^3 + ax + b
@@ -236,7 +236,7 @@ library EllipticCurve {
         return toAffine(x, y, z, _pp);
     }
 
-    /// @dev Substract two points (x1, y1) and (x2, y2) in affine coordinates.
+    /// @dev Subtract two points (x1, y1) and (x2, y2) in affine coordinates.
     /// @param _x1 coordinate x of P1
     /// @param _y1 coordinate y of P1
     /// @param _x2 coordinate x of P2
@@ -284,15 +284,15 @@ library EllipticCurve {
         return toAffine(x1, y1, z1, _pp);
     }
 
-    /// @dev Adds two points (x1, y1, z1) and (x2 y2, z2).
+    /// @dev Adds two points (x1, y1, z1) and (x2, y2, z2).
     /// @param _x1 coordinate x of P1
     /// @param _y1 coordinate y of P1
     /// @param _z1 coordinate z of P1
-    /// @param _x2 coordinate x of square
-    /// @param _y2 coordinate y of square
-    /// @param _z2 coordinate z of square
+    /// @param _x2 coordinate x of P2
+    /// @param _y2 coordinate y of P2
+    /// @param _z2 coordinate z of P2
     /// @param _pp the modulus
-    /// @return (qx, qy, qz) P1+square in Jacobian
+    /// @return (qx, qy, qz) P1+P2 in Jacobian
     function jacAdd(
             uint256 _x1,
             uint256 _y1,
