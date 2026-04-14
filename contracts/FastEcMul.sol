@@ -56,21 +56,21 @@ library FastEcMul {
         ab[3] = int256(-t[1]);
 
         //b2*K
-        uint[3] memory test;
+        uint256[3] memory test;
         (test[0], test[1], test[2]) = _multiply256(uint(ab[3]), uint(k));
 
         //-b1*k
-        uint[3] memory test2;
+        uint256[3] memory test2;
         (test2[0], test2[1], test2[2]) = _multiply256(uint(-ab[1]), uint(k));
 
         //c1 and c2
-        uint[2] memory c1;
+        uint256[2] memory c1;
         (c1[0], c1[1]) = _bigDivision(
             (uint256(uint128(test[0])) << 128) | uint128(test[1]),
             uint256(test[2]) + (_nn / 2),
             _nn
         );
-        uint[2] memory c2;
+        uint256[2] memory c2;
         (c2[0], c2[1]) = _bigDivision(
             (uint256(uint128(test2[0])) << 128) | uint128(test2[1]),
             uint256(test2[2]) + (_nn / 2),
@@ -118,7 +118,7 @@ library FastEcMul {
         uint256 maxCount = 0;
         uint256 count = 0;
 
-        for (uint j = 0; j < 4; j++) {
+        for (uint256 j = 0; j < 4; j++) {
             (wnaf[j], count) = _wnaf(_scalars[j]);
             if (count > maxCount) {
                 maxCount = count;
@@ -251,7 +251,7 @@ library FastEcMul {
     /// @param _k A 256-bit integer
     /// @return (ptr, length) The pointer to the first coefficient, and the total length of the array
     function _wnaf(int256 _k) private pure returns (uint256, uint256) {
-        int sign = _k < 0 ? -1 : int(1);
+        int8 sign = _k < 0 ? -1 : int8(1);
         uint256 k = uint256(sign * _k);
 
         uint256 ptr;
@@ -303,7 +303,7 @@ library FastEcMul {
         private pure 
         returns (uint256, uint256, uint256) 
     {
-        uint[3] memory mulPoint;
+        uint256[3] memory mulPoint;
         uint256[3][4][4] memory iP;
         _lookupSimMul(iP, _points, _aa, _beta, _pp);
 

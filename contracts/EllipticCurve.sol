@@ -14,12 +14,20 @@ library EllipticCurve {
     uint256 private constant U255_MAX_PLUS_1 =
         57896044618658097711785492504343953926634992332820282019728792003956564819968;
 
+
+    /// @dev At least one of the arguments is incompatible with the operation being performed.
+    /// @param msg A more specific error message describing why this is a bad argument
+    error BadArgument(string msg);
+
+    /// @dev Used JacAdd where it was more optimal to use JacDouble.
+    error BetterUseJacDouble();
+
     /// @dev Modular euclidean inverse of a number (mod p).
     /// @param _x The number
     /// @param _pp The modulus
     /// @return q such that x*q = 1 (mod _pp)
     function invMod(uint256 _x, uint256 _pp) internal pure returns (uint256) {
-        require(_x != 0 && _x != _pp && _pp != 0, "Invalid number");
+        if (_x == 0 || _x == _pp || _pp == 0) revert BadArgument("Invalid number");
         uint256 q = 0;
         uint256 newT = 1;
         uint256 r = _pp;
@@ -47,7 +55,7 @@ library EllipticCurve {
         internal pure
         returns (uint256) 
     {
-        require(_pp != 0, "EllipticCurve: modulus is zero");
+        if (_pp == 0) revert BadArgument("Modulus is zero");
 
         if (_base == 0) return 0;
         if (_exp == 0) return 1;
@@ -127,10 +135,7 @@ library EllipticCurve {
         internal pure 
         returns (uint256) 
     {
-        require(
-            _prefix == 0x02 || _prefix == 0x03,
-            "EllipticCurve:invalid compressed EC point prefix"
-        );
+        if (_prefix != 0x02 && _prefix != 0x03) revert BadArgument("Invalid compressed EC point prefix");
 
         // x^3 + ax + b
         uint256 y2 = addmod(
@@ -153,11 +158,11 @@ library EllipticCurve {
     /// @param _pp the modulus
     /// @return true if x,y in the curve, false else
     function isOnCurve(
-            uint _x,
-            uint _y,
-            uint _aa,
-            uint _bb,
-            uint _pp
+            uint256 _x,
+            uint256 _y,
+            uint256 _aa,
+            uint256 _bb,
+            uint256 _pp
         ) 
         internal pure 
         returns (bool) 
@@ -166,9 +171,9 @@ library EllipticCurve {
             return false;
         }
         // y^2
-        uint lhs = mulmod(_y, _y, _pp);
+        uint256 lhs = mulmod(_y, _y, _pp);
         // x^3
-        uint rhs = mulmod(mulmod(_x, _x, _pp), _x, _pp);
+        uint256 rhs = mulmod(mulmod(_x, _x, _pp), _x, _pp);
         if (_aa != 0) {
             // x^3 + a*x
             rhs = addmod(rhs, mulmod(_x, _aa, _pp), _pp);
@@ -216,9 +221,9 @@ library EllipticCurve {
         internal pure 
         returns (uint256, uint256) 
     {
-        uint x = 0;
-        uint y = 0;
-        uint z = 0;
+        uint256 x = 0;
+        uint256 y = 0;
+        uint256 z = 0;
 
         // Double if x1==x2 else add
         if (_x1 == _x2) {
@@ -309,7 +314,7 @@ library EllipticCurve {
         if (_x2 == 0 && _y2 == 0) return (_x1, _y1, _z1);
 
         // We follow the equations described in https://pdfs.semanticscholar.org/5c64/29952e08025a9649c2b0ba32518e9a7fb5c2.pdf Section 5
-        uint[4] memory zs; // z1^2, z1^3, z2^2, z2^3
+        uint256[4] memory zs; // z1^2, z1^3, z2^2, z2^3
         zs[0] = mulmod(_z1, _z1, _pp);
         zs[1] = mulmod(_z1, zs[0], _pp);
         zs[2] = mulmod(_z2, _z2, _pp);
@@ -324,12 +329,9 @@ library EllipticCurve {
         ];
 
         // In case of zs[0] == zs[2] && zs[1] == zs[3], double function should be used
-        require(
-            zs[0] != zs[2] || zs[1] != zs[3],
-            "Use jacDouble function instead"
-        );
+        if (zs[0] == zs[2] && zs[1] == zs[3]) revert BetterUseJacDouble();
 
-        uint[4] memory hr;
+        uint256[4] memory hr;
         //h
         hr[0] = addmod(zs[2], _pp - zs[0], _pp);
         //r
@@ -380,9 +382,9 @@ library EllipticCurve {
         uint256 z = mulmod(_z, _z, _pp); //z1^2
 
         // s
-        uint s = mulmod(4, mulmod(_x, y, _pp), _pp);
+        uint256 s = mulmod(4, mulmod(_x, y, _pp), _pp);
         // m
-        uint m = addmod(
+        uint256 m = addmod(
             mulmod(3, x, _pp),
             mulmod(_aa, mulmod(z, z, _pp), _pp),
             _pp
